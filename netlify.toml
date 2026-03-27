@@ -4,3 +4,15 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+[[redirects]]
+  from = "/saunamind"
+  to = "https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=legacy_page"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/saunamind/*"
+  to = "https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=legacy_page"
+  status = 301
+  force = true
