@@ -1,0 +1,169 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Science & Research">
+  <Nav current="science" />
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Biohacking Science</h1>
+      <p>The research behind performance optimization</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="article-grid">
+        <article class="article-card">
+          <h2>The Science of Infrared Sauna</h2>
+          <p class="date">Published March 2026</p>
+          <p>Far-infrared wavelengths penetrate the skin and underlying tissues, increasing core body temperature and inducing systemic benefits...</p>
+          <a href="#" class="read-more">Read Article →</a>
+        </article>
+
+        <article class="article-card">
+          <h2>Cryotherapy & Recovery</h2>
+          <p class="date">Published February 2026</p>
+          <p>Extreme cold exposure triggers adaptive responses in the nervous system, reducing inflammation and accelerating recovery...</p>
+          <a href="#" class="read-more">Read Article →</a>
+        </article>
+
+        <article class="article-card">
+          <h2>Float Tank Neuroscience</h2>
+          <p class="date">Published January 2026</p>
+          <p>Sensory deprivation in magnesium-rich saltwater creates unique neural conditions for deep relaxation and neuroplasticity...</p>
+          <a href="#" class="read-more">Read Article →</a>
+        </article>
+
+        <article class="article-card">
+          <h2>Red Light Therapy & Mitochondria</h2>
+          <p class="date">Published December 2025</p>
+          <p>Near-infrared light stimulates cytochrome c oxidase in mitochondria, increasing ATP production at the cellular level...</p>
+          <a href="#" class="read-more">Read Article →</a>
+        </article>
+
+        <article class="article-card">
+          <h2>Hormesis: Stress as Medicine</h2>
+          <p class="date">Published November 2025</p>
+          <p>Strategic exposure to mild stressors triggers adaptive responses that strengthen resilience and improve overall health...</p>
+          <a href="#" class="read-more">Read Article →</a>
+        </article>
+
+        <article class="article-card">
+          <h2>The Cold Exposure Effect</h2>
+          <p class="date">Published October 2025</p>
+          <p>Cold water immersion activates the parasympathetic nervous system and increases production of brown adipose tissue...</p>
+          <a href="#" class="read-more">Read Article →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-content h1 {
+    font-size: 48px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+
+  .hero-content p {
+    color: var(--muted);
+    font-size: 16px;
+  }
+
+  .section {
+    padding: 3rem 2rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .article-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+
+  .article-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+
+  .article-card h2 {
+    font-size: 20px;
+    margin-bottom: 0.5rem;
+  }
+
+  .article-card .date {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .article-card p {
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .read-more {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+
+  .read-more:hover {
+    color: var(--accent2);
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 2rem 1rem;
+    }
+
+    .hero-content h1 {
+      font-size: 32px;
+    }
+
+    .section {
+      padding: 2rem 1rem;
+    }
+
+    .article-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

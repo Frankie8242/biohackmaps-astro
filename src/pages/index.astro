@@ -1,17 +1,202 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import HeroSection from '../components/HeroSection.astro';
+import ModalityCard from '../components/ModalityCard.astro';
+import VenueCard from '../components/VenueCard.astro';
+import Footer from '../components/Footer.astro';
+import { getAllModalities } from '../data/modalities';
+import { getAllVenues } from '../data/venues';
 
+const modalities = getAllModalities();
+const venues = getAllVenues().filter(v => v.featured).slice(0, 6);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Home">
+  <Nav current="home" />
+  
+  <HeroSection 
+    title="BiohackMap"
+    subtitle="The world's most complete directory of biohacking venues worldwide."
+    cta="Explore Venues"
+  />
+
+  <section class="section">
+    <div class="container">
+      <h2>Browse Modalities</h2>
+      <p class="section-subtitle">Discover the science of self-optimization</p>
+      
+      <div class="modality-grid">
+        {modalities.map(mod => (
+          <ModalityCard modality={mod} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {venues.length > 0 && (
+    <section class="section section-dark">
+      <div class="container">
+        <h2>Featured Venues</h2>
+        <p class="section-subtitle">Hand-picked biohacking destinations</p>
+        
+        <div class="venue-grid">
+          {venues.map(venue => (
+            <VenueCard venue={venue} />
+          ))}
+        </div>
+
+        <div class="cta-center">
+          <a href="/venues/" class="button button-outline">View All Venues →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section sauna-cta">
+    <div class="container">
+      <div class="cta-content">
+        <h2>SaunaMind Integration</h2>
+        <p>Real-time venue data, ratings, and reviews synchronized across the network.</p>
+        <a href="#" class="button">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .section {
+    padding: 4rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-dark {
+    background: var(--surface);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section h2 {
+    font-size: 44px;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 2rem;
+  }
+
+  .modality-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .venue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .cta-center {
+    text-align: center;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--accent);
+    color: var(--black);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.2s;
+    border: 2px solid var(--accent);
+  }
+
+  .button:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  .button-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+  }
+
+  .button-outline:hover {
+    background: var(--accent);
+    color: var(--black);
+  }
+
+  .sauna-cta {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(6, 182, 212, 0.1));
+    border-top: 1px solid var(--border);
+    border-bottom: none;
+  }
+
+  .cta-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .cta-content p {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      padding: 3rem 1rem;
+    }
+
+    .section h2 {
+      font-size: 32px;
+    }
+
+    .modality-grid {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .venue-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .section {
+      padding: 2rem 1rem;
+    }
+
+    .section h2 {
+      font-size: 24px;
+    }
+
+    .section-subtitle {
+      font-size: 14px;
+    }
+
+    .modality-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+  }
+</style>

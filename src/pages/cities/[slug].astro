@@ -1,0 +1,142 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import VenueCard from '../../components/VenueCard.astro';
+import Footer from '../../components/Footer.astro';
+import { getVenuesByCity, getUniqueCities } from '../../data/venues';
+
+export async function getStaticPaths() {
+  const cities = getUniqueCities();
+  return cities.map(city => ({
+    params: { slug: city.toLowerCase().replace(/\s+/g, '-') },
+    props: { city },
+  }));
+}
+
+interface Props {
+  city: string;
+}
+
+const { city } = Astro.props as Props;
+const venues = getVenuesByCity(city);
+---
+
+<Layout title={`Biohacking Venues in ${city}`}>
+  <Nav current="venues" />
+
+  <HeroSection
+    title={`Biohacking in ${city}`}
+    subtitle={`Discover the top biohacking venues in ${city}`}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="city-header">
+        <h2>Popular Modalities in {city}</h2>
+        <div class="modality-list">
+          {Array.from(new Set(venues.flatMap(v => v.modalities))).map(mod => (
+            <a href={`/modalities/${mod}`} class="modality-tag">{mod}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {venues.length > 0 ? (
+    <section class="section section-dark">
+      <div class="container">
+        <h2>{venues.length} Venues in {city}</h2>
+        <div class="venue-grid">
+          {venues.map(venue => (
+            <VenueCard venue={venue} />
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="section section-dark">
+      <div class="container">
+        <div class="no-venues">
+          <p>No venues yet in {city}. Check back soon.</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Footer />
+</Layout>
+
+<style>
+  .section {
+    padding: 3rem 2rem;
+  }
+
+  .section-dark {
+    background: var(--surface);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .city-header h2 {
+    font-size: 28px;
+    margin-bottom: 1.5rem;
+  }
+
+  .modality-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .modality-tag {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(6, 182, 212, 0.1);
+    color: var(--accent2);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .modality-tag:hover {
+    background: rgba(6, 182, 212, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .section h2 {
+    font-size: 32px;
+    margin-bottom: 2rem;
+  }
+
+  .venue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .no-venues {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      padding: 2rem 1rem;
+    }
+
+    .city-header h2 {
+      font-size: 22px;
+    }
+
+    .venue-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

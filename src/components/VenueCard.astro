@@ -1,0 +1,151 @@
+---
+import type { Venue } from '../types/venue';
+
+interface Props {
+  venue: Venue;
+}
+
+const { venue } = Astro.props;
+---
+
+<a href={`/venues/${venue.slug}`} class="venue-card">
+  <div class="venue-header">
+    <h3>{venue.name}</h3>
+    {venue.verified && <span class="badge verified">✓ Verified</span>}
+    {venue.featured && <span class="badge featured">⭐ Featured</span>}
+  </div>
+  
+  <div class="venue-info">
+    <p class="location">📍 {venue.city}, {venue.country}</p>
+    <p class="rating">
+      ⭐ {venue.rating.toFixed(1)} ({venue.reviewCount} reviews)
+    </p>
+  </div>
+
+  <div class="modalities">
+    {venue.modalities.map(mod => (
+      <span class="modality-tag">{mod}</span>
+    ))}
+  </div>
+
+  {venue.description && (
+    <p class="description">{venue.description}</p>
+  )}
+
+  <div class="venue-footer">
+    <button class="learn-more">Learn More →</button>
+  </div>
+</a>
+
+<style>
+  .venue-card {
+    display: block;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .venue-card:hover {
+    background: var(--surface2);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.1);
+  }
+
+  .venue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+  }
+
+  .venue-header h3 {
+    font-size: 18px;
+    margin: 0;
+    flex: 1;
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  .badge.verified {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--green);
+  }
+
+  .badge.featured {
+    background: rgba(249, 115, 22, 0.2);
+    color: var(--accent);
+  }
+
+  .venue-info {
+    margin-bottom: 1rem;
+    font-size: 13px;
+  }
+
+  .location {
+    color: var(--muted);
+    margin: 0.25rem 0;
+  }
+
+  .rating {
+    color: var(--text);
+    margin: 0.25rem 0;
+  }
+
+  .modalities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .modality-tag {
+    display: inline-block;
+    background: rgba(6, 182, 212, 0.1);
+    color: var(--accent2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .description {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 1rem 0;
+    line-height: 1.5;
+  }
+
+  .venue-footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .learn-more {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    padding: 0;
+    transition: color 0.2s;
+  }
+
+  .learn-more:hover {
+    color: var(--accent2);
+  }
+</style>

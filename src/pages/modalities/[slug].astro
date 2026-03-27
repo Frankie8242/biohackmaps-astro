@@ -1,0 +1,195 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import VenueCard from '../../components/VenueCard.astro';
+import Footer from '../../components/Footer.astro';
+import { getAllModalities } from '../../data/modalities';
+import { getVenuesByModality } from '../../data/venues';
+
+export async function getStaticPaths() {
+  const modalities = getAllModalities();
+  return modalities.map(mod => ({
+    params: { slug: mod.slug },
+    props: { modality: mod },
+  }));
+}
+
+interface Props {
+  modality: {
+    id: string;
+    name: string;
+    description: string;
+    benefits: string[];
+  };
+}
+
+const { modality } = Astro.props as Props;
+const venues = getVenuesByModality(modality.id);
+---
+
+<Layout title={modality.name}>
+  <Nav current="venues" />
+
+  <HeroSection
+    title={modality.name}
+    subtitle={modality.description}
+  />
+
+  <section class="section">
+    <div class="container">
+      <div class="modality-content">
+        <div class="modality-main">
+          <h2>About {modality.name}</h2>
+          <p>{modality.description}</p>
+
+          <h3>Key Benefits</h3>
+          <ul class="benefits-list">
+            {modality.benefits.map(benefit => (
+              <li>{benefit}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="modality-sidebar">
+          <div class="info-box">
+            <h4>By The Numbers</h4>
+            <p>
+              <strong>{venues.length}</strong> verified venues offering {modality.name}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {venues.length > 0 && (
+    <section class="section section-dark">
+      <div class="container">
+        <h2>Venues Offering {modality.name}</h2>
+        <div class="venue-grid">
+          {venues.map(venue => (
+            <VenueCard venue={venue} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <Footer />
+</Layout>
+
+<style>
+  .section {
+    padding: 3rem 2rem;
+  }
+
+  .section-dark {
+    background: var(--surface);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .modality-content {
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    gap: 2rem;
+  }
+
+  .modality-main h2 {
+    font-size: 32px;
+    margin-bottom: 1rem;
+  }
+
+  .modality-main h3 {
+    font-size: 20px;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .modality-main p {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  .benefits-list li {
+    padding: 0.75rem 0;
+    color: var(--muted);
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .benefits-list li:before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .info-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+
+  .info-box h4 {
+    font-size: 14px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--accent);
+  }
+
+  .info-box p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .info-box strong {
+    color: var(--text);
+    font-size: 20px;
+    display: block;
+  }
+
+  .section h2 {
+    font-size: 32px;
+    margin-bottom: 2rem;
+  }
+
+  .venue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      padding: 2rem 1rem;
+    }
+
+    .modality-content {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .modality-main h2 {
+      font-size: 24px;
+    }
+
+    .venue-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

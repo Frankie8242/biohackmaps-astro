@@ -1,0 +1,317 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getVenueBySlug, getAllVenues } from '../../data/venues';
+import { generateVenueSchema } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const venues = getAllVenues();
+  return venues.map(venue => ({
+    params: { slug: venue.slug },
+    props: { venue },
+  }));
+}
+
+interface Props {
+  venue: any;
+}
+
+const { venue } = Astro.props as Props;
+
+if (!venue) {
+  return Astro.redirect('/venues/');
+}
+
+const schema = generateVenueSchema(venue, Astro.url.origin);
+---
+
+<Layout title={venue.name}>
+  <Nav current="venues" />
+
+  <div class="venue-hero">
+    <div class="venue-hero-content">
+      <h1>{venue.name}</h1>
+      <p class="location">📍 {venue.address}</p>
+      <p class="location">{venue.city}, {venue.country}</p>
+      
+      <div class="venue-meta">
+        <div class="rating">
+          <span class="stars">⭐ {venue.rating.toFixed(1)}</span>
+          <span class="reviews">({venue.reviewCount} reviews)</span>
+        </div>
+        {venue.verified && <span class="badge verified">✓ Verified</span>}
+        {venue.featured && <span class="badge featured">⭐ Featured</span>}
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="venue-grid">
+        <div class="venue-main">
+          {venue.description && (
+            <div class="section-block">
+              <h2>About</h2>
+              <p>{venue.description}</p>
+            </div>
+          )}
+
+          <div class="section-block">
+            <h2>Modalities</h2>
+            <div class="modalities-grid">
+              {venue.modalities.map((mod: string) => (
+                <a href={`/modalities/${mod}`} class="modality-link">
+                  {mod}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {venue.hours && (
+            <div class="section-block">
+              <h2>Hours</h2>
+              <p>{venue.hours}</p>
+            </div>
+          )}
+        </div>
+
+        <div class="venue-sidebar">
+          <div class="info-card">
+            <h3>Contact</h3>
+            {venue.phone && (
+              <p>
+                <strong>Phone:</strong><br />
+                <a href={`tel:${venue.phone}`}>{venue.phone}</a>
+              </p>
+            )}
+            {venue.email && (
+              <p>
+                <strong>Email:</strong><br />
+                <a href={`mailto:${venue.email}`}>{venue.email}</a>
+              </p>
+            )}
+            {venue.website && (
+              <p>
+                <a href={venue.website} target="_blank" rel="noopener noreferrer" class="button">
+                  Visit Website →
+                </a>
+              </p>
+            )}
+          </div>
+
+          <div class="info-card">
+            <h3>Map</h3>
+            <p style="font-size: 12px; color: var(--muted);">
+              Coming soon: Map integration
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+
+  <Footer />
+</Layout>
+
+<style>
+  .venue-hero {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem;
+  }
+
+  .venue-hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .venue-hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 0.5rem;
+  }
+
+  .location {
+    color: var(--muted);
+    margin: 0.25rem 0;
+  }
+
+  .venue-meta {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .stars {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .reviews {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .badge {
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .badge.verified {
+    background: rgba(34, 197, 94, 0.2);
+    color: var(--green);
+  }
+
+  .badge.featured {
+    background: rgba(249, 115, 22, 0.2);
+    color: var(--accent);
+  }
+
+  .section {
+    padding: 3rem 2rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .venue-grid {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+  }
+
+  .venue-main {
+    flex: 1;
+  }
+
+  .section-block {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-block h2 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+
+  .section-block p {
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .modalities-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .modality-link {
+    display: inline-block;
+    padding: 8px 16px;
+    background: rgba(6, 182, 212, 0.1);
+    color: var(--accent2);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+
+  .modality-link:hover {
+    background: rgba(6, 182, 212, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .info-card h3 {
+    font-size: 16px;
+    margin-bottom: 1rem;
+  }
+
+  .info-card p {
+    margin-bottom: 0.75rem;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .info-card strong {
+    color: var(--text);
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .info-card a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .info-card a:hover {
+    color: var(--accent2);
+  }
+
+  .button {
+    display: block;
+    padding: 10px 14px;
+    background: var(--accent);
+    color: var(--black);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 13px;
+    text-align: center;
+    transition: all 0.2s;
+    border: 2px solid var(--accent);
+  }
+
+  .button:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  @media (max-width: 768px) {
+    .venue-hero {
+      padding: 2rem 1rem;
+    }
+
+    .venue-hero-content h1 {
+      font-size: 32px;
+    }
+
+    .section {
+      padding: 2rem 1rem;
+    }
+
+    .venue-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .venue-sidebar {
+      order: -1;
+    }
+  }
+</style>
+

@@ -1,0 +1,103 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: string;
+}
+
+const { title, description = "The world's most complete directory of biohacking venues worldwide.", image = "/og-image.svg", type = "website" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} — BiohackMap</title>
+    <meta name="description" content={description} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content="https://biohackmaps.com" />
+    <meta property="og:title" content={`${title} — BiohackMap`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://biohackmaps.com/og-image.svg" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://biohackmaps.com" />
+    <meta property="twitter:title" content={`${title} — BiohackMap`} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://biohackmaps.com/og-image.svg" />
+    <meta name="twitter:creator" content="@biohackmaps" />
+    
+    <!-- Search Engine / SEO -->
+    <link rel="canonical" href="https://biohackmaps.com" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      :root {
+        --black: #080808;
+        --surface: #0f0f0f;
+        --surface2: #161616;
+        --border: #222;
+        --text: #e8e8e8;
+        --muted: #666;
+        --accent: #f97316;
+        --accent2: #06b6d4;
+        --accent3: #a855f7;
+        --green: #22c55e;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--black);
+        color: var(--text);
+        font-family: 'DM Sans', sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      h1, h2, h3, h4 {
+        font-family: 'Bebas Neue', sans-serif;
+        letter-spacing: 1px;
+      }
+
+      code, pre {
+        font-family: 'DM Mono', monospace;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        body {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

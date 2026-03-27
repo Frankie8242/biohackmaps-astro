@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /_astro/
+Disallow: /dist/
+
+# Crawl-delay: 1
+# Request-rate: 1/10s
+
+# Sitemaps
+Sitemap: https://biohackmaps.com/sitemap-index.xml
+Sitemap: https://biohackmaps.com/sitemap-0.xml
