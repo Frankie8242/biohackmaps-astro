@@ -7,12 +7,16 @@ import VenueCard from '../components/VenueCard.astro';
 import Footer from '../components/Footer.astro';
 import { getAllModalities } from '../data/modalities';
 import { getAllVenues } from '../data/venues';
+import { generateOrganizationSchema } from '../lib/schema';
 
 const modalities = getAllModalities();
-const venues = getAllVenues().filter(v => v.featured).slice(0, 6);
+const allVenues = getAllVenues();
+const featuredVenues = allVenues.filter(v => v.featured).slice(0, 6);
+const orgSchema = generateOrganizationSchema(Astro.url.origin);
 ---
 
 <Layout title="Home">
+  <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
   <Nav current="home" />
   
   <HeroSection 
@@ -34,15 +38,17 @@ const venues = getAllVenues().filter(v => v.featured).slice(0, 6);
     </div>
   </section>
 
-  {venues.length > 0 && (
+  {featuredVenues.length > 0 && (
     <section class="section section-dark">
       <div class="container">
-        <h2>Featured Venues</h2>
-        <p class="section-subtitle">Hand-picked biohacking destinations</p>
+        <h2 id="venues-heading">Featured Venues</h2>
+        <p class="section-subtitle" id="venues-subtitle">Hand-picked biohacking destinations</p>
         
-        <div class="venue-grid">
-          {venues.map(venue => (
-            <VenueCard venue={venue} />
+        <div class="venue-grid" id="venue-grid">
+          {allVenues.map(venue => (
+            <div class="venue-wrapper" data-city={venue.city.toLowerCase()} data-featured={venue.featured} style="display:none">
+              <VenueCard venue={venue} />
+            </div>
           ))}
         </div>
 
@@ -53,18 +59,72 @@ const venues = getAllVenues().filter(v => v.featured).slice(0, 6);
     </section>
   )}
 
-  <section class="section sauna-cta">
-    <div class="container">
-      <div class="cta-content">
-        <h2>SaunaMind — Not Time. Temperature.</h2>
-        <p>Found your venue? Move from guessing by minutes to tracking estimated core temperature with SaunaMind's science-backed heat zones.</p>
-        <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=home_cta" class="button" target="_blank" rel="noopener noreferrer">Get Early Access →</a>
-      </div>
-    </div>
+  <section class="sponsor-section">
+    <div class="sponsor-eyebrow">Major Sponsor</div>
+    <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor" target="_blank" rel="noopener noreferrer" class="sponsor-brand">
+      <img src="/sauna-mind-logo.png" alt="SaunaMind logo" class="sponsor-logo" />
+      <span class="sponsor-name">SaunaMind</span>
+    </a>
+    <p class="sponsor-tagline">NOT TIME. <span>TEMPERATURE.</span></p>
+    <p class="sponsor-desc">Science-backed sauna tracking using estimated core body temperature — guided by peer-reviewed research. Know your zones.</p>
+    <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor_cta" target="_blank" rel="noopener noreferrer" class="sponsor-cta">Get Early Access →</a>
   </section>
 
   <Footer />
 </Layout>
+
+<script>
+  (async () => {
+    const wrappers = Array.from(document.querySelectorAll('.venue-wrapper'));
+    const heading = document.getElementById('venues-heading');
+    const subtitle = document.getElementById('venues-subtitle');
+
+    const showVenues = (list) => {
+      wrappers.forEach(w => w.style.display = 'none');
+      list.slice(0, 6).forEach(w => w.style.display = 'block');
+    };
+
+    // Default: show featured venues
+    const featured = wrappers.filter(w => w.dataset.featured === 'true');
+    showVenues(featured);
+
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const data = await res.json();
+      const city = (data.city || '').trim();
+      const region = (data.region || '').trim();
+      if (!city) return;
+
+      const cityLower = city.toLowerCase();
+
+      // Get unique cities in the directory
+      const knownCities = [...new Set(wrappers.map(w => w.dataset.city))];
+
+      // Try exact match first, then check if detected city contains a known city
+      // (handles suburbs like "Surry Hills" → matches "sydney")
+      let matchedCity = knownCities.find(c => c === cityLower)
+        || knownCities.find(c => cityLower.includes(c))
+        || knownCities.find(c => c.includes(cityLower));
+
+      // Fallback: match by region (e.g. "New South Wales" → Sydney)
+      if (!matchedCity && region) {
+        const regionLower = region.toLowerCase();
+        matchedCity = knownCities.find(c => regionLower.includes(c));
+      }
+
+      if (!matchedCity) return;
+
+      const local = wrappers.filter(w => w.dataset.city === matchedCity);
+
+      if (local.length >= 3) {
+        showVenues(local);
+        const displayCity = matchedCity.charAt(0).toUpperCase() + matchedCity.slice(1);
+        if (heading) heading.textContent = `Venues Near You in ${displayCity}`;
+        if (subtitle) subtitle.textContent = `Top-rated biohacking spots in ${displayCity}`;
+      }
+    } catch (_) {}
+  })();
+</script>
 
 <style>
   .section {
@@ -140,27 +200,95 @@ const venues = getAllVenues().filter(v => v.featured).slice(0, 6);
     color: var(--black);
   }
 
-  .sauna-cta {
-    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(6, 182, 212, 0.1));
-    border-top: 1px solid var(--border);
-    border-bottom: none;
-  }
-
-  .cta-content {
+  .sponsor-section {
+    background: radial-gradient(ellipse at center, rgba(180,100,56,0.15) 0%, #080808 70%);
+    border-top: 1px solid #2a1a0e;
+    border-bottom: 1px solid #2a1a0e;
+    padding: 5rem 2rem;
     text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
   }
 
-  .cta-content h2 {
-    color: var(--accent);
-    margin-bottom: 1rem;
+  .sponsor-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #b46438;
+    border: 1px solid #2a1a0e;
+    padding: 4px 14px;
+    border-radius: 100px;
   }
 
-  .cta-content p {
-    color: var(--muted);
+  .sponsor-brand {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .sponsor-brand:hover { opacity: 0.85; }
+
+  .sponsor-logo {
+    height: 72px;
+    width: auto;
+    filter: drop-shadow(0 0 20px rgba(232,149,106,0.4));
+  }
+
+  .sponsor-name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 64px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .sponsor-tagline {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #555;
+  }
+  .sponsor-tagline span { color: #E8956A; }
+
+  .sponsor-desc {
     font-size: 16px;
-    margin-bottom: 1.5rem;
+    color: #666;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  .sponsor-cta {
+    display: inline-block;
+    background: #b46438;
+    color: #fff;
+    padding: 14px 36px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    box-shadow: 0 0 28px rgba(180,100,56,0.4);
+    margin-top: 0.5rem;
+  }
+  .sponsor-cta:hover {
+    background: #e8956a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 32px rgba(180,100,56,0.5);
+  }
+
+  @media (max-width: 600px) {
+    .sponsor-name { font-size: 38px; }
+    .sponsor-logo { height: 48px; }
+    .sponsor-brand { gap: 12px; }
   }
 
   @media (max-width: 768px) {

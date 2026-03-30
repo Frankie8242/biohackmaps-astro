@@ -19,9 +19,6 @@ const { current } = Astro.props;
       <a href="/science/" class:list={{ active: current === 'science' }}>
         Science
       </a>
-      <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=nav" target="_blank" rel="noopener noreferrer">
-        SaunaMind
-      </a>
       <a href="/for-business/" class:list={{ active: current === 'business' }}>
         For Business
       </a>
@@ -31,12 +28,14 @@ const { current } = Astro.props;
 
 <style>
   .navbar {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: transparent;
+    border-bottom: none;
     position: sticky;
     top: 0;
     z-index: 100;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(8, 13, 26, 0.85);
   }
 
   .navbar-container {

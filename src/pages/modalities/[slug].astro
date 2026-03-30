@@ -6,6 +6,7 @@ import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getAllModalities } from '../../data/modalities';
 import { getVenuesByModality } from '../../data/venues';
+import { generateModalitySchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const modalities = getAllModalities();
@@ -26,10 +27,15 @@ interface Props {
 
 const { modality } = Astro.props as Props;
 const venues = getVenuesByModality(modality.id);
+const modalitySchema = generateModalitySchema(modality, venues.length, Astro.url.origin);
 ---
 
-<Layout title={modality.name}>
+<Layout
+  title={modality.name}
+  description={`Find the best ${modality.name} venues worldwide. ${modality.description} All ${venues.length} venues verified with 4.7★+ ratings and 50+ reviews.`}
+>
   <Nav current="venues" />
+  <script type="application/ld+json" set:html={JSON.stringify(modalitySchema)} />
 
   <HeroSection
     title={modality.name}

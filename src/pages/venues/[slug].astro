@@ -26,7 +26,13 @@ if (!venue) {
 const schema = generateVenueSchema(venue, Astro.url.origin);
 ---
 
-<Layout title={venue.name}>
+<Layout
+  title={venue.name}
+  description={venue.description
+    ? `${venue.description.slice(0, 140)}...`
+    : `${venue.name} in ${venue.city} — ${venue.modalities.join(', ')}. Rated ${venue.rating}★ with ${venue.reviewCount} reviews. Book your biohacking session today.`}
+  type="place"
+>
   <Nav current="venues" />
 
   <div class="venue-hero">

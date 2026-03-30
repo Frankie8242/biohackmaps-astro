@@ -8,11 +8,13 @@ interface Props {
 const { venue } = Astro.props;
 ---
 
-<a href={`/venues/${venue.slug}`} class="venue-card">
+<a href={`/venues/${venue.slug}`} class:list={["venue-card", { premium: venue.premium }]} data-city={venue.city.toLowerCase()}>
   <div class="venue-header">
     <h3>{venue.name}</h3>
-    {venue.verified && <span class="badge verified">✓ Verified</span>}
-    {venue.featured && <span class="badge featured">⭐ Featured</span>}
+    <div class="badges">
+      {venue.premium && <span class="badge premium">⭐ Premium</span>}
+      {venue.verified && !venue.premium && <span class="badge verified">✓ Listed</span>}
+    </div>
   </div>
   
   <div class="venue-info">
@@ -50,6 +52,16 @@ const { venue } = Astro.props;
     cursor: pointer;
   }
 
+  .venue-card.premium {
+    border-color: rgba(251,191,36,0.3);
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(251,191,36,0.04) 100%);
+  }
+
+  .venue-card.premium:hover {
+    border-color: rgba(251,191,36,0.7);
+    box-shadow: 0 8px 32px rgba(251,191,36,0.12);
+  }
+
   .venue-card:hover {
     background: var(--surface2);
     border-color: var(--accent);
@@ -71,6 +83,13 @@ const { venue } = Astro.props;
     flex: 1;
   }
 
+  .badges {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+  }
+
   .badge {
     font-size: 11px;
     padding: 4px 8px;
@@ -78,6 +97,13 @@ const { venue } = Astro.props;
     font-weight: 600;
     white-space: nowrap;
     text-transform: uppercase;
+  }
+
+  .badge.premium {
+    background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(245,158,11,0.15));
+    color: #fbbf24;
+    border: 1px solid rgba(251,191,36,0.4);
+    letter-spacing: 0.5px;
   }
 
   .badge.verified {

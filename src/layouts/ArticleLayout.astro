@@ -1,0 +1,146 @@
+---
+import Layout from './Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  date: string;
+  description: string;
+  readTime: string;
+  modality?: string;
+}
+
+const { title, date, description, readTime, modality } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <Nav current="science" />
+
+  <article class="article-page">
+    <header class="article-header">
+      <div class="container">
+        <div class="breadcrumb"><a href="/science">Science</a> → {title}</div>
+        {modality && <span class="modality-tag">{modality}</span>}
+        <h1>{title}</h1>
+        <div class="meta">
+          <span>📅 {date}</span>
+          <span>⏱ {readTime} read</span>
+        </div>
+        <p class="lead">{description}</p>
+      </div>
+    </header>
+
+    <div class="article-body">
+      <div class="container">
+        <slot />
+
+        <div class="cta-box">
+          <h3>Find a Venue Near You</h3>
+          <p>Browse verified, top-rated biohacking venues in 35+ cities worldwide.</p>
+          <a href="/venues/" class="cta-btn">Explore Venues →</a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <Footer />
+</Layout>
+
+<style>
+  .article-page { color: var(--text); }
+
+  .article-header {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem;
+  }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
+  .breadcrumb a { color: var(--accent); text-decoration: none; }
+
+  .modality-tag {
+    display: inline-block;
+    background: rgba(249,115,22,0.1);
+    border: 1px solid rgba(249,115,22,0.3);
+    color: var(--accent);
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+  }
+
+  h1 {
+    font-size: 40px;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .meta { display: flex; gap: 1.5rem; font-size: 13px; color: var(--muted); margin-bottom: 1.25rem; }
+
+  .lead { font-size: 18px; color: #aaa; line-height: 1.7; }
+
+  .article-body { padding: 3rem 2rem; }
+
+  .article-body :global(h2) {
+    font-size: 24px; margin: 2.5rem 0 1rem;
+    color: var(--text);
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem;
+  }
+
+  .article-body :global(h3) { font-size: 18px; margin: 2rem 0 0.75rem; color: var(--accent2); }
+
+  .article-body :global(p) { font-size: 16px; line-height: 1.8; color: #bbb; margin-bottom: 1.25rem; }
+
+  .article-body :global(ul), .article-body :global(ol) {
+    padding-left: 1.5rem; margin-bottom: 1.25rem;
+  }
+  .article-body :global(li) { font-size: 16px; line-height: 1.8; color: #bbb; margin-bottom: 0.4rem; }
+
+  .article-body :global(strong) { color: var(--text); }
+
+  .article-body :global(blockquote) {
+    border-left: 3px solid var(--accent3);
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: var(--surface);
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    color: #aaa;
+  }
+
+  .cta-box {
+    margin-top: 4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+  }
+  .cta-box h3 { font-size: 22px; margin-bottom: 0.5rem; }
+  .cta-box p { color: var(--muted); margin-bottom: 1.25rem; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .cta-btn:hover { opacity: 0.9; }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 28px; }
+    .article-header, .article-body { padding: 2rem 1rem; }
+  }
+</style>

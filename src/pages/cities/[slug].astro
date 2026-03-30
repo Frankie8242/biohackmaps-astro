@@ -5,6 +5,7 @@ import HeroSection from '../../components/HeroSection.astro';
 import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getVenuesByCity, getUniqueCities } from '../../data/venues';
+import { generateCitySchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const cities = getUniqueCities();
@@ -20,10 +21,15 @@ interface Props {
 
 const { city } = Astro.props as Props;
 const venues = getVenuesByCity(city);
+const citySchema = generateCitySchema(city, venues.length, Astro.url.origin);
 ---
 
-<Layout title={`Biohacking Venues in ${city}`}>
+<Layout
+  title={`Biohacking Venues in ${city}`}
+  description={`Discover the top ${venues.length} verified biohacking venues in ${city} — infrared saunas, cryotherapy, float tanks, IV therapy, cold plunge and more. All rated 4.7★+.`}
+>
   <Nav current="venues" />
+  <script type="application/ld+json" set:html={JSON.stringify(citySchema)} />
 
   <HeroSection
     title={`Biohacking in ${city}`}

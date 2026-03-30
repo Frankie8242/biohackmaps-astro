@@ -32,7 +32,7 @@ import Footer from '../components/Footer.astro';
 
           <div class="benefit-item">
             <h3>💰 Drive Revenue</h3>
-            <p>Free basic listing. Upgrade to Featured ($99-199/month) to rank at the top of searches</p>
+            <p>Even 2–3 new clients a month from BiohackMaps pays for itself. Premium venues rank first in every city and modality search.</p>
           </div>
 
           <div class="benefit-item">
@@ -61,50 +61,75 @@ import Footer from '../components/Footer.astro';
               <li>✓ Basic venue information</li>
               <li>✓ Location & modalities</li>
               <li>✓ Hours & contact info</li>
-              <li>✓ Venue page on BiohackMap</li>
+              <li>✓ "Listed" badge on your venue card</li>
             </ul>
-            <button class="button button-outline">Get Started</button>
+            <a href="#listing-form" class="button button-outline">Get Listed</a>
           </div>
 
           <div class="pricing-card featured">
-            <p class="badge-top">POPULAR</p>
-            <h3>Featured Listing</h3>
-            <p class="price">$99<span>/month</span></p>
+            <h3>Premium Verified</h3>
+            <p class="price">$49<span>/month</span></p>
             <ul class="features">
               <li>✓ Everything in Free</li>
-              <li>✓ Featured on city pages</li>
-              <li>✓ Top of search results</li>
-              <li>✓ Premium badge</li>
-              <li>✓ Photo gallery</li>
-              <li>✓ Booking link integration</li>
+              <li>✓ Gold ⭐ Verified badge — builds trust instantly</li>
+              <li>✓ Rank #1 in city + modality search</li>
+              <li>✓ Featured on homepage (2,500+ monthly visitors)</li>
+              <li>✓ Monthly performance report (views & clicks)</li>
+              <li>✓ Priority support from the founders</li>
             </ul>
-            <button class="button">Upgrade to Featured</button>
-          </div>
-
-          <div class="pricing-card">
-            <h3>Premium Profile</h3>
-            <p class="price">$199<span>/month</span></p>
-            <ul class="features">
-              <li>✓ Everything in Featured</li>
-              <li>✓ Professional photos</li>
-              <li>✓ Team member profiles</li>
-              <li>✓ Analytics dashboard</li>
-              <li>✓ Priority support</li>
-              <li>✓ Custom branding</li>
-            </ul>
-            <button class="button button-outline">Learn More</button>
+            <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+            <stripe-buy-button
+              buy-button-id="buy_btn_1TGXx3KAU2Dgyxl4wXcw2vS7"
+              publishable-key="pk_live_51TGW09KAU2Dgyxl4QPsob7eNaEq7B22g0KtIyFjnaeymIP5y4dJKGzTMDax3lPyhfL7Hq9wZQ3W6aDfadqY7Rndj00acXXzgN1"
+            ></stripe-buy-button>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section section-dark">
+  <section class="section sponsor-offer">
+    <div class="container">
+      <div class="sponsor-offer-inner">
+        <div class="sponsor-offer-text">
+          <p class="sponsor-eyebrow">Site Sponsorship</p>
+          <h2>Become a Major Sponsor</h2>
+          <p>Get your brand in front of thousands of health-conscious biohackers every month. Your logo, tagline, and CTA featured prominently on the BiohackMaps homepage — just like SaunaMind.</p>
+          <ul class="sponsor-perks">
+            <li>🏠 Full-width branded section on the homepage</li>
+            <li>🔗 Direct link with your UTM tracking</li>
+            <li>📣 Your tagline & call-to-action button</li>
+            <li>🌍 Seen by visitors across 35+ cities</li>
+            <li>📊 Monthly traffic report</li>
+            <li>🤝 "Major Sponsor" badge — only 1 slot available</li>
+          </ul>
+          <a href="mailto:francois@biohackmaps.com?subject=Site Sponsorship Enquiry" class="button">Enquire About Sponsorship →</a>
+        </div>
+        <div class="sponsor-offer-preview">
+          <p class="preview-label">What you get — live example:</p>
+          <div class="preview-card">
+            <span class="preview-pill">Major Sponsor</span>
+            <div class="preview-brand">
+              <div class="preview-logo-box">🔥</div>
+              <span class="preview-name">YOUR BRAND</span>
+            </div>
+            <p class="preview-tagline">YOUR TAGLINE. <span>HERE.</span></p>
+            <p class="preview-desc">Your product description and value proposition shown to thousands of biohackers monthly.</p>
+            <div class="preview-btn">Get Early Access →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark" id="listing-form">
     <div class="container">
       <h2>List Your Venue Today</h2>
       <p class="subtitle">Join hundreds of biohacking venues getting discovered by health-conscious customers worldwide</p>
 
-      <form class="signup-form">
+      <form class="signup-form" name="venue-listing" method="POST" netlify action="/success/">
+        <input type="hidden" name="form-name" value="venue-listing" />
+
         <div class="form-group">
           <label for="name">Venue Name *</label>
           <input type="text" id="name" name="name" required />
@@ -231,6 +256,14 @@ import Footer from '../components/Footer.astro';
     background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(6, 182, 212, 0.05));
     transform: scale(1.05);
   }
+
+  .social-proof {
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 0.75rem;
+  }
+  .social-proof strong { color: #fbbf24; }
 
   .badge-top {
     position: absolute;
@@ -414,4 +447,147 @@ import Footer from '../components/Footer.astro';
       padding: 1.5rem;
     }
   }
+  /* Sponsorship section */
+  .sponsor-offer {
+    background: radial-gradient(ellipse at 60% 50%, rgba(180,100,56,0.1) 0%, transparent 70%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sponsor-offer-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .sponsor-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b46438;
+    margin-bottom: 1rem;
+  }
+
+  .sponsor-offer-text h2 {
+    font-size: 36px;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+
+  .sponsor-offer-text > p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .sponsor-perks {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .sponsor-perks li {
+    font-size: 15px;
+    color: #bbb;
+  }
+
+  .sponsor-offer-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .preview-label {
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .preview-card {
+    background: radial-gradient(ellipse at center, rgba(180,100,56,0.12) 0%, #0e0e0e 70%);
+    border: 1px solid #2a1a0e;
+    border-radius: 12px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .preview-pill {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #b46438;
+    border: 1px solid #2a1a0e;
+    padding: 3px 12px;
+    border-radius: 100px;
+  }
+
+  .preview-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .preview-logo-box {
+    font-size: 40px;
+    filter: grayscale(0.3);
+  }
+
+  .preview-name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 36px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #444;
+  }
+
+  .preview-tagline {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #333;
+  }
+  .preview-tagline span { color: rgba(232,149,106,0.5); }
+
+  .preview-desc {
+    font-size: 13px;
+    color: #333;
+    max-width: 280px;
+    line-height: 1.6;
+  }
+
+  .preview-btn {
+    background: #2a1a0e;
+    color: #b46438;
+    border: 1px solid #3a2a1e;
+    padding: 10px 24px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 768px) {
+    .sponsor-offer-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    .sponsor-offer-text h2 { font-size: 26px; }
+  }
+
 </style>

@@ -2,17 +2,30 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import HeroSection from '../../components/HeroSection.astro';
-import SearchBar from '../../components/SearchBar.astro';
 import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getAllVenues } from '../../data/venues';
+import { MODALITIES } from '../../data/modalities';
 
 const venues = getAllVenues();
-const cities = Array.from(new Set(venues.map(v => v.city)));
-const modalities = Array.from(new Set(venues.flatMap(v => v.modalities)));
+
+// Group cities by country for the dropdown
+const cityCountryMap = new Map<string, string>();
+venues.forEach(v => cityCountryMap.set(v.city, v.country));
+const citiesByCountry = new Map<string, string[]>();
+cityCountryMap.forEach((country, city) => {
+  if (!citiesByCountry.has(country)) citiesByCountry.set(country, []);
+  citiesByCountry.get(country)!.push(city);
+});
+const sortedCountries = Array.from(citiesByCountry.keys()).sort();
+citiesByCountry.forEach(cities => cities.sort());
+
+// Only show modalities that are actually used
+const usedModalities = new Set(venues.flatMap(v => v.modalities));
+const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
 ---
 
-<Layout title="Venues">
+<Layout title="Venues — BiohackMaps">
   <Nav current="venues" />
   
   <HeroSection 
@@ -22,60 +35,382 @@ const modalities = Array.from(new Set(venues.flatMap(v => v.modalities)));
 
   <section class="section">
     <div class="container">
-      <div class="search-wrapper">
-        <SearchBar />
-      </div>
 
-      <div class="filters">
-        <div class="filter-group">
-          <h4>Cities</h4>
-          <div class="filter-options">
-            {cities.map(city => (
-              <label class="filter-checkbox">
-                <input type="checkbox" value={city} />
-                <span>{city}</span>
-              </label>
+      <!-- Sticky search bar -->
+      <div class="sticky-search" id="sticky-search">
+        <div class="search-row">
+          <div class="search-field">
+            <span class="search-icon">🔍</span>
+            <input
+              type="text"
+              id="search-input"
+              class="search-bar"
+              placeholder="Search city, therapy..."
+              autocomplete="off"
+            />
+            <button id="clear-search" class="clear-btn" aria-label="Clear search">✕</button>
+          </div>
+          <button id="near-me-btn" class="near-me-btn" title="Find venues near me">
+            <span class="near-me-icon">📍</span>
+            <span class="near-me-text">Near Me</span>
+          </button>
+        </div>
+
+        <!-- Horizontally scrollable modality pills -->
+        <div class="pills-scroll-wrap">
+          <div class="mod-pills" id="mod-pills">
+            {availableModalities.map(mod => (
+              <button class="mod-pill" data-mod={mod.slug} title={mod.name}>
+                <span>{mod.icon}</span>
+                <span class="pill-label">{mod.name}</span>
+              </button>
             ))}
           </div>
         </div>
+      </div>
 
-        <div class="filter-group">
-          <h4>Modalities</h4>
-          <div class="filter-options">
-            {modalities.map(mod => (
-              <label class="filter-checkbox">
-                <input type="checkbox" value={mod} />
-                <span>{mod}</span>
-              </label>
-            ))}
-          </div>
+      <!-- Second row: city + sort + count -->
+      <div class="controls-bar">
+        <select id="city-select" class="city-select">
+          <option value="">🌍 All Cities</option>
+          {sortedCountries.map(country => (
+            <optgroup label={country}>
+              {citiesByCountry.get(country)!.map(city => (
+                <option value={city.toLowerCase()}>{city}</option>
+              ))}
+            </optgroup>
+          ))}
+        </select>
+
+        <div class="sort-group">
+          <button class="sort-btn active" data-sort="default">Default</button>
+          <button class="sort-btn" data-sort="nearest" id="sort-nearest" disabled title="Enable Near Me first">📍 Nearest</button>
+          <button class="sort-btn" data-sort="rating">★ Rating</button>
+          <button class="sort-btn" data-sort="reviews">💬 Reviews</button>
         </div>
+
+        <div class="venue-count" id="venue-count">Showing {venues.length} venues</div>
       </div>
 
-      <div class="venue-count">
-        Showing {venues.length} venues
-      </div>
+      <!-- Active filter chips -->
+      <div id="active-filters" class="active-filters"></div>
 
-      <div class="venue-grid">
+      <!-- Venue grid -->
+      <div class="venue-grid" id="venue-grid">
         {venues.map(venue => (
-          <VenueCard venue={venue} />
+          <div
+            class="venue-item"
+            data-name={venue.name.toLowerCase()}
+            data-city={venue.city.toLowerCase()}
+            data-country={venue.country.toLowerCase()}
+            data-modalities={venue.modalities.join(' ')}
+            data-description={(venue.description || '').toLowerCase()}
+            data-rating={venue.rating}
+            data-reviews={venue.reviewCount}
+            data-lat={venue.lat}
+            data-lng={venue.lng}
+          >
+            <VenueCard venue={venue} />
+          </div>
         ))}
       </div>
 
-      {venues.length === 0 && (
-        <div class="no-results">
-          <p>No venues found. Check back soon as we're adding more every day!</p>
-        </div>
-      )}
+      <div class="no-results" id="no-results" style="display:none">
+        <p>No venues match your search. <button id="reset-all" class="reset-link">Clear all filters</button></p>
+      </div>
     </div>
   </section>
 
   <Footer />
 </Layout>
 
+<script>
+  // --- State ---
+  let userLat: number | null = null;
+  let userLng: number | null = null;
+  let currentSort = 'default';
+  let activeMods = new Set<string>();
+  let activeCity = '';
+
+  // --- Elements ---
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const clearBtn = document.getElementById('clear-search') as HTMLButtonElement;
+  const citySelect = document.getElementById('city-select') as HTMLSelectElement;
+  const nearMeBtn = document.getElementById('near-me-btn') as HTMLButtonElement;
+  const sortBtns = document.querySelectorAll<HTMLButtonElement>('.sort-btn');
+  const sortNearestBtn = document.getElementById('sort-nearest') as HTMLButtonElement;
+  const modPills = document.querySelectorAll<HTMLButtonElement>('.mod-pill');
+  const grid = document.getElementById('venue-grid') as HTMLElement;
+  const countEl = document.getElementById('venue-count') as HTMLElement;
+  const noResults = document.getElementById('no-results') as HTMLElement;
+  const activeFiltersEl = document.getElementById('active-filters') as HTMLElement;
+  const resetAll = document.getElementById('reset-all') as HTMLButtonElement;
+
+  // --- Haversine distance (km) ---
+  function haversine(lat1: number, lng1: number, lat2: number, lng2: number): number {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)**2;
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  function formatDist(km: number): string {
+    return km < 1 ? `${Math.round(km*1000)}m` : `${km.toFixed(1)}km`;
+  }
+
+  // --- Update distance badges ---
+  function updateDistanceBadges() {
+    document.querySelectorAll<HTMLElement>('.venue-item').forEach(item => {
+      let badge = item.querySelector<HTMLElement>('.dist-badge');
+      if (userLat !== null && userLng !== null) {
+        const lat = parseFloat(item.dataset.lat ?? '0');
+        const lng = parseFloat(item.dataset.lng ?? '0');
+        const dist = haversine(userLat, userLng, lat, lng);
+        item.dataset.dist = dist.toFixed(2);
+        if (!badge) {
+          badge = document.createElement('div');
+          badge.className = 'dist-badge';
+          item.querySelector('.venue-card')?.prepend(badge);
+        }
+        badge.textContent = `📍 ${formatDist(dist)} away`;
+      } else {
+        badge?.remove();
+        delete item.dataset.dist;
+      }
+    });
+  }
+
+  // --- Apply all filters + sort ---
+  function applyFilters() {
+    const query = searchInput.value.toLowerCase().trim();
+    const cityVal = citySelect.value.toLowerCase();
+
+    const items = Array.from(document.querySelectorAll<HTMLElement>('.venue-item'));
+    let shown = 0;
+
+    items.forEach(item => {
+      const name = item.dataset.name ?? '';
+      const city = item.dataset.city ?? '';
+      const mods = item.dataset.modalities ?? '';
+      const desc = item.dataset.description ?? '';
+      const country = item.dataset.country ?? '';
+
+      const matchesSearch = !query ||
+        name.includes(query) || city.includes(query) ||
+        mods.includes(query) || desc.includes(query) || country.includes(query);
+
+      const matchesCity = !cityVal || city === cityVal;
+
+      const matchesMod = activeMods.size === 0 ||
+        Array.from(activeMods).some(m => mods.includes(m));
+
+      const visible = matchesSearch && matchesCity && matchesMod;
+      item.style.display = visible ? '' : 'none';
+      if (visible) shown++;
+    });
+
+    // Sort visible items
+    const visibleItems = items.filter(i => i.style.display !== 'none');
+    if (currentSort === 'nearest' && userLat !== null) {
+      visibleItems.sort((a, b) => parseFloat(a.dataset.dist ?? '99999') - parseFloat(b.dataset.dist ?? '99999'));
+    } else if (currentSort === 'rating') {
+      visibleItems.sort((a, b) => parseFloat(b.dataset.rating ?? '0') - parseFloat(a.dataset.rating ?? '0'));
+    } else if (currentSort === 'reviews') {
+      visibleItems.sort((a, b) => parseInt(b.dataset.reviews ?? '0') - parseInt(a.dataset.reviews ?? '0'));
+    }
+    visibleItems.forEach(item => grid.appendChild(item));
+
+    countEl.textContent = `Showing ${shown} venue${shown !== 1 ? 's' : ''}`;
+    noResults.style.display = shown === 0 ? 'block' : 'none';
+    updateActiveFilters();
+  }
+
+  // --- Active filter chips ---
+  function updateActiveFilters() {
+    activeFiltersEl.innerHTML = '';
+    if (activeCity) {
+      const chip = makeChip(citySelect.options[citySelect.selectedIndex].text, () => {
+        citySelect.value = '';
+        activeCity = '';
+        applyFilters();
+      });
+      activeFiltersEl.appendChild(chip);
+    }
+    activeMods.forEach(mod => {
+      const pill = document.querySelector<HTMLButtonElement>(`.mod-pill[data-mod="${mod}"]`);
+      const label = pill?.querySelector('.pill-label')?.textContent ?? mod;
+      const chip = makeChip(label, () => {
+        activeMods.delete(mod);
+        pill?.classList.remove('active');
+        applyFilters();
+      });
+      activeFiltersEl.appendChild(chip);
+    });
+  }
+
+  function makeChip(label: string, onRemove: () => void): HTMLElement {
+    const chip = document.createElement('span');
+    chip.className = 'active-chip';
+    chip.innerHTML = `${label} <button aria-label="Remove filter">✕</button>`;
+    chip.querySelector('button')!.addEventListener('click', onRemove);
+    return chip;
+  }
+
+  // --- Near Me ---
+  nearMeBtn.addEventListener('click', () => {
+    if (!navigator.geolocation) {
+      alert('Geolocation is not supported by your browser.');
+      return;
+    }
+    nearMeBtn.classList.add('loading');
+    nearMeBtn.querySelector('.near-me-text')!.textContent = 'Locating…';
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+        nearMeBtn.classList.remove('loading');
+        nearMeBtn.classList.add('active');
+        nearMeBtn.querySelector('.near-me-text')!.textContent = 'Near Me ✓';
+        sortNearestBtn.disabled = false;
+        // Auto-switch to nearest sort
+        setSort('nearest');
+        updateDistanceBadges();
+        applyFilters();
+      },
+      () => {
+        nearMeBtn.classList.remove('loading');
+        nearMeBtn.querySelector('.near-me-text')!.textContent = 'Near Me';
+        alert('Could not get your location. Please allow location access and try again.');
+      },
+      { timeout: 10000 }
+    );
+  });
+
+  // --- Sort buttons ---
+  function setSort(val: string) {
+    currentSort = val;
+    sortBtns.forEach(b => b.classList.toggle('active', b.dataset.sort === val));
+    applyFilters();
+  }
+  sortBtns.forEach(btn => btn.addEventListener('click', () => setSort(btn.dataset.sort ?? 'default')));
+
+  // --- City select ---
+  citySelect.addEventListener('change', () => {
+    activeCity = citySelect.value;
+    applyFilters();
+  });
+
+  // --- Modality pills ---
+  modPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      const mod = pill.dataset.mod ?? '';
+      if (activeMods.has(mod)) {
+        activeMods.delete(mod);
+        pill.classList.remove('active');
+      } else {
+        activeMods.add(mod);
+        pill.classList.add('active');
+      }
+      applyFilters();
+    });
+  });
+
+  // --- Search ---
+  searchInput.addEventListener('input', () => {
+    clearBtn.style.display = searchInput.value ? 'flex' : 'none';
+    applyFilters();
+  });
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    clearBtn.style.display = 'none';
+    applyFilters();
+  });
+
+  // --- Reset all ---
+  resetAll?.addEventListener('click', () => {
+    searchInput.value = '';
+    clearBtn.style.display = 'none';
+    citySelect.value = '';
+    activeCity = '';
+    activeMods.clear();
+    modPills.forEach(p => p.classList.remove('active'));
+    setSort('default');
+  });
+
+  // Init
+  clearBtn.style.display = 'none';
+
+  // --- Auto-detect city from IP on page load ---
+  (async () => {
+    // Don't override if user landed with a URL param
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('city')) return;
+
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const data = await res.json();
+      const detected = (data.city || '').toLowerCase().trim();
+      if (!detected) return;
+
+      // Find best match in city dropdown
+      const options = Array.from(citySelect.options) as HTMLOptionElement[];
+      const match = options.find(o =>
+        o.value && (o.value === detected || detected.startsWith(o.value) || o.value.startsWith(detected))
+      );
+
+      if (match && match.value) {
+        citySelect.value = match.value;
+        activeCity = match.value;
+        applyFilters();
+
+        // Show subtle "Showing venues in X" toast
+        const toast = document.createElement('div');
+        toast.className = 'geo-toast';
+        toast.innerHTML = `📍 Showing venues in <strong>${match.text}</strong> <button id="geo-all">Show all</button>`;
+        document.querySelector('.sticky-search')?.after(toast);
+        document.getElementById('geo-all')?.addEventListener('click', () => {
+          citySelect.value = '';
+          activeCity = '';
+          applyFilters();
+          toast.remove();
+        });
+        setTimeout(() => toast.style.opacity = '0', 6000);
+        setTimeout(() => toast.remove(), 6500);
+      }
+    } catch (_) { /* silent fail */ }
+  })();
+</script>
+
 <style>
+  .geo-toast {
+    background: #0f172a;
+    border: 1px solid #1e3a5f;
+    color: #94a3b8;
+    font-size: 13px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin: 8px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.5s;
+  }
+  .geo-toast strong { color: #e2e8f0; }
+  .geo-toast button {
+    margin-left: auto;
+    background: none;
+    border: 1px solid #334155;
+    color: #64748b;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .geo-toast button:hover { border-color: #f97316; color: #f97316; }
+
   .section {
-    padding: 3rem 2rem;
+    padding: 1.5rem 1rem 3rem;
   }
 
   .container {
@@ -83,66 +418,256 @@ const modalities = Array.from(new Set(venues.flatMap(v => v.modalities)));
     margin: 0 auto;
   }
 
-  .search-wrapper {
-    margin-bottom: 2rem;
-  }
-
-  .filters {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
+  /* ── Sticky search area ───────────────────────── */
+  .sticky-search {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--bg);
+    padding: 0.75rem 0 0.5rem;
+    margin: 0 -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
   }
 
-  .filter-group h4 {
+  .search-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+    align-items: center;
+  }
+
+  .search-field {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    font-size: 15px;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .search-bar {
+    width: 100%;
+    padding: 13px 38px 13px 40px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    transition: all 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .search-bar:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--surface2);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.12);
+  }
+
+  .search-bar::placeholder { color: var(--muted); }
+
+  .clear-btn {
+    position: absolute;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
     font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 1rem;
+    padding: 6px;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 50%;
+    transition: color 0.2s, background 0.2s;
+  }
+  .clear-btn:hover { color: var(--text); background: var(--surface2); }
+
+  /* Near Me */
+  .near-me-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0 16px;
+    height: 48px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .near-me-btn:hover { border-color: var(--accent); background: var(--surface2); }
+  .near-me-btn.active { border-color: var(--accent); color: var(--accent); }
+  .near-me-btn.loading { opacity: 0.7; cursor: wait; }
+
+  /* ── Horizontally scrollable pill row ─────────── */
+  .pills-scroll-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+  }
+  .pills-scroll-wrap::-webkit-scrollbar { display: none; }
+
+  .mod-pills {
+    display: flex;
+    gap: 0.45rem;
+    width: max-content;
+    padding-bottom: 2px;
+  }
+
+  .mod-pill {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 9px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s;
+    min-height: 40px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mod-pill:hover { border-color: var(--accent); color: var(--text); }
+  .mod-pill.active {
+    background: rgba(249, 115, 22, 0.15);
+    border-color: var(--accent);
     color: var(--accent);
   }
 
-  .filter-options {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .filter-checkbox {
+  /* ── Controls bar (city + sort + count) ────────── */
+  .controls-bar {
     display: flex;
     align-items: center;
-    cursor: pointer;
-    font-size: 13px;
-    padding: 0.25rem 0;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    flex-wrap: wrap;
   }
 
-  .filter-checkbox input {
-    margin-right: 0.5rem;
-    cursor: pointer;
-    accent-color: var(--accent);
-  }
-
-  .filter-checkbox span {
-    color: var(--muted);
-    transition: color 0.2s;
-  }
-
-  .filter-checkbox:hover span {
+  .city-select {
+    padding: 9px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
     color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    min-width: 150px;
+    max-width: 200px;
+    transition: border-color 0.2s;
+    min-height: 40px;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
   }
+  .city-select:focus { outline: none; border-color: var(--accent); }
+  .city-select option, .city-select optgroup { background: #1a1a1a; }
+
+  .sort-group {
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex: 1;
+  }
+  .sort-group::-webkit-scrollbar { display: none; }
+
+  .sort-btn {
+    padding: 8px 13px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    min-height: 36px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .sort-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--text); }
+  .sort-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(249,115,22,0.1); }
+  .sort-btn:disabled { opacity: 0.35; cursor: not-allowed; }
 
   .venue-count {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted);
-    margin-bottom: 1.5rem;
+    white-space: nowrap;
+    margin-left: auto;
   }
 
+  /* ── Active chips ─────────────────────────────── */
+  .active-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
+  }
+  .active-filters:empty { margin-bottom: 0; }
+
+  .active-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px;
+    background: rgba(249, 115, 22, 0.15);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .active-chip button {
+    background: none; border: none; color: var(--accent);
+    cursor: pointer; padding: 0 0 0 2px; font-size: 12px; line-height: 1;
+    min-width: 18px; min-height: 18px;
+  }
+
+  /* ── Venue grid ───────────────────────────────── */
   .venue-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  .venue-item { display: block; }
+
+  :global(.dist-badge) {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: block;
   }
 
   .no-results {
@@ -150,29 +675,25 @@ const modalities = Array.from(new Set(venues.flatMap(v => v.modalities)));
     padding: 3rem 2rem;
     color: var(--muted);
   }
+  .reset-link {
+    background: none; border: none; color: var(--accent);
+    cursor: pointer; text-decoration: underline; font-size: inherit;
+  }
 
-  @media (max-width: 768px) {
-    .section {
-      padding: 2rem 1rem;
-    }
-
-    .filters {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .venue-grid {
-      grid-template-columns: 1fr;
-    }
+  /* ── Desktop tweaks ───────────────────────────── */
+  @media (min-width: 768px) {
+    .section { padding: 2rem 2rem 4rem; }
+    .sticky-search { margin: 0; padding: 1rem 0 0.75rem; }
+    .pills-scroll-wrap { margin: 0; padding: 0; overflow-x: visible; }
+    .mod-pills { flex-wrap: wrap; width: auto; }
+    .controls-bar { flex-wrap: nowrap; }
+    .sort-group { overflow-x: visible; flex: none; }
+    .city-select { max-width: 220px; }
   }
 
   @media (max-width: 480px) {
-    .section {
-      padding: 1.5rem 1rem;
-    }
-
-    .filters {
-      display: none;
-    }
+    .near-me-text { display: none; }
+    .near-me-btn { padding: 0 13px; }
+    .venue-grid { grid-template-columns: 1fr; }
   }
 </style>

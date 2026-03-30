@@ -17,6 +17,7 @@ export interface Venue {
   imageUrl?: string;
   verified: boolean;
   featured: boolean;
+  premium?: boolean;
   slug: string;
 }
 

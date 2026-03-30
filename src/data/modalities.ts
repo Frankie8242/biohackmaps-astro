@@ -58,12 +58,28 @@ export const MODALITIES: Modality[] = [
     benefits: ['Energy', 'Muscle', 'Libido', 'Mood'],
   },
   {
+    id: 'iv-therapy',
+    name: 'IV Therapy',
+    slug: 'iv-therapy',
+    icon: '💉',
+    description: 'Intravenous vitamin and nutrient infusions for rapid absorption',
+    benefits: ['Energy', 'Immunity', 'Hydration', 'Recovery'],
+  },
+  {
     id: 'tanning',
     name: 'Tanning',
     slug: 'tanning',
     icon: '☀️',
     description: 'Vitamin D and light exposure therapy',
     benefits: ['Vitamin D', 'Mood', 'Skin health', 'Circadian rhythm'],
+  },
+  {
+    id: 'womens-health',
+    name: "Women's Health",
+    slug: 'womens-health',
+    icon: '🌸',
+    description: "Hormone health, fertility, and women's wellness clinics",
+    benefits: ['Hormone balance', 'Energy', 'Fertility', 'Mood'],
   },
 ];
 

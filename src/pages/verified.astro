@@ -1,0 +1,189 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="You're Verified | BiohackMaps" description="Welcome to BiohackMaps Premium. Your venue badge will be live within 24 hours.">
+  <Nav />
+
+  <section class="verified-page">
+    <div class="glow"></div>
+    <div class="content">
+      <div class="badge-icon">⭐</div>
+      <h1>Payment Received</h1>
+      <p class="lead">Welcome to <strong>BiohackMaps Premium</strong>. Your Gold Verified badge will be live on your venue page within <strong>24 hours</strong>.</p>
+
+      <div class="what-happens">
+        <h2>What happens next</h2>
+        <div class="steps">
+          <div class="step">
+            <span class="step-num">1</span>
+            <div>
+              <strong>We receive your details</strong>
+              <p>Our team reviews your venue information from your payment submission.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">2</span>
+            <div>
+              <strong>Badge goes live</strong>
+              <p>Your ⭐ Premium badge is added and your venue moves to the top of your city's results.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="step-num">3</span>
+            <div>
+              <strong>Confirmation email</strong>
+              <p>You'll receive an email from support@biohackmaps.com confirming your listing is live.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="support-box">
+        <p>Questions? Email us at <a href="mailto:support@biohackmaps.com">support@biohackmaps.com</a></p>
+      </div>
+
+      <a href="/venues/" class="button">Browse All Venues →</a>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .verified-page {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 70%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .content {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .badge-icon {
+    font-size: 64px;
+    filter: drop-shadow(0 0 24px rgba(251,191,36,0.5));
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+
+  h1 {
+    font-size: 48px;
+    background: linear-gradient(135deg, #fbbf24, #f97316);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .lead {
+    font-size: 18px;
+    color: #aaa;
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  .lead strong { color: var(--text); }
+
+  .what-happens {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: left;
+    width: 100%;
+  }
+
+  .what-happens h2 {
+    font-size: 18px;
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 12px;
+  }
+
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .step {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    background: rgba(251,191,36,0.15);
+    border: 1px solid rgba(251,191,36,0.3);
+    color: #fbbf24;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .step strong { display: block; margin-bottom: 0.25rem; font-size: 15px; }
+  .step p { font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0; }
+
+  .support-box {
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .support-box a { color: var(--accent); text-decoration: none; }
+  .support-box a:hover { text-decoration: underline; }
+
+  .button {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--accent);
+    color: var(--black);
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .button:hover { opacity: 0.9; }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 32px; }
+    .badge-icon { font-size: 48px; }
+  }
+</style>

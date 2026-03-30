@@ -49,6 +49,37 @@ export function generateOrganizationSchema(baseUrl: string) {
   };
 }
 
+export function generateCitySchema(city: string, venueCount: number, baseUrl: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `Biohacking Venues in ${city}`,
+    description: `Directory of ${venueCount} verified biohacking venues in ${city} — infrared saunas, cryotherapy, float tanks, IV therapy, cold plunge and more.`,
+    url: `${baseUrl}/cities/${city.toLowerCase().replace(/\s+/g, '-')}`,
+    about: {
+      '@type': 'City',
+      name: city,
+    },
+    numberOfItems: venueCount,
+  };
+}
+
+export function generateModalitySchema(modality: { name: string; slug: string; description: string }, venueCount: number, baseUrl: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${modality.name} Venues Worldwide`,
+    description: `Find the best ${modality.name} venues worldwide. ${modality.description} All venues verified with 4.7★+ ratings.`,
+    url: `${baseUrl}/modalities/${modality.slug}`,
+    about: {
+      '@type': 'Service',
+      name: modality.name,
+      description: modality.description,
+    },
+    numberOfItems: venueCount,
+  };
+}
+
 export function generateLocalBusinessSchema(venue: Venue, baseUrl: string) {
   return {
     '@context': 'https://schema.org',
