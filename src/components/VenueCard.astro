@@ -16,9 +16,12 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
 );
 ---
 
-<a href={`/venues/${venue.slug}`} class:list={["venue-card", { premium: venue.premium }]}
+<div class:list={["venue-card", { premium: venue.premium }]}
+  data-href={`/venues/${venue.slug}`}
   data-city={venue.city.toLowerCase()}
   data-hours={venue.hours || ''}
+  role="link"
+  tabindex="0"
 >
   <div class="venue-header">
     <h3>{venue.name}</h3>
@@ -29,7 +32,7 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
   </div>
   
   <div class="venue-info">
-    <p class="location">📍 <a href={`/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}`} class="city-link" onclick="event.stopPropagation()">{venue.city}</a>, {venue.country}</p>
+    <p class="location">📍 <a href={`/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}`} class="city-link">{venue.city}</a>, {venue.country}</p>
     <p class="rating">
       ⭐ {venue.rating.toFixed(1)}
       <span class="review-count">({venue.reviewCount.toLocaleString()} reviews)</span>
@@ -52,9 +55,23 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
   <div class="venue-footer">
     <span class="learn-more">View Venue →</span>
   </div>
-</a>
+</div>
 
 <script>
+  // Card click navigation
+  document.addEventListener('click', (e) => {
+    const card = (e.target as HTMLElement).closest<HTMLElement>('.venue-card[data-href]');
+    if (!card) return;
+    if ((e.target as HTMLElement).closest('a')) return; // let real links handle themselves
+    window.location.href = card.dataset.href!;
+  });
+  document.addEventListener('keydown', (e) => {
+    const card = e.target as HTMLElement;
+    if (card.classList.contains('venue-card') && (e.key === 'Enter' || e.key === ' ')) {
+      window.location.href = card.dataset.href!;
+    }
+  });
+
   // "Open Now" status — runs once after DOM ready
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll<HTMLElement>('.venue-card[data-hours]').forEach(card => {
@@ -145,6 +162,8 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
     transition: all 0.3s;
     cursor: pointer;
     height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .venue-card.premium {
