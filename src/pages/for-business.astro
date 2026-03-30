@@ -106,16 +106,16 @@ import Footer from '../components/Footer.astro';
           <a href="mailto:francois@biohackmaps.com?subject=Site Sponsorship Enquiry" class="button">Enquire About Sponsorship →</a>
         </div>
         <div class="sponsor-offer-preview">
-          <p class="preview-label">What you get — live example:</p>
+          <p class="preview-label">↓ Live example — what your slot looks like on the homepage</p>
           <div class="preview-card">
             <span class="preview-pill">Major Sponsor</span>
             <div class="preview-brand">
-              <div class="preview-logo-box">🔥</div>
+              <div class="preview-logo-box">⚡</div>
               <span class="preview-name">YOUR BRAND</span>
             </div>
-            <p class="preview-tagline">YOUR TAGLINE. <span>HERE.</span></p>
-            <p class="preview-desc">Your product description and value proposition shown to thousands of biohackers monthly.</p>
-            <div class="preview-btn">Get Early Access →</div>
+            <p class="preview-tagline">YOUR SLOGAN. <span>HERE.</span></p>
+            <p class="preview-desc">Your product or service described to thousands of health-conscious biohackers every month across 35+ cities.</p>
+            <a class="preview-btn">Get Early Access →</a>
           </div>
         </div>
       </div>
@@ -512,8 +512,11 @@ import Footer from '../components/Footer.astro';
   }
 
   .preview-card {
-    background: radial-gradient(ellipse at center, rgba(180,100,56,0.12) 0%, #0e0e0e 70%);
-    border: 1px solid #2a1a0e;
+    background: radial-gradient(ellipse at center, rgba(180,100,56,0.15) 0%, var(--black) 70%);
+    border-top: 1px solid #2a1a0e;
+    border-bottom: 1px solid #2a1a0e;
+    border-left: none;
+    border-right: none;
     border-radius: 12px;
     padding: 2.5rem 2rem;
     text-align: center;
@@ -529,7 +532,7 @@ import Footer from '../components/Footer.astro';
     letter-spacing: 3px;
     text-transform: uppercase;
     color: #b46438;
-    border: 1px solid #2a1a0e;
+    border: 1px solid #3a2a1e;
     padding: 3px 12px;
     border-radius: 100px;
   }
@@ -542,7 +545,7 @@ import Footer from '../components/Footer.astro';
 
   .preview-logo-box {
     font-size: 40px;
-    filter: grayscale(0.3);
+    filter: drop-shadow(0 0 12px rgba(232,149,106,0.5));
   }
 
   .preview-name {
@@ -551,7 +554,7 @@ import Footer from '../components/Footer.astro';
     font-size: 36px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #444;
+    color: var(--text);
   }
 
   .preview-tagline {
@@ -560,26 +563,27 @@ import Footer from '../components/Footer.astro';
     font-size: 14px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #333;
+    color: var(--text);
   }
-  .preview-tagline span { color: rgba(232,149,106,0.5); }
+  .preview-tagline span { color: #E8956A; }
 
   .preview-desc {
     font-size: 13px;
-    color: #333;
+    color: #666;
     max-width: 280px;
     line-height: 1.6;
   }
 
   .preview-btn {
-    background: #2a1a0e;
-    color: #b46438;
-    border: 1px solid #3a2a1e;
+    display: inline-block;
+    background: #b46438;
+    color: #fff;
     padding: 10px 24px;
     border-radius: 100px;
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.05em;
+    text-decoration: none;
   }
 
   @media (max-width: 768px) {
