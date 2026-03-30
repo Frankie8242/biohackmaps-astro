@@ -125,11 +125,14 @@ const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${venue.l
               <h2>Opening Hours</h2>
               <div class="hours-grid">
                 {venue.hours.split('|').map((h: string) => {
-                  const [day, time] = h.trim().split(':').map(s => s.trim());
+                  const trimmed = h.trim();
+                  const colonIdx = trimmed.indexOf(':');
+                  const day = colonIdx !== -1 ? trimmed.slice(0, colonIdx).trim() : trimmed;
+                  const time = colonIdx !== -1 ? trimmed.slice(colonIdx + 1).trim() : '';
                   return (
                     <div class="hours-row">
                       <span class="hours-day">{day}</span>
-                      <span class="hours-time">{time ? `: ${time}` : ''}</span>
+                      <span class="hours-time">{time}</span>
                     </div>
                   );
                 })}
@@ -333,7 +336,9 @@ const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${venue.l
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    min-width: 200px;
+    min-width: 180px;
+    max-width: 220px;
+    flex-shrink: 0;
   }
 
   .btn {
