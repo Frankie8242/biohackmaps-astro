@@ -12,7 +12,8 @@ export function generateVenueSchema(venue: Venue, baseUrl: string) {
       addressLocality: venue.city,
       addressCountry: venue.country,
     },
-    url: `${baseUrl}/venues/${venue.slug}`,
+    url: venue.website || `${baseUrl}/venues/${venue.slug}`,
+    sameAs: venue.website ? [venue.website] : [],
     telephone: venue.phone,
     geo: {
       '@type': 'GeoCoordinates',
@@ -23,12 +24,52 @@ export function generateVenueSchema(venue: Venue, baseUrl: string) {
       '@type': 'AggregateRating',
       ratingValue: venue.rating,
       reviewCount: venue.reviewCount,
+      bestRating: 5,
+      worstRating: 1,
     },
     areaServed: venue.city,
     availableService: venue.modalities.map(mod => ({
       '@type': 'Service',
       name: mod,
     })),
+    hasMap: `https://www.google.com/maps?q=${venue.lat},${venue.lng}`,
+  };
+}
+
+export function generateVenueBreadcrumbSchema(venue: Venue, baseUrl: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Venues', item: `${baseUrl}/venues/` },
+      { '@type': 'ListItem', position: 3, name: venue.city, item: `${baseUrl}/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}` },
+      { '@type': 'ListItem', position: 4, name: venue.name, item: `${baseUrl}/venues/${venue.slug}` },
+    ],
+  };
+}
+
+export function generateCityBreadcrumbSchema(city: string, baseUrl: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Venues', item: `${baseUrl}/venues/` },
+      { '@type': 'ListItem', position: 3, name: city, item: `${baseUrl}/cities/${city.toLowerCase().replace(/\s+/g, '-')}` },
+    ],
+  };
+}
+
+export function generateModalityBreadcrumbSchema(modality: { name: string; slug: string }, baseUrl: string) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Venues', item: `${baseUrl}/venues/` },
+      { '@type': 'ListItem', position: 3, name: modality.name, item: `${baseUrl}/modalities/${modality.slug}` },
+    ],
   };
 }
 
@@ -36,16 +77,16 @@ export function generateOrganizationSchema(baseUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'BiohackMap',
+    name: 'BiohackMaps',
     description: 'The world\'s most complete directory of biohacking venues worldwide.',
     url: baseUrl,
-    logo: `${baseUrl}/logo.png`,
+    logo: `${baseUrl}/og-image.png`,
     sameAs: [
-      'https://twitter.com/biohackmap',
-      'https://instagram.com/biohackmap',
+      'https://twitter.com/biohackmaps',
+      'https://instagram.com/biohackmaps',
     ],
     areaServed: 'Worldwide',
-    serviceType: ['Sauna', 'Cryotherapy', 'Float Tank', 'Infrared Light', 'Hyperbaric Oxygen', 'TRT Clinic', 'Red Light Therapy', 'Cold Plunge', 'Tanning'],
+    serviceType: ['Infrared Sauna', 'Cryotherapy', 'Float Tank', 'Red Light Therapy', 'Hyperbaric Oxygen', 'TRT Clinic', 'Cold Plunge', 'IV Therapy', 'HRT Clinic'],
   };
 }
 
@@ -93,7 +134,6 @@ export function generateLocalBusinessSchema(venue: Venue, baseUrl: string) {
     },
     telephone: venue.phone,
     url: venue.website || `${baseUrl}/venues/${venue.slug}`,
-    image: venue.imageUrl,
     priceRange: '$$',
   };
 }

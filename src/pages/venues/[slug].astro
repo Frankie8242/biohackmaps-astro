@@ -1,9 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
+import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getVenueBySlug, getAllVenues } from '../../data/venues';
-import { generateVenueSchema } from '../../lib/schema';
+import { generateVenueSchema, generateVenueBreadcrumbSchema } from '../../lib/schema';
+import { MODALITIES } from '../../data/modalities';
 
 export async function getStaticPaths() {
   const venues = getAllVenues();
@@ -24,37 +26,92 @@ if (!venue) {
 }
 
 const schema = generateVenueSchema(venue, Astro.url.origin);
+const breadcrumbSchema = generateVenueBreadcrumbSchema(venue, Astro.url.origin);
+
+// Related venues: same city, exclude self, limit 3 (premium first)
+const related = getAllVenues()
+  .filter(v => v.city === venue.city && v.slug !== venue.slug)
+  .sort((a, b) => (b.premium ? 1 : 0) - (a.premium ? 1 : 0))
+  .slice(0, 3);
+
+// Modality display names
+const modalityNames: Record<string, string> = Object.fromEntries(
+  MODALITIES.map(m => [m.slug, m.name])
+);
+
+const citySlug = venue.city.toLowerCase().replace(/\s+/g, '-');
+const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${venue.lat},${venue.lng}`;
+const osmEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${venue.lng - 0.012},${venue.lat - 0.008},${venue.lng + 0.012},${venue.lat + 0.008}&layer=mapnik&marker=${venue.lat},${venue.lng}`;
 ---
 
 <Layout
-  title={venue.name}
+  title={`${venue.name} | ${venue.city} Biohacking`}
   description={venue.description
-    ? `${venue.description.slice(0, 140)}...`
-    : `${venue.name} in ${venue.city} — ${venue.modalities.join(', ')}. Rated ${venue.rating}★ with ${venue.reviewCount} reviews. Book your biohacking session today.`}
+    ? `${venue.description.slice(0, 155)}`
+    : `${venue.name} — ${venue.modalities.map((m: string) => modalityNames[m] || m).join(', ')} in ${venue.city}. Rated ${venue.rating}★ with ${venue.reviewCount} reviews.`}
   type="place"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <Nav current="venues" />
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="/">Home</a>
+      <span class="sep">›</span>
+      <a href="/venues/">Venues</a>
+      <span class="sep">›</span>
+      <a href={`/cities/${citySlug}`}>{venue.city}</a>
+      <span class="sep">›</span>
+      <span class="current">{venue.name}</span>
+    </div>
+  </nav>
 
   <div class="venue-hero">
     <div class="venue-hero-content">
-      <h1>{venue.name}</h1>
-      <p class="location">📍 {venue.address}</p>
-      <p class="location">{venue.city}, {venue.country}</p>
-      
-      <div class="venue-meta">
-        <div class="rating">
-          <span class="stars">⭐ {venue.rating.toFixed(1)}</span>
-          <span class="reviews">({venue.reviewCount} reviews)</span>
+      <div class="venue-hero-top">
+        <div>
+          <h1>{venue.name}</h1>
+          <p class="location">📍 {venue.address}, {venue.city}, {venue.country}</p>
+          <div class="venue-meta">
+            <div class="rating">
+              <span class="stars">⭐ {venue.rating.toFixed(1)}</span>
+              <span class="reviews">({venue.reviewCount.toLocaleString()} reviews)</span>
+            </div>
+            {venue.premium && <span class="badge premium">⭐ Premium Verified</span>}
+            {venue.verified && !venue.premium && <span class="badge verified">✓ Verified</span>}
+          </div>
+          <div class="modality-chips">
+            {venue.modalities.map((mod: string) => (
+              <a href={`/modalities/${mod}`} class="mod-chip">
+                {modalityNames[mod] || mod}
+              </a>
+            ))}
+          </div>
         </div>
-        {venue.verified && <span class="badge verified">✓ Verified</span>}
-        {venue.featured && <span class="badge featured">⭐ Featured</span>}
+        <div class="hero-actions">
+          {venue.phone && (
+            <a href={`tel:${venue.phone}`} class="btn btn-primary">
+              📞 Call Now
+            </a>
+          )}
+          {venue.website && (
+            <a href={venue.website} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              🌐 Visit Website
+            </a>
+          )}
+          <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+            🗺 Get Directions
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
   <section class="section">
     <div class="container">
-      <div class="venue-grid">
+      <div class="venue-layout">
         <div class="venue-main">
           {venue.description && (
             <div class="section-block">
@@ -63,261 +120,357 @@ const schema = generateVenueSchema(venue, Astro.url.origin);
             </div>
           )}
 
+          {venue.hours && (
+            <div class="section-block">
+              <h2>Opening Hours</h2>
+              <div class="hours-grid">
+                {venue.hours.split('|').map((h: string) => {
+                  const [day, time] = h.trim().split(':').map(s => s.trim());
+                  return (
+                    <div class="hours-row">
+                      <span class="hours-day">{day}</span>
+                      <span class="hours-time">{time ? `: ${time}` : ''}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           <div class="section-block">
-            <h2>Modalities</h2>
+            <h2>Services & Modalities</h2>
             <div class="modalities-grid">
               {venue.modalities.map((mod: string) => (
                 <a href={`/modalities/${mod}`} class="modality-link">
-                  {mod}
+                  {modalityNames[mod] || mod}
                 </a>
               ))}
             </div>
           </div>
-
-          {venue.hours && (
-            <div class="section-block">
-              <h2>Hours</h2>
-              <p>{venue.hours}</p>
-            </div>
-          )}
         </div>
 
         <div class="venue-sidebar">
-          <div class="info-card">
-            <h3>Contact</h3>
+          <!-- Quick actions card -->
+          <div class="info-card actions-card">
             {venue.phone && (
-              <p>
-                <strong>Phone:</strong><br />
-                <a href={`tel:${venue.phone}`}>{venue.phone}</a>
-              </p>
-            )}
-            {venue.email && (
-              <p>
-                <strong>Email:</strong><br />
-                <a href={`mailto:${venue.email}`}>{venue.email}</a>
-              </p>
+              <a href={`tel:${venue.phone}`} class="action-btn primary">
+                📞 Call Now
+              </a>
             )}
             {venue.website && (
-              <p>
-                <a href={venue.website} target="_blank" rel="noopener noreferrer" class="button">
-                  Visit Website →
-                </a>
-              </p>
+              <a href={venue.website} target="_blank" rel="noopener noreferrer" class="action-btn secondary">
+                🌐 Visit Website
+              </a>
+            )}
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="action-btn outline">
+              🗺 Get Directions
+            </a>
+            {venue.phone && (
+              <p class="contact-phone">{venue.phone}</p>
             )}
           </div>
 
+          <!-- Info card -->
           <div class="info-card">
-            <h3>Map</h3>
-            <p style="font-size: 12px; color: var(--muted);">
-              Coming soon: Map integration
-            </p>
+            <h3>Details</h3>
+            <div class="detail-row">
+              <span class="detail-label">City</span>
+              <a href={`/cities/${citySlug}`} class="detail-value link">{venue.city}</a>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Country</span>
+              <span class="detail-value">{venue.country}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Rating</span>
+              <span class="detail-value">⭐ {venue.rating.toFixed(1)} / 5</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Reviews</span>
+              <span class="detail-value">{venue.reviewCount.toLocaleString()}</span>
+            </div>
           </div>
+
+          <!-- Map card -->
+          <div class="info-card map-card">
+            <h3>Location</h3>
+            <iframe
+              src={osmEmbed}
+              width="100%"
+              height="220"
+              style="border: none; border-radius: 6px; display: block;"
+              loading="lazy"
+              title={`Map of ${venue.name}`}
+            ></iframe>
+            <a href={mapsUrl} target="_blank" rel="noopener noreferrer" class="map-link">
+              Open in Google Maps →
+            </a>
+          </div>
+
+          <!-- Premium upsell (only for non-premium venues) -->
+          {!venue.premium && (
+            <div class="info-card upsell-card">
+              <p class="upsell-label">Are you the owner?</p>
+              <h3>Get Premium Verified</h3>
+              <p>Rank #1 in {venue.city} searches, get a gold badge, and be featured on the homepage.</p>
+              <a href="/for-business#pricing" class="action-btn primary">Learn More →</a>
+            </div>
+          )}
         </div>
       </div>
     </div>
   </section>
 
-  <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  <!-- Related venues -->
+  {related.length > 0 && (
+    <section class="section section-dark">
+      <div class="container">
+        <h2>More Venues in {venue.city}</h2>
+        <div class="related-grid">
+          {related.map(v => <VenueCard venue={v} />)}
+        </div>
+        <div class="see-all">
+          <a href={`/cities/${citySlug}`} class="see-all-link">
+            See all {venue.city} venues →
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
 
   <Footer />
 </Layout>
 
 <style>
+  .breadcrumb-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    font-size: 13px;
+  }
+  .breadcrumb-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+  }
+  .breadcrumb-inner a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb-inner a:hover { color: var(--accent); }
+  .breadcrumb-inner .sep { color: var(--border); }
+  .breadcrumb-inner .current { color: var(--text); }
+
   .venue-hero {
     background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
     border-bottom: 1px solid var(--border);
-    padding: 3rem 2rem;
+    padding: 2.5rem 2rem;
+  }
+  .venue-hero-content { max-width: 1200px; margin: 0 auto; }
+  .venue-hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    flex-wrap: wrap;
   }
 
-  .venue-hero-content {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .venue-hero-content h1 {
-    font-size: 48px;
+  h1 {
+    font-size: 42px;
     margin-bottom: 0.5rem;
+    line-height: 1.1;
   }
-
-  .location {
-    color: var(--muted);
-    margin: 0.25rem 0;
-  }
+  .location { color: var(--muted); margin: 0.25rem 0 1rem; font-size: 14px; }
 
   .venue-meta {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
-    margin-top: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 1rem;
     flex-wrap: wrap;
   }
-
-  .rating {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .stars {
-    font-size: 20px;
-    font-weight: 600;
-  }
-
-  .reviews {
-    color: var(--muted);
-    font-size: 14px;
-  }
+  .stars { font-size: 18px; font-weight: 600; }
+  .reviews { color: var(--muted); font-size: 14px; }
 
   .badge {
-    font-size: 12px;
-    padding: 6px 12px;
+    font-size: 11px;
+    padding: 4px 10px;
     border-radius: 4px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
-
+  .badge.premium {
+    background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(245,158,11,0.15));
+    color: #fbbf24;
+    border: 1px solid rgba(251,191,36,0.4);
+  }
   .badge.verified {
     background: rgba(34, 197, 94, 0.2);
     color: var(--green);
+    border: 1px solid rgba(34,197,94,0.3);
   }
 
-  .badge.featured {
-    background: rgba(249, 115, 22, 0.2);
-    color: var(--accent);
+  .modality-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .mod-chip {
+    padding: 5px 12px;
+    background: rgba(6,182,212,0.1);
+    color: var(--accent2);
+    border-radius: 100px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid rgba(6,182,212,0.2);
+  }
+  .mod-chip:hover { background: rgba(6,182,212,0.2); }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 200px;
   }
 
-  .section {
-    padding: 3rem 2rem;
+  .btn {
+    display: block;
+    padding: 11px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s;
+    white-space: nowrap;
   }
+  .btn-primary { background: var(--accent); color: var(--black); }
+  .btn-primary:hover { background: #fb923c; transform: translateY(-1px); }
+  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--accent2); color: var(--accent2); }
+  .btn-outline { background: transparent; color: var(--accent2); border: 1px solid rgba(6,182,212,0.4); }
+  .btn-outline:hover { background: rgba(6,182,212,0.1); }
 
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+  .section { padding: 3rem 2rem; }
+  .section-dark { background: var(--surface); }
+  .container { max-width: 1200px; margin: 0 auto; }
 
-  .venue-grid {
+  .venue-layout {
     display: grid;
     grid-template-columns: 1fr 300px;
     gap: 3rem;
+    align-items: start;
   }
 
-  .venue-main {
-    flex: 1;
-  }
+  .section-block { margin-bottom: 2.5rem; }
+  .section-block h2 { font-size: 26px; margin-bottom: 1rem; }
+  .section-block p { color: var(--muted); line-height: 1.8; }
 
-  .section-block {
-    margin-bottom: 2.5rem;
-  }
+  .hours-grid { display: flex; flex-direction: column; gap: 0.4rem; }
+  .hours-row { display: flex; gap: 0.5rem; font-size: 14px; }
+  .hours-day { color: var(--text); font-weight: 500; min-width: 80px; }
+  .hours-time { color: var(--muted); }
 
-  .section-block h2 {
-    font-size: 24px;
-    margin-bottom: 1rem;
-  }
-
-  .section-block p {
-    color: var(--muted);
-    line-height: 1.8;
-  }
-
-  .modalities-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
+  .modalities-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
   .modality-link {
-    display: inline-block;
     padding: 8px 16px;
-    background: rgba(6, 182, 212, 0.1);
+    background: rgba(6,182,212,0.1);
     color: var(--accent2);
-    text-decoration: none;
     border-radius: 4px;
-    font-weight: 500;
+    text-decoration: none;
     font-size: 14px;
+    font-weight: 500;
     transition: all 0.2s;
+    border: 1px solid rgba(6,182,212,0.2);
   }
-
-  .modality-link:hover {
-    background: rgba(6, 182, 212, 0.2);
-    transform: translateY(-2px);
-  }
+  .modality-link:hover { background: rgba(6,182,212,0.2); transform: translateY(-2px); }
 
   .info-card {
-    background: var(--surface);
+    background: var(--surface2);
     border: 1px solid var(--border);
     padding: 1.5rem;
     border-radius: 8px;
+    margin-bottom: 1.25rem;
+  }
+  .info-card h3 { font-size: 16px; margin-bottom: 1rem; color: var(--text); }
+
+  .actions-card { display: flex; flex-direction: column; gap: 0.75rem; }
+  .action-btn {
+    display: block;
+    padding: 11px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .action-btn.primary { background: var(--accent); color: var(--black); }
+  .action-btn.primary:hover { background: #fb923c; }
+  .action-btn.secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+  .action-btn.secondary:hover { border-color: var(--accent2); color: var(--accent2); }
+  .action-btn.outline { background: transparent; color: var(--accent2); border: 1px solid rgba(6,182,212,0.4); }
+  .action-btn.outline:hover { background: rgba(6,182,212,0.1); }
+  .contact-phone { font-size: 13px; color: var(--muted); text-align: center; margin-top: 0.25rem; }
+
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .detail-row:last-child { border-bottom: none; }
+  .detail-label { color: var(--muted); }
+  .detail-value { color: var(--text); font-weight: 500; }
+  .detail-value.link { color: var(--accent2); text-decoration: none; }
+  .detail-value.link:hover { text-decoration: underline; }
+
+  .map-card h3 { margin-bottom: 0.75rem; }
+  .map-link {
+    display: block;
+    text-align: center;
+    margin-top: 0.75rem;
+    font-size: 13px;
+    color: var(--accent2);
+    text-decoration: none;
+  }
+  .map-link:hover { text-decoration: underline; }
+
+  .upsell-card { border-color: rgba(249,115,22,0.3); background: rgba(249,115,22,0.04); }
+  .upsell-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); margin-bottom: 0.5rem; }
+  .upsell-card h3 { font-size: 18px; margin-bottom: 0.5rem; }
+  .upsell-card p { color: var(--muted); font-size: 13px; line-height: 1.6; margin-bottom: 1rem; }
+
+  .section h2 { font-size: 28px; margin-bottom: 1.5rem; }
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 1.5rem;
   }
+  .see-all { text-align: center; }
+  .see-all-link { color: var(--accent2); text-decoration: none; font-weight: 500; font-size: 15px; }
+  .see-all-link:hover { text-decoration: underline; }
 
-  .info-card h3 {
-    font-size: 16px;
-    margin-bottom: 1rem;
+  @media (max-width: 900px) {
+    .venue-hero-top { flex-direction: column; }
+    .hero-actions { flex-direction: row; flex-wrap: wrap; min-width: 0; }
+    .btn { flex: 1; min-width: 140px; }
+    .venue-layout { grid-template-columns: 1fr; }
+    .venue-sidebar { order: -1; }
+    h1 { font-size: 32px; }
   }
-
-  .info-card p {
-    margin-bottom: 0.75rem;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
-
-  .info-card strong {
-    color: var(--text);
-    display: block;
-    margin-bottom: 0.25rem;
-  }
-
-  .info-card a {
-    color: var(--accent);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .info-card a:hover {
-    color: var(--accent2);
-  }
-
-  .button {
-    display: block;
-    padding: 10px 14px;
-    background: var(--accent);
-    color: var(--black);
-    text-decoration: none;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 13px;
-    text-align: center;
-    transition: all 0.2s;
-    border: 2px solid var(--accent);
-  }
-
-  .button:hover {
-    background: transparent;
-    color: var(--accent);
-  }
-
-  @media (max-width: 768px) {
-    .venue-hero {
-      padding: 2rem 1rem;
-    }
-
-    .venue-hero-content h1 {
-      font-size: 32px;
-    }
-
-    .section {
-      padding: 2rem 1rem;
-    }
-
-    .venue-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-    }
-
-    .venue-sidebar {
-      order: -1;
-    }
+  @media (max-width: 480px) {
+    .venue-hero { padding: 1.5rem 1rem; }
+    .section { padding: 2rem 1rem; }
+    h1 { font-size: 26px; }
+    .hero-actions .btn { font-size: 13px; }
+    .breadcrumb-nav { padding: 0.6rem 1rem; }
   }
 </style>
 

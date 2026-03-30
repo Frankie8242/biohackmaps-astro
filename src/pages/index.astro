@@ -13,6 +13,7 @@ const modalities = getAllModalities();
 const allVenues = getAllVenues();
 const featuredVenues = allVenues.filter(v => v.featured).slice(0, 6);
 const orgSchema = generateOrganizationSchema(Astro.url.origin);
+const uniqueCities = new Set(allVenues.map(v => v.city)).size;
 ---
 
 <Layout title="Home">
@@ -24,6 +25,19 @@ const orgSchema = generateOrganizationSchema(Astro.url.origin);
     subtitle="The world's most complete directory of biohacking venues worldwide."
     cta="Explore Venues"
   />
+
+  <!-- Social proof stats bar -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat"><span class="stat-num">{allVenues.length}</span><span class="stat-label">Verified Venues</span></div>
+      <div class="stat-sep">·</div>
+      <div class="stat"><span class="stat-num">{uniqueCities}+</span><span class="stat-label">Cities</span></div>
+      <div class="stat-sep">·</div>
+      <div class="stat"><span class="stat-num">{modalities.length}</span><span class="stat-label">Modalities</span></div>
+      <div class="stat-sep">·</div>
+      <div class="stat"><span class="stat-num">4.8★</span><span class="stat-label">Avg Rating</span></div>
+    </div>
+  </div>
 
   <section class="section">
     <div class="container">
@@ -127,6 +141,40 @@ const orgSchema = generateOrganizationSchema(Astro.url.origin);
 </script>
 
 <style>
+  .stats-bar {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+  }
+  .stats-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .stat {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .stat-sep {
+    color: var(--border);
+    font-size: 18px;
+  }
+
   .section {
     padding: 4rem 2rem;
     border-bottom: 1px solid var(--border);

@@ -5,7 +5,7 @@ import HeroSection from '../../components/HeroSection.astro';
 import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getVenuesByCity, getUniqueCities } from '../../data/venues';
-import { generateCitySchema } from '../../lib/schema';
+import { generateCitySchema, generateCityBreadcrumbSchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const cities = getUniqueCities();
@@ -20,8 +20,15 @@ interface Props {
 }
 
 const { city } = Astro.props as Props;
-const venues = getVenuesByCity(city);
+const allVenues = getVenuesByCity(city);
+// Premium first, then by rating
+const venues = [...allVenues].sort((a, b) => {
+  if (a.premium && !b.premium) return -1;
+  if (!a.premium && b.premium) return 1;
+  return b.rating - a.rating;
+});
 const citySchema = generateCitySchema(city, venues.length, Astro.url.origin);
+const breadcrumbSchema = generateCityBreadcrumbSchema(city, Astro.url.origin);
 ---
 
 <Layout
@@ -30,6 +37,18 @@ const citySchema = generateCitySchema(city, venues.length, Astro.url.origin);
 >
   <Nav current="venues" />
   <script type="application/ld+json" set:html={JSON.stringify(citySchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="/">Home</a>
+      <span class="sep">›</span>
+      <a href="/venues/">Venues</a>
+      <span class="sep">›</span>
+      <span class="current">{city}</span>
+    </div>
+  </nav>
 
   <HeroSection
     title={`Biohacking in ${city}`}
@@ -145,4 +164,24 @@ const citySchema = generateCitySchema(city, venues.length, Astro.url.origin);
       grid-template-columns: 1fr;
     }
   }
+
+  .breadcrumb-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    font-size: 13px;
+  }
+  .breadcrumb-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+  }
+  .breadcrumb-inner a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb-inner a:hover { color: var(--accent); }
+  .breadcrumb-inner .sep { color: var(--border); }
+  .breadcrumb-inner .current { color: var(--text); }
 </style>

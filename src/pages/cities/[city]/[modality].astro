@@ -1,0 +1,302 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Nav from '../../../components/Nav.astro';
+import VenueCard from '../../../components/VenueCard.astro';
+import Footer from '../../../components/Footer.astro';
+import { getAllVenues, getUniqueCities } from '../../../data/venues';
+import { getAllModalities } from '../../../data/modalities';
+
+export async function getStaticPaths() {
+  const allVenues = getAllVenues();
+  const cities = getUniqueCities();
+  const modalities = getAllModalities();
+  const paths = [];
+
+  for (const city of cities) {
+    for (const modality of modalities) {
+      const venues = allVenues.filter(
+        v => v.city === city && v.modalities.includes(modality.id)
+      );
+      if (venues.length >= 2) {
+        paths.push({
+          params: {
+            city: city.toLowerCase().replace(/\s+/g, '-'),
+            modality: modality.slug,
+          },
+          props: { city, modality, venues },
+        });
+      }
+    }
+  }
+  return paths;
+}
+
+interface Props {
+  city: string;
+  modality: any;
+  venues: any[];
+}
+
+const { city, modality, venues: rawVenues } = Astro.props;
+
+// Sort: premium first, then by rating × log(reviews)
+const venues = [...rawVenues].sort((a, b) => {
+  if (a.premium && !b.premium) return -1;
+  if (!a.premium && b.premium) return 1;
+  return (b.rating * Math.log(b.reviewCount + 1)) - (a.rating * Math.log(a.reviewCount + 1));
+});
+
+const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+const pageTitle = `Best ${modality.name} in ${city}`;
+const pageDesc = `Find the top ${venues.length} verified ${modality.name} venues in ${city}. All rated 4.7★+ with 50+ reviews. Discover the best ${modality.name.toLowerCase()} spots near you.`;
+
+// BreadcrumbList schema
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: Astro.url.origin },
+    { '@type': 'ListItem', position: 2, name: 'Venues', item: `${Astro.url.origin}/venues/` },
+    { '@type': 'ListItem', position: 3, name: city, item: `${Astro.url.origin}/cities/${citySlug}` },
+    { '@type': 'ListItem', position: 4, name: modality.name, item: `${Astro.url.origin}/cities/${citySlug}/${modality.slug}` },
+  ],
+};
+
+// CollectionPage schema
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: pageTitle,
+  description: pageDesc,
+  url: `${Astro.url.origin}/cities/${citySlug}/${modality.slug}`,
+  numberOfItems: venues.length,
+  about: { '@type': 'Service', name: modality.name },
+};
+
+// FAQ schema
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: `How many ${modality.name} venues are in ${city}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `There are ${venues.length} verified ${modality.name} venues in ${city} on BiohackMaps, all rated 4.7★ or higher with 50+ reviews.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: `What is ${modality.name}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: modality.description,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: `What are the benefits of ${modality.name}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `Key benefits of ${modality.name} include: ${modality.benefits.join(', ')}.`,
+      },
+    },
+  ],
+};
+---
+
+<Layout title={pageTitle} description={pageDesc}>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <Nav current="venues" />
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="/">Home</a>
+      <span class="sep">›</span>
+      <a href="/venues/">Venues</a>
+      <span class="sep">›</span>
+      <a href={`/cities/${citySlug}`}>{city}</a>
+      <span class="sep">›</span>
+      <span class="current">{modality.name}</span>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="hero-icon">{modality.icon}</div>
+      <h1>Best {modality.name} in {city}</h1>
+      <p class="subtitle">
+        {venues.length} verified venues · All rated 4.7★+ · {modality.description}
+      </p>
+      <div class="hero-links">
+        <a href={`/cities/${citySlug}`} class="link-chip">All venues in {city}</a>
+        <a href={`/modalities/${modality.slug}`} class="link-chip">{modality.name} worldwide</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="results-header">
+        <h2>{venues.length} {modality.name} Venues in {city}</h2>
+        <span class="sort-note">Ranked by rating & reviews · Premium venues first</span>
+      </div>
+      <div class="venue-grid">
+        {venues.map((venue, i) => (
+          <div class="venue-wrap">
+            {i < 3 && (
+              <div class="rank-badge rank-{i + 1}">
+                {i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'} #{i + 1} {modality.name} in {city}
+              </div>
+            )}
+            <VenueCard venue={venue} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits section -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="info-grid">
+        <div class="info-block">
+          <h2>About {modality.name}</h2>
+          <p>{modality.description}</p>
+          <h3>Key Benefits</h3>
+          <ul class="benefit-list">
+            {modality.benefits.map((b: string) => <li>✓ {b}</li>)}
+          </ul>
+          <a href={`/modalities/${modality.slug}`} class="more-link">
+            See all {modality.name} venues worldwide →
+          </a>
+        </div>
+        <div class="faq-block">
+          <h2>FAQ</h2>
+          <div class="faq-item">
+            <h3>How many {modality.name} venues are in {city}?</h3>
+            <p>There are <strong>{venues.length}</strong> verified {modality.name} venues in {city} on BiohackMaps, all rated 4.7★ or higher.</p>
+          </div>
+          <div class="faq-item">
+            <h3>What should I look for in a {modality.name} venue?</h3>
+            <p>Look for venues with strong ratings (4.7★+), a high review count, and clear information about their equipment, hygiene protocols, and session options. All BiohackMaps venues meet these standards.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Are these venues verified?</h3>
+            <p>Yes. All venues are sourced from Google Maps with a minimum 4.7★ rating and 50+ verified reviews. Premium Verified venues (gold badge) are additionally confirmed by our team.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internal links -->
+  <section class="section">
+    <div class="container">
+      <h2>Explore More in {city}</h2>
+      <div class="internal-links" id="more-modalities"></div>
+      <h2>Find {modality.name} in Other Cities</h2>
+      <div class="internal-links" id="more-cities"></div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script>
+  // Inject city × modality internal links client-side from static data embedded in page
+  const citySlugEl = document.querySelector('[data-city-slug]') as HTMLElement;
+  const modalitySlugEl = document.querySelector('[data-modality-slug]') as HTMLElement;
+</script>
+
+<style>
+  .breadcrumb-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    font-size: 13px;
+  }
+  .breadcrumb-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; color: var(--muted);
+  }
+  .breadcrumb-inner a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb-inner a:hover { color: var(--accent); }
+  .breadcrumb-inner .sep { color: var(--border); }
+  .breadcrumb-inner .current { color: var(--text); }
+
+  .page-hero {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  .hero-icon { font-size: 48px; margin-bottom: 1rem; }
+  h1 { font-size: 48px; margin-bottom: 0.75rem; }
+  .subtitle { color: var(--muted); font-size: 16px; max-width: 600px; margin: 0 auto 1.5rem; }
+  .hero-links { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .link-chip {
+    padding: 6px 16px; border-radius: 100px;
+    background: rgba(6,182,212,0.1); color: var(--accent2);
+    text-decoration: none; font-size: 13px; border: 1px solid rgba(6,182,212,0.2);
+    transition: all 0.2s;
+  }
+  .link-chip:hover { background: rgba(6,182,212,0.2); }
+
+  .section { padding: 3rem 2rem; }
+  .section-dark { background: var(--surface); }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .results-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;
+  }
+  .results-header h2 { font-size: 28px; }
+  .sort-note { font-size: 13px; color: var(--muted); }
+
+  .venue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .venue-wrap { display: flex; flex-direction: column; gap: 0.5rem; }
+  .rank-badge {
+    font-size: 12px; font-weight: 700; padding: 4px 10px;
+    border-radius: 4px; width: fit-content;
+  }
+  .rank-1 { background: rgba(251,191,36,0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+  .rank-2 { background: rgba(148,163,184,0.15); color: #94a3b8; border: 1px solid rgba(148,163,184,0.3); }
+  .rank-3 { background: rgba(180,100,56,0.15); color: #b46438; border: 1px solid rgba(180,100,56,0.3); }
+
+  .info-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+  }
+  .info-block h2, .faq-block h2 { font-size: 28px; margin-bottom: 1rem; }
+  .info-block p { color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
+  .info-block h3 { font-size: 18px; margin-bottom: 0.75rem; }
+  .benefit-list { list-style: none; padding: 0; margin-bottom: 1.5rem; }
+  .benefit-list li { padding: 0.4rem 0; color: var(--muted); font-size: 14px; }
+  .more-link { color: var(--accent2); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .more-link:hover { text-decoration: underline; }
+
+  .faq-item { margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item h3 { font-size: 16px; margin-bottom: 0.5rem; }
+  .faq-item p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .faq-item strong { color: var(--text); }
+
+  .section h2 { font-size: 24px; margin-bottom: 1rem; }
+  .internal-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 32px; }
+    .info-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .section { padding: 2rem 1rem; }
+    .page-hero { padding: 2rem 1rem; }
+    .breadcrumb-nav { padding: 0.6rem 1rem; }
+  }
+</style>

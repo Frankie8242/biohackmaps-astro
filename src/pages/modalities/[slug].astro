@@ -6,7 +6,7 @@ import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getAllModalities } from '../../data/modalities';
 import { getVenuesByModality } from '../../data/venues';
-import { generateModalitySchema } from '../../lib/schema';
+import { generateModalitySchema, generateModalityBreadcrumbSchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const modalities = getAllModalities();
@@ -20,14 +20,21 @@ interface Props {
   modality: {
     id: string;
     name: string;
+    slug: string;
     description: string;
     benefits: string[];
   };
 }
 
 const { modality } = Astro.props as Props;
-const venues = getVenuesByModality(modality.id);
+const allVenues = getVenuesByModality(modality.id);
+const venues = [...allVenues].sort((a, b) => {
+  if (a.premium && !b.premium) return -1;
+  if (!a.premium && b.premium) return 1;
+  return b.rating - a.rating;
+});
 const modalitySchema = generateModalitySchema(modality, venues.length, Astro.url.origin);
+const breadcrumbSchema = generateModalityBreadcrumbSchema(modality, Astro.url.origin);
 ---
 
 <Layout
@@ -36,6 +43,18 @@ const modalitySchema = generateModalitySchema(modality, venues.length, Astro.url
 >
   <Nav current="venues" />
   <script type="application/ld+json" set:html={JSON.stringify(modalitySchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="/">Home</a>
+      <span class="sep">›</span>
+      <a href="/venues/">Venues</a>
+      <span class="sep">›</span>
+      <span class="current">{modality.name}</span>
+    </div>
+  </nav>
 
   <HeroSection
     title={modality.name}
@@ -198,4 +217,24 @@ const modalitySchema = generateModalitySchema(modality, venues.length, Astro.url
       grid-template-columns: 1fr;
     }
   }
+
+  .breadcrumb-nav {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0.75rem 2rem;
+    font-size: 13px;
+  }
+  .breadcrumb-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    color: var(--muted);
+  }
+  .breadcrumb-inner a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb-inner a:hover { color: var(--accent); }
+  .breadcrumb-inner .sep { color: var(--border); }
+  .breadcrumb-inner .current { color: var(--text); }
 </style>

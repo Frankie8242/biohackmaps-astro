@@ -1,43 +1,137 @@
 ---
 import type { Venue } from '../types/venue';
+import { MODALITIES } from '../data/modalities';
 
 interface Props {
   venue: Venue;
 }
 
 const { venue } = Astro.props;
+
+const modalityNames: Record<string, string> = Object.fromEntries(
+  MODALITIES.map(m => [m.slug, m.name])
+);
+const modalityIcons: Record<string, string> = Object.fromEntries(
+  MODALITIES.map(m => [m.slug, m.icon])
+);
 ---
 
-<a href={`/venues/${venue.slug}`} class:list={["venue-card", { premium: venue.premium }]} data-city={venue.city.toLowerCase()}>
+<a href={`/venues/${venue.slug}`} class:list={["venue-card", { premium: venue.premium }]}
+  data-city={venue.city.toLowerCase()}
+  data-hours={venue.hours || ''}
+>
   <div class="venue-header">
     <h3>{venue.name}</h3>
     <div class="badges">
       {venue.premium && <span class="badge premium">⭐ Premium</span>}
-      {venue.verified && !venue.premium && <span class="badge verified">✓ Listed</span>}
+      {venue.verified && !venue.premium && <span class="badge verified">✓ Verified</span>}
     </div>
   </div>
   
   <div class="venue-info">
-    <p class="location">📍 {venue.city}, {venue.country}</p>
+    <p class="location">📍 <a href={`/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}`} class="city-link" onclick="event.stopPropagation()">{venue.city}</a>, {venue.country}</p>
     <p class="rating">
-      ⭐ {venue.rating.toFixed(1)} ({venue.reviewCount} reviews)
+      ⭐ {venue.rating.toFixed(1)}
+      <span class="review-count">({venue.reviewCount.toLocaleString()} reviews)</span>
+      <span class="open-status"></span>
     </p>
   </div>
 
   <div class="modalities">
-    {venue.modalities.map(mod => (
-      <span class="modality-tag">{mod}</span>
+    {venue.modalities.slice(0, 3).map(mod => (
+      <span class="modality-tag">
+        {modalityIcons[mod] || ''} {modalityNames[mod] || mod}
+      </span>
     ))}
   </div>
 
   {venue.description && (
-    <p class="description">{venue.description}</p>
+    <p class="description">{venue.description.slice(0, 100)}…</p>
   )}
 
   <div class="venue-footer">
-    <button class="learn-more">Learn More →</button>
+    <span class="learn-more">View Venue →</span>
   </div>
 </a>
+
+<script>
+  // "Open Now" status — runs once after DOM ready
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll<HTMLElement>('.venue-card[data-hours]').forEach(card => {
+      const hoursStr = card.dataset.hours || '';
+      if (!hoursStr) return;
+      const statusEl = card.querySelector('.open-status') as HTMLElement;
+      if (!statusEl) return;
+
+      const now = new Date();
+      const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+      const todayName = dayNames[now.getDay()];
+      const currentMins = now.getHours() * 60 + now.getMinutes();
+
+      // Parse "Mon-Fri: 10am-6pm | Sat: 10:30am-5pm | Sun: Closed"
+      const segments = hoursStr.split('|').map((s: string) => s.trim());
+      let matchedSegment = '';
+
+      for (const seg of segments) {
+        const colonIdx = seg.indexOf(':');
+        if (colonIdx === -1) continue;
+        const daysPart = seg.slice(0, colonIdx).trim();
+        
+        // Check if today matches
+        if (daysPart.includes('-')) {
+          const [startDay, endDay] = daysPart.split('-').map((d: string) => d.trim().slice(0, 3));
+          const startIdx = dayNames.indexOf(startDay);
+          const endIdx = dayNames.indexOf(endDay);
+          const todayIdx = dayNames.indexOf(todayName);
+          if (startIdx !== -1 && endIdx !== -1 && todayIdx >= startIdx && todayIdx <= endIdx) {
+            matchedSegment = seg.slice(colonIdx + 1).trim();
+            break;
+          }
+        } else if (daysPart.slice(0, 3) === todayName) {
+          matchedSegment = seg.slice(colonIdx + 1).trim();
+          break;
+        }
+      }
+
+      if (!matchedSegment || matchedSegment.toLowerCase() === 'closed') {
+        statusEl.innerHTML = '<span class="closed-badge">● Closed today</span>';
+        return;
+      }
+
+      // Parse time range e.g. "10am-8pm" or "10:30am-5:30pm"
+      const parseTime = (t: string): number => {
+        const m = t.trim().match(/(\d+)(?::(\d+))?\s*(am|pm)/i);
+        if (!m) return -1;
+        let h = parseInt(m[1]);
+        const min = parseInt(m[2] || '0');
+        const ampm = m[3].toLowerCase();
+        if (ampm === 'pm' && h !== 12) h += 12;
+        if (ampm === 'am' && h === 12) h = 0;
+        return h * 60 + min;
+      };
+
+      const parts = matchedSegment.split('-');
+      if (parts.length < 2) return;
+      const openMins = parseTime(parts[0]);
+      const closeMins = parseTime(parts[parts.length - 1]);
+
+      if (openMins === -1 || closeMins === -1) return;
+
+      if (currentMins >= openMins && currentMins < closeMins) {
+        const minsLeft = closeMins - currentMins;
+        if (minsLeft <= 60) {
+          statusEl.innerHTML = `<span class="closing-badge">● Closes soon</span>`;
+        } else {
+          statusEl.innerHTML = `<span class="open-badge">● Open now</span>`;
+        }
+      } else if (currentMins < openMins) {
+        statusEl.innerHTML = `<span class="closed-badge">● Opens later</span>`;
+      } else {
+        statusEl.innerHTML = `<span class="closed-badge">● Closed</span>`;
+      }
+    });
+  });
+</script>
 
 <style>
   .venue-card {
@@ -50,6 +144,7 @@ const { venue } = Astro.props;
     color: inherit;
     transition: all 0.3s;
     cursor: pointer;
+    height: 100%;
   }
 
   .venue-card.premium {
@@ -78,9 +173,10 @@ const { venue } = Astro.props;
   }
 
   .venue-header h3 {
-    font-size: 18px;
+    font-size: 17px;
     margin: 0;
     flex: 1;
+    line-height: 1.3;
   }
 
   .badges {
@@ -88,32 +184,29 @@ const { venue } = Astro.props;
     flex-direction: column;
     gap: 4px;
     align-items: flex-end;
+    flex-shrink: 0;
   }
 
   .badge {
-    font-size: 11px;
-    padding: 4px 8px;
+    font-size: 10px;
+    padding: 3px 8px;
     border-radius: 4px;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
     text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
 
   .badge.premium {
     background: linear-gradient(135deg, rgba(251,191,36,0.25), rgba(245,158,11,0.15));
     color: #fbbf24;
     border: 1px solid rgba(251,191,36,0.4);
-    letter-spacing: 0.5px;
   }
 
   .badge.verified {
-    background: rgba(34, 197, 94, 0.2);
+    background: rgba(34, 197, 94, 0.15);
     color: var(--green);
-  }
-
-  .badge.featured {
-    background: rgba(249, 115, 22, 0.2);
-    color: var(--accent);
+    border: 1px solid rgba(34,197,94,0.2);
   }
 
   .venue-info {
@@ -125,31 +218,46 @@ const { venue } = Astro.props;
     color: var(--muted);
     margin: 0.25rem 0;
   }
+  .city-link {
+    color: var(--accent2);
+    text-decoration: none;
+  }
+  .city-link:hover { text-decoration: underline; }
 
   .rating {
     color: var(--text);
     margin: 0.25rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
   }
+  .review-count { color: var(--muted); }
+
+  :global(.open-badge) { color: #22c55e; font-size: 11px; font-weight: 600; }
+  :global(.closing-badge) { color: #f59e0b; font-size: 11px; font-weight: 600; }
+  :global(.closed-badge) { color: var(--muted); font-size: 11px; }
 
   .modalities {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    gap: 0.4rem;
+    margin-bottom: 0.75rem;
   }
 
   .modality-tag {
     display: inline-block;
-    background: rgba(6, 182, 212, 0.1);
+    background: rgba(6, 182, 212, 0.08);
     color: var(--accent2);
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 100px;
+    font-size: 11px;
     font-weight: 500;
+    border: 1px solid rgba(6,182,212,0.15);
   }
 
   .description {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--muted);
     margin: 0 0 1rem 0;
     line-height: 1.5;
@@ -158,20 +266,12 @@ const { venue } = Astro.props;
   .venue-footer {
     display: flex;
     justify-content: flex-end;
+    margin-top: auto;
   }
 
   .learn-more {
-    background: none;
-    border: none;
     color: var(--accent);
-    cursor: pointer;
     font-weight: 600;
     font-size: 13px;
-    padding: 0;
-    transition: color 0.2s;
-  }
-
-  .learn-more:hover {
-    color: var(--accent2);
   }
 </style>
