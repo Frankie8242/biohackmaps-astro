@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Privacy Policy" description="BiohackMaps privacy policy — how we collect, use, and protect your data.">
+  <Nav />
+
+  <main class="page-content">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: April 2026</p>
+
+    <section>
+      <h2>Information We Collect</h2>
+      <p>BiohackMaps collects minimal data to operate the directory. We may collect your email address if you submit a venue listing or contact us directly. We do not sell personal data.</p>
+    </section>
+
+    <section>
+      <h2>How We Use Your Information</h2>
+      <p>Information you provide is used solely to respond to your enquiry or process your venue submission. We do not share your data with third parties for marketing purposes.</p>
+    </section>
+
+    <section>
+      <h2>Cookies & Analytics</h2>
+      <p>We may use privacy-respecting analytics to understand site traffic. No personally identifiable information is collected through analytics.</p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>Questions about this policy? Email us at <a href="mailto:francois@biohackmaps.com">francois@biohackmaps.com</a>.</p>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-content {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+    color: var(--text);
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .updated {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

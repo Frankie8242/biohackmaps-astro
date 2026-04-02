@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Terms of Service" description="BiohackMaps terms of service — the rules for using our directory.">
+  <Nav />
+
+  <main class="page-content">
+    <h1>Terms of Service</h1>
+    <p class="updated">Last updated: April 2026</p>
+
+    <section>
+      <h2>Use of the Directory</h2>
+      <p>BiohackMaps provides a directory of biohacking venues for informational purposes. Venue details are crowd-sourced and user-submitted; we do not guarantee accuracy. Always verify details directly with a venue before visiting.</p>
+    </section>
+
+    <section>
+      <h2>Venue Listings</h2>
+      <p>By submitting a venue, you confirm that the information is accurate and that you have the right to share it. We reserve the right to remove listings that are inaccurate, misleading, or inappropriate.</p>
+    </section>
+
+    <section>
+      <h2>Intellectual Property</h2>
+      <p>All content, design, and code on BiohackMaps is © 2026 BiohackMaps unless otherwise noted. Venue data attributed to their respective owners.</p>
+    </section>
+
+    <section>
+      <h2>Limitation of Liability</h2>
+      <p>BiohackMaps is provided "as is". We are not liable for any inaccuracies in venue data or for any loss arising from use of this directory.</p>
+    </section>
+
+    <section>
+      <h2>Contact</h2>
+      <p>Questions? Email us at <a href="mailto:francois@biohackmaps.com">francois@biohackmaps.com</a>.</p>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .page-content {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+    color: var(--text);
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .updated {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
