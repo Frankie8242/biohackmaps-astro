@@ -1,0 +1,299 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Contact"
+  description="Get in touch with the BiohackMaps team — for venue submissions, partnership enquiries, or just to say hello."
+>
+  <Nav />
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Get in Touch</p>
+      <h1>We read every message</h1>
+      <p class="hero-sub">Questions, venue tips, partnership ideas, or just want to geek out about cold plunges — we're here.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-grid">
+
+        <div class="contact-form-wrap">
+          <form
+            class="contact-form"
+            name="contact"
+            method="POST"
+            netlify
+            action="/success/"
+          >
+            <input type="hidden" name="form-name" value="contact" />
+
+            <div class="form-group">
+              <label for="name">Your Name *</label>
+              <input type="text" id="name" name="name" placeholder="Francois" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="subject">What's this about?</label>
+              <select id="subject" name="subject">
+                <option value="">Select a topic…</option>
+                <option value="venue-tip">I know a venue that should be listed</option>
+                <option value="venue-correction">A venue listing has wrong info</option>
+                <option value="partnership">Partnership or sponsorship</option>
+                <option value="press">Press or media enquiry</option>
+                <option value="feedback">General feedback</option>
+                <option value="other">Something else</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message *</label>
+              <textarea id="message" name="message" rows="6" placeholder="Tell us what's on your mind…" required></textarea>
+            </div>
+
+            <button type="submit" class="button">Send Message →</button>
+          </form>
+        </div>
+
+        <div class="contact-aside">
+          <div class="aside-block">
+            <h3>Know a venue we're missing?</h3>
+            <p>If you've found a great spot that isn't on BiohackMaps yet, drop us a note. We add new venues every week and we love getting tips from the community.</p>
+          </div>
+
+          <div class="aside-block">
+            <h3>Venue owner?</h3>
+            <p>Want your business listed — or upgraded to a verified premium listing? The fastest route is the <a href="/for-business/">For Business page</a>.</p>
+          </div>
+
+          <div class="aside-block">
+            <h3>Prefer email?</h3>
+            <p>Reach us directly at <a href="mailto:francois@biohackmaps.com">francois@biohackmaps.com</a>. We reply within a day or two, usually faster.</p>
+          </div>
+
+          <div class="aside-block">
+            <h3>Follow along</h3>
+            <p>
+              <a href="https://x.com/biohackmaps" target="_blank" rel="noopener">Twitter / X</a> ·
+              <a href="https://instagram.com/biohackmaps" target="_blank" rel="noopener">Instagram</a>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.08) 0%, transparent 65%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-content {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 52px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .section {
+    padding: 4rem 2rem;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  /* Form */
+  .contact-form-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  .form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7a99' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+  }
+
+  .form-group select option {
+    background: var(--surface2);
+    color: var(--text);
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent2);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--muted);
+  }
+
+  .button {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .button:hover {
+    background: var(--accent2);
+    color: var(--black);
+  }
+
+  /* Aside */
+  .contact-aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 0.25rem;
+  }
+
+  .aside-block {
+    border-left: 2px solid var(--border);
+    padding-left: 1.25rem;
+  }
+
+  .aside-block h3 {
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .aside-block p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .aside-block a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  .aside-block a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 3rem 1.5rem;
+    }
+
+    .hero-content h1 {
+      font-size: 36px;
+    }
+
+    .section {
+      padding: 2.5rem 1.5rem;
+    }
+
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .contact-form-wrap {
+      padding: 1.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-content h1 {
+      font-size: 30px;
+    }
+
+    .contact-form-wrap {
+      padding: 1.25rem;
+    }
+  }
+</style>

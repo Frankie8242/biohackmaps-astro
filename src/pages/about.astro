@@ -1,0 +1,418 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="About"
+  description="BiohackMaps was built by biohackers for biohackers — the story behind the world's most complete directory of biohacking venues."
+>
+  <Nav />
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Our Story</p>
+      <h1>We built the map<br />we wished existed</h1>
+      <p class="hero-sub">A directory born out of frustration — and a cold plunge obsession.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-text">
+          <p class="lead">
+            It started the same way it probably started for you. I was trying to find a cold plunge near me, and ended up deep in Reddit threads, dead links, and Google Maps reviews from 2019. It was painful.
+          </p>
+          <p>
+            So I built a spreadsheet. Then a database. Then this. BiohackMaps is the directory I wanted — one place to find every infrared sauna, cryotherapy chamber, float tank, red-light therapy studio, and TRT clinic near you, wherever you are in the world.
+          </p>
+          <p>
+            There's no VC money behind this. No growth-hacking team. Just a founder who takes cold plunges seriously and thinks more people should have easy access to these tools.
+          </p>
+          <p>
+            We're currently tracking <strong>775+ venues</strong> across <strong>35+ cities</strong>, and we add new ones every week. If your favorite spot isn't listed yet, <a href="/contact/">tell us</a> — we'll get it on the map.
+          </p>
+        </div>
+
+        <div class="story-aside">
+          <div class="stat-card">
+            <span class="stat-number">775+</span>
+            <span class="stat-label">Venues tracked</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">35+</span>
+            <span class="stat-label">Cities covered</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">6</span>
+            <span class="stat-label">Modalities indexed</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">Free</span>
+            <span class="stat-label">Always, for searchers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <div class="mission">
+        <p class="eyebrow">What We Believe</p>
+        <h2>Biohacking should be accessible</h2>
+        <p>
+          The best recovery tools used to be locked inside elite sports facilities or expensive spas. That's changing fast — and BiohackMaps exists to help people find these services before they give up and go home.
+        </p>
+        <p>
+          We don't take commissions on bookings. We don't sell your search data. We just want you to find the right venue, quickly.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="modalities">
+        <p class="eyebrow">What We Track</p>
+        <h2>Every major modality, one directory</h2>
+        <div class="modality-grid">
+          <div class="modality-item">
+            <span class="modality-icon">🔥</span>
+            <h3>Infrared Sauna</h3>
+            <p>Deep heat therapy for recovery, detox, and relaxation</p>
+          </div>
+          <div class="modality-item">
+            <span class="modality-icon">🧊</span>
+            <h3>Cryotherapy</h3>
+            <p>Whole-body cold exposure for inflammation and performance</p>
+          </div>
+          <div class="modality-item">
+            <span class="modality-icon">🌊</span>
+            <h3>Float Tanks</h3>
+            <p>Sensory deprivation for deep rest and mental clarity</p>
+          </div>
+          <div class="modality-item">
+            <span class="modality-icon">💡</span>
+            <h3>Red Light Therapy</h3>
+            <p>Photobiomodulation for skin, recovery, and energy</p>
+          </div>
+          <div class="modality-item">
+            <span class="modality-icon">🥶</span>
+            <h3>Cold Plunge</h3>
+            <p>Ice bath immersion for the brave and the obsessed</p>
+          </div>
+          <div class="modality-item">
+            <span class="modality-icon">💉</span>
+            <h3>TRT Clinics</h3>
+            <p>Testosterone replacement therapy and hormone optimisation</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-cta">
+    <div class="container">
+      <div class="cta-block">
+        <h2>Got a venue to add?</h2>
+        <p>If you own a biohacking venue or know one that should be on the map, we want to hear from you.</p>
+        <div class="cta-buttons">
+          <a href="/for-business/" class="button">List Your Venue</a>
+          <a href="/contact/" class="button button-outline">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .hero {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.08) 0%, transparent 65%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-content {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 56px;
+    line-height: 1.05;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.5;
+  }
+
+  .section {
+    padding: 4rem 2rem;
+  }
+
+  .section-dark {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Story */
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .story-text .lead {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+
+  .story-text p {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1.25rem;
+    font-size: 16px;
+  }
+
+  .story-text p strong {
+    color: var(--text);
+  }
+
+  .story-text a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .story-aside {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--accent);
+    letter-spacing: 1px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  /* Mission */
+  .mission {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .mission h2 {
+    font-size: 40px;
+    margin-bottom: 1.25rem;
+  }
+
+  .mission p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 16px;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Modalities */
+  .modalities {
+    text-align: center;
+  }
+
+  .modalities h2 {
+    font-size: 40px;
+    margin-bottom: 2.5rem;
+  }
+
+  .modality-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    text-align: left;
+  }
+
+  .modality-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: border-color 0.2s;
+  }
+
+  .modality-item:hover {
+    border-color: var(--accent);
+  }
+
+  .modality-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .modality-item h3 {
+    font-size: 17px;
+    margin-bottom: 0.5rem;
+  }
+
+  .modality-item p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* CTA */
+  .section-cta {
+    background: radial-gradient(ellipse at 50% 50%, rgba(6,182,212,0.06) 0%, transparent 70%);
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-block {
+    text-align: center;
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .cta-block h2 {
+    font-size: 40px;
+    margin-bottom: 0.75rem;
+  }
+
+  .cta-block p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .button {
+    display: inline-block;
+    padding: 12px 28px;
+    background: var(--accent);
+    color: var(--black);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .button:hover {
+    background: var(--accent2);
+  }
+
+  .button-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 2px solid var(--accent);
+  }
+
+  .button-outline:hover {
+    background: var(--accent);
+    color: var(--black);
+  }
+
+  @media (max-width: 900px) {
+    .story-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .story-aside {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero {
+      padding: 3rem 1.5rem;
+    }
+
+    .hero-content h1 {
+      font-size: 38px;
+    }
+
+    .section {
+      padding: 3rem 1.5rem;
+    }
+
+    .modality-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .story-aside {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .hero-content h1 {
+      font-size: 30px;
+    }
+
+    .modality-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .story-aside {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
