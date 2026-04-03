@@ -1,0 +1,485 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout
+  title="Claim Your Listing"
+  description="Claim or upgrade your BiohackMaps venue listing. Take control of how your venue appears to 2,500+ monthly visitors."
+>
+  <Nav />
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Venue Owners</p>
+      <h1>Claim your BiohackMap listing</h1>
+      <p class="hero-sub">Take control of how your venue appears to 2,500+ monthly visitors.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Success state -->
+      <div class="success-state" id="success-state" style="display:none;">
+        <div class="success-box">
+          <p class="success-icon">✓</p>
+          <h2>Claim received</h2>
+          <p>Thanks — we'll review your submission and follow up within 1–2 business days.</p>
+        </div>
+      </div>
+
+      <!-- Offer cards + form -->
+      <div class="claim-content" id="claim-content">
+        <div class="offer-cards">
+          <div class="card free">
+            <div class="card-header">
+              <p class="card-label">Free Listing</p>
+              <p class="card-price">$0<span>/month</span></p>
+            </div>
+            <ul class="card-features">
+              <li>Your venue in our directory</li>
+              <li>Location, hours & website link</li>
+              <li>Appears in city + modality searches</li>
+              <li>Dedicated venue page</li>
+            </ul>
+            <button class="btn btn-secondary" id="claim-free-btn">Claim free listing</button>
+          </div>
+
+          <div class="card premium">
+            <div class="card-badge">Most popular</div>
+            <div class="card-header">
+              <p class="card-label">
+                <span class="gold-badge">★</span> Premium Verified
+              </p>
+              <p class="card-price">$49<span>/month</span></p>
+            </div>
+            <ul class="card-features">
+              <li>Gold Verified badge</li>
+              <li>Rank #1 in city + modality searches</li>
+              <li>Homepage featured placement</li>
+              <li>Monthly analytics report</li>
+              <li>Full listing control</li>
+              <li>Priority support</li>
+            </ul>
+            <a
+              href="https://buy.stripe.com/cNicN68X16P56rietQ33W01"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-primary"
+            >Upgrade to Premium</a>
+          </div>
+        </div>
+
+        <div class="form-wrap" id="claim-form-wrap">
+          <h2 class="form-heading">Claim your free listing</h2>
+          <p class="form-sub">Fill in the form below and we'll verify your ownership and update your listing.</p>
+
+          <form
+            name="venue-claim"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            action="/claim?success=true"
+          >
+            <input type="hidden" name="form-name" value="venue-claim" />
+            <p class="hidden-field"><label>Don't fill this out: <input name="bot-field" /></label></p>
+            <input type="hidden" name="tier" value="free" id="tier-field" />
+
+            <div class="form-group">
+              <label for="venue-name">Venue name *</label>
+              <input type="text" id="venue-name" name="venue-name" placeholder="Your venue name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="owner-name">Your name *</label>
+              <input type="text" id="owner-name" name="owner-name" placeholder="Your name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Your email *</label>
+              <input type="email" id="email" name="email" placeholder="you@yourvenue.com" required />
+            </div>
+
+            <div class="form-group">
+              <label for="notes">Anything to update on your listing? <span class="optional">(optional)</span></label>
+              <textarea id="notes" name="notes" rows="4" placeholder="Wrong hours, missing services, new photos — let us know."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">Submit claim →</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<script>
+  // Show success state if ?success=true
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('success') === 'true') {
+    const successEl = document.getElementById('success-state');
+    const contentEl = document.getElementById('claim-content');
+    if (successEl) successEl.style.display = 'block';
+    if (contentEl) contentEl.style.display = 'none';
+  }
+
+  // Pre-fill venue name from ?venue= or ?name=
+  const nameParam = params.get('name');
+  const venueParam = params.get('venue');
+  const raw = nameParam || venueParam;
+  if (raw) {
+    const decoded = nameParam
+      ? decodeURIComponent(raw)
+      : decodeURIComponent(raw).replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const field = document.getElementById('venue-name') as HTMLInputElement | null;
+    if (field) field.value = decoded;
+  }
+
+  // Scroll to form when clicking "Claim free listing"
+  document.getElementById('claim-free-btn')?.addEventListener('click', () => {
+    const formWrap = document.getElementById('claim-form-wrap');
+    if (formWrap) {
+      formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      formWrap.classList.add('highlight');
+      setTimeout(() => formWrap.classList.remove('highlight'), 1200);
+    }
+  });
+</script>
+
+<style>
+  .hero {
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.08) 0%, transparent 65%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-content {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .hero-content h1 {
+    font-size: 52px;
+    background: linear-gradient(135deg, var(--accent), #facc15);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+
+  .hero-sub {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .section {
+    padding: 4rem 2rem;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Success state */
+  .success-box {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .success-icon {
+    font-size: 48px;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+
+  .success-box h2 {
+    font-size: 32px;
+    margin-bottom: 0.75rem;
+    color: var(--green);
+  }
+
+  .success-box p:last-child {
+    color: var(--muted);
+    font-size: 15px;
+  }
+
+  /* Offer cards */
+  .offer-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card.premium {
+    border-color: #facc15;
+    background: linear-gradient(160deg, var(--surface) 0%, rgba(250,204,21,0.04) 100%);
+  }
+
+  .card-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #facc15;
+    color: var(--black);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 12px;
+    border-radius: 20px;
+  }
+
+  .card-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .card-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .gold-badge {
+    color: #facc15;
+    font-size: 14px;
+  }
+
+  .card-price {
+    font-size: 36px;
+    font-weight: 700;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    color: var(--text);
+  }
+
+  .card-price span {
+    font-size: 15px;
+    font-weight: 400;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--muted);
+  }
+
+  .card-features {
+    list-style: none;
+    flex: 1;
+    margin-bottom: 1.75rem;
+  }
+
+  .card-features li {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 0.35rem 0;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .card-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 12px;
+  }
+
+  .premium .card-features li {
+    color: var(--text);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    padding: 11px 24px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.18s;
+    font-family: 'DM Sans', sans-serif;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--black);
+  }
+
+  .btn-primary:hover {
+    background: #ea6c0a;
+  }
+
+  .premium .btn-primary {
+    background: #facc15;
+    color: var(--black);
+  }
+
+  .premium .btn-primary:hover {
+    background: #f0bc00;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--accent2);
+    color: var(--accent2);
+  }
+
+  .btn-full {
+    width: 100%;
+  }
+
+  /* Form */
+  .form-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2.5rem;
+    scroll-margin-top: 2rem;
+    transition: box-shadow 0.3s;
+  }
+
+  .form-wrap.highlight {
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  .form-heading {
+    font-size: 28px;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 2rem;
+  }
+
+  .hidden-field {
+    display: none;
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .form-group label {
+    display: block;
+    font-weight: 500;
+    font-size: 13px;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .optional {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.2s;
+    resize: vertical;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--muted);
+  }
+
+  @media (max-width: 640px) {
+    .hero {
+      padding: 3rem 1.5rem;
+    }
+
+    .hero-content h1 {
+      font-size: 36px;
+    }
+
+    .section {
+      padding: 2.5rem 1.25rem;
+    }
+
+    .offer-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .card.premium {
+      order: -1;
+    }
+
+    .form-wrap {
+      padding: 1.75rem;
+    }
+
+    .form-heading {
+      font-size: 24px;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .hero-content h1 {
+      font-size: 30px;
+    }
+
+    .form-wrap {
+      padding: 1.25rem;
+    }
+  }
+</style>
