@@ -18,6 +18,7 @@ export const VENUES: Venue[] = [
     description: 'Hobart Float Wellness Spa & Massage offers float tank and infrared sauna in Hobart, Australia. Rated 4.7★ with 333 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hobartfloatspa@gmail.com',
     slug: 'hobart-float-wellness-spa-massage',
   },
   {
@@ -37,6 +38,7 @@ export const VENUES: Venue[] = [
     description: 'Gravity Wellness offers infrared sauna and float tank in Melbourne, Australia. Rated 4.9★ with 288 verified reviews.',
     verified: true,
     featured: true,
+    email: 'float@gravityfloat.com.au',
     slug: 'gravity-wellness',
   },
   {
@@ -56,6 +58,7 @@ export const VENUES: Venue[] = [
     description: 'Float House & Co offers infrared sauna and float tank in Perth, Australia. Rated 4.9★ with 252 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hello@rhemawellness.com.au',
     slug: 'float-house-co',
   },
   {
@@ -75,6 +78,7 @@ export const VENUES: Venue[] = [
     description: 'Full-service recovery centre with IV therapy, hyperbaric oxygen, cold plunge and infrared sauna on the Gold Coast.',
     verified: true,
     featured: true,
+    email: 'burleigh@p3recovery.com.au',
     slug: 'p3-recovery-burleigh',
   },
   {
@@ -113,6 +117,7 @@ export const VENUES: Venue[] = [
     description: 'Breathe WRL offers cryotherapy, infrared sauna and red light therapy in Adelaide, Australia. Rated 5.0★ with 195 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@breathewrl.com.au',
     slug: 'breathe-wrl',
   },
   {
@@ -132,6 +137,7 @@ export const VENUES: Venue[] = [
     description: 'Bliss Wellness offers float tank and infrared sauna in Adelaide, Australia. Rated 4.9★ with 176 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@blissclinics.com.au',
     slug: 'bliss-wellness',
   },
   {
@@ -170,6 +176,7 @@ export const VENUES: Venue[] = [
     description: 'Breathe Stretch Float offers float tank in Adelaide, Australia. Rated 5.0★ with 125 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@breathestretchfloat.com',
     slug: 'breathe-stretch-float',
   },
   {
@@ -208,6 +215,7 @@ export const VENUES: Venue[] = [
     description: 'Multi-modality wellness hub in Surry Hills offering hyperbaric oxygen, float tanks, infrared sauna and cold plunge.',
     verified: true,
     featured: false,
+    email: 'teambionik@bionikwellness.com.au',
     slug: 'bionik-wellness',
   },
   {
@@ -227,6 +235,7 @@ export const VENUES: Venue[] = [
     description: 'Vital IV Therapy Ascot Vale offers IV therapy in Melbourne, Australia. Rated 4.9★ with 102 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@vitalivtherapy.com.au',
     slug: 'vital-iv-therapy-ascot-vale',
   },
   {
@@ -246,6 +255,7 @@ export const VENUES: Venue[] = [
     description: 'Element Health Centres offers hyperbaric oxygen, cryotherapy, infrared sauna and red light therapy in Perth, Australia. Rated 5.0★ with 54 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@elementcentre.com.au',
     slug: 'element-health-centres',
   },
   {
@@ -265,6 +275,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Canberra City offers float tank and infrared sauna in Canberra, Australia. Rated 5.0★ with 226 verified reviews.',
     verified: true,
     featured: false,
+    email: 'canberracity@citycave.com.au',
     slug: 'city-cave-canberra-city',
   },
   {
@@ -341,6 +352,7 @@ export const VENUES: Venue[] = [
     description: 'Third Space Float & Wellness Studio offers float tank in Barossa Valley, Australia. Rated 4.9★ with 157 verified reviews.',
     verified: true,
     featured: false,
+    email: 'thirdspacewellnessau@gmail.com',
     slug: 'third-space-float-wellness-studio',
   },
   {
@@ -360,6 +372,7 @@ export const VENUES: Venue[] = [
     description: 'Mobile and clinic-based IV vitamin infusion therapy in Lennox Head near Byron Bay.',
     verified: true,
     featured: false,
+    email: 'contactus@infusioniv.com.au',
     slug: 'infusion-iv',
   },
   {
@@ -379,6 +392,7 @@ export const VENUES: Venue[] = [
     description: 'The Infusion Clinic offers IV therapy in Sydney, Australia. Rated 4.8★ with 95 verified reviews.',
     verified: true,
     featured: false,
+    email: 'bookings@infusionclinic.com.au',
     slug: 'the-infusion-clinic',
   },
   {
@@ -455,6 +469,7 @@ export const VENUES: Venue[] = [
     description: 'ETERNA HAUS Longevity Lounge - fka CryoZone offers infrared sauna and cryotherapy in Santa Monica, United States. Rated 5.0★ with 354 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@iloveeterna.com',
     slug: 'eterna-haus-longevity-lounge-fka-cryozone',
   },
   {
@@ -493,6 +508,7 @@ export const VENUES: Venue[] = [
     description: 'RenewMe IV Therapy + Medspa offers IV therapy in Los Angeles, United States. Rated 5.0★ with 301 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@renewmespa.com',
     slug: 'renewme-iv-therapy-medspa',
   },
   {
@@ -550,6 +566,7 @@ export const VENUES: Venue[] = [
     description: 'Cryohealthcare offers cryotherapy in Los Angeles, United States. Rated 4.9★ with 260 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'cryohealthcare',
   },
   {
@@ -569,6 +586,7 @@ export const VENUES: Venue[] = [
     description: 'Alpha Hormones offers TRT clinic in Pasadena, United States. Rated 4.9★ with 232 verified reviews.',
     verified: true,
     featured: false,
+    email: 'contact@alphahormones.com',
     slug: 'alpha-hormones',
   },
   {
@@ -702,6 +720,7 @@ export const VENUES: Venue[] = [
     description: 'Float Clinic offers float tank in Torrance, United States. Rated 4.8★ with 129 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@floatclinic.com',
     slug: 'float-clinic',
   },
   {
@@ -797,6 +816,7 @@ export const VENUES: Venue[] = [
     description: 'OxygenWell Hyperbaric & Regenerative Medicine Center offers infrared sauna and hyperbaric oxygen in Tarzana, United States. Rated 5.0★ with 61 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@oxygenwell.com',
     slug: 'oxygenwell-hyperbaric-regenerative-medicine-center',
   },
   {
@@ -816,6 +836,7 @@ export const VENUES: Venue[] = [
     description: 'LA Cryo offers cryotherapy in Pasadena, United States. Rated 4.9★ with 54 verified reviews.',
     verified: true,
     featured: false,
+    email: 'lacryospa@gmail.com',
     slug: 'la-cryo',
   },
   {
@@ -835,6 +856,7 @@ export const VENUES: Venue[] = [
     description: 'Oxynergy2 Hyperbaric Oxygen & Longevity Center offers hyperbaric oxygen in Beverly Hills, United States. Rated 5.0★ with 53 verified reviews.',
     verified: true,
     featured: false,
+    email: 'help@oxynergy2.com',
     slug: 'oxynergy2-hyperbaric-oxygen-longevity-center',
   },
   {
@@ -873,6 +895,7 @@ export const VENUES: Venue[] = [
     description: 'AWAKEN Wellness and Recovery - Cryotherapy, Infrared Sauna, Red Light Therapy and Halotherapy offers infrared sauna, cryotherapy and red light therapy in Granada Hills, United States. Rated 4.8★ with 52 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@awakenbylereve.com',
     slug: 'awaken-wellness-and-recovery-cryotherapy-infrared-sauna-red-',
   },
   {
@@ -892,6 +915,7 @@ export const VENUES: Venue[] = [
     description: 'Men\'s Health Clinic Australia offers TRT clinic in Sydney, Australia. Rated 4.9★ with 1352 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@mhc.com.au',
     slug: 'men-s-health-clinic-australia',
   },
   {
@@ -911,6 +935,7 @@ export const VENUES: Venue[] = [
     description: 'Sydney Women\'s Wellness offers women\'s health in Greenwich, Australia. Rated 5.0★ with 102 verified reviews.',
     verified: true,
     featured: false,
+    email: 'reception@sydneywomenswellness.com.au',
     slug: 'sydney-women-s-wellness',
   },
   {
@@ -930,6 +955,7 @@ export const VENUES: Venue[] = [
     description: 'Innerlight Sauna offers infrared sauna in Camperdown, Australia. Rated 5.0★ with 65 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@innerlightsauna.com.au',
     slug: 'innerlight-sauna',
   },
   {
@@ -949,6 +975,7 @@ export const VENUES: Venue[] = [
     description: '1Remedy offers infrared sauna in Potts Point, Australia. Rated 5.0★ with 159 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@1remedy.com.au',
     slug: '1remedy',
   },
   {
@@ -968,6 +995,7 @@ export const VENUES: Venue[] = [
     description: 'The Sauna Hub offers infrared sauna in Dee Why, Australia. Rated 5.0★ with 455 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@thesaunahub.com.au',
     slug: 'the-sauna-hub',
   },
   {
@@ -1006,6 +1034,7 @@ export const VENUES: Venue[] = [
     description: 'Nimbus Co Infrared Sauna Manly offers infrared sauna in Manly, Australia. Rated 5.0★ with 91 verified reviews.',
     verified: true,
     featured: false,
+    email: 'ecom-swiper@11.css',
     slug: 'nimbus-co-infrared-sauna-manly',
   },
   {
@@ -1025,6 +1054,7 @@ export const VENUES: Venue[] = [
     description: 'Feel Good Nation - Wellness & Recovery offers infrared sauna in Leichhardt, Australia. Rated 5.0★ with 273 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@feelgoodnation.com.au',
     slug: 'feel-good-nation-wellness-recovery',
   },
   {
@@ -1044,6 +1074,7 @@ export const VENUES: Venue[] = [
     description: 'True Float offers infrared sauna and float tank in Sydney, Australia. Rated 4.9★ with 282 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@truefloat.com.au',
     slug: 'true-float',
   },
   {
@@ -1101,6 +1132,7 @@ export const VENUES: Venue[] = [
     description: 'Sydney Float Centre offers float tank in Sydney, Australia. Rated 4.7★ with 120 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@sydneyfloatcentre.com.au',
     slug: 'sydney-float-centre',
   },
   {
@@ -1120,6 +1152,7 @@ export const VENUES: Venue[] = [
     description: 'Cryospa Clinics offers cryotherapy in Sydney, Australia. Rated 5.0★ with 347 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@cryospaclinics.com.au',
     slug: 'cryospa-clinics',
   },
   {
@@ -1139,6 +1172,7 @@ export const VENUES: Venue[] = [
     description: 'CRYO Strathfield offers cryotherapy in Strathfield, Australia. Rated 4.9★ with 56 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@stayyoungcryo.com.au',
     slug: 'cryo-strathfield',
   },
   {
@@ -1158,6 +1192,7 @@ export const VENUES: Venue[] = [
     description: 'IV League Drips Sydney offers IV therapy in Mascot, Australia. Rated 5.0★ with 303 verified reviews.',
     verified: true,
     featured: true,
+    email: 'enquiries@ivleaguedrips.com',
     slug: 'iv-league-drips-sydney',
   },
   {
@@ -1177,6 +1212,7 @@ export const VENUES: Venue[] = [
     description: 'Elevate IV Drips offers IV therapy in Woolloomooloo, Australia. Rated 5.0★ with 72 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@elevateiv.com.au',
     slug: 'elevate-iv-drips',
   },
   {
@@ -1215,6 +1251,7 @@ export const VENUES: Venue[] = [
     description: 'IV Plus offers IV therapy in Belmore, Australia. Rated 4.8★ with 155 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@ivplusdrips.com.au',
     slug: 'iv-plus',
   },
   {
@@ -1253,6 +1290,7 @@ export const VENUES: Venue[] = [
     description: 'Men\'s Health Melbourne - Associate Professor Darren Katz offers TRT clinic and women\'s health in Melbourne, Australia. Rated 4.8★ with 163 verified reviews.',
     verified: true,
     featured: false,
+    email: 'reception@menshealthmelbourne.com.au',
     slug: 'men-s-health-melbourne-associate-professor-darren-katz',
   },
   {
@@ -1272,6 +1310,7 @@ export const VENUES: Venue[] = [
     description: 'Jean Hailes Clinics - Jean Hailes Melbourne CBD Clinic offers TRT clinic and women\'s health in Melbourne, Australia. Rated 4.8★ with 488 verified reviews.',
     verified: true,
     featured: true,
+    email: 'clinic@jeanhailes.org.au',
     slug: 'jean-hailes-clinics-jean-hailes-melbourne-cbd-clinic',
   },
   {
@@ -1329,6 +1368,7 @@ export const VENUES: Venue[] = [
     description: 'Kylin Sauna - Blackburn offers infrared sauna in Blackburn, Australia. Rated 4.9★ with 151 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@kylinaustralia.com.au',
     slug: 'kylin-sauna-blackburn',
   },
   {
@@ -1348,6 +1388,7 @@ export const VENUES: Venue[] = [
     description: 'My Recovery Lounge offers infrared sauna in Port Melbourne, Australia. Rated 4.9★ with 282 verified reviews.',
     verified: true,
     featured: false,
+    email: 'myrecoverylounge@gmail.com',
     slug: 'my-recovery-lounge',
   },
   {
@@ -1365,6 +1406,7 @@ export const VENUES: Venue[] = [
     description: 'Sauna Goose offers infrared sauna in Melbourne, Australia. Rated 5.0★ with 52 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@saunagoose.com',
     slug: 'sauna-goose',
   },
   {
@@ -1384,6 +1426,7 @@ export const VENUES: Venue[] = [
     description: 'Lars Ice Bath offers infrared sauna and cold plunge in Middle Park, Australia. Rated 4.9★ with 51 verified reviews.',
     verified: true,
     featured: false,
+    email: 'larsmpicebath@gmail.com',
     slug: 'lars-ice-bath',
   },
   {
@@ -1403,6 +1446,7 @@ export const VENUES: Venue[] = [
     description: 'Beyond Rest - Collingwood: Float & Infrared Sauna & Ice Bath Contrast offers infrared sauna, cold plunge and float tank in Melbourne, Australia. Rated 4.9★ with 157 verified reviews.',
     verified: true,
     featured: false,
+    email: 'collingwood@beyondrest.com.au',
     slug: 'beyond-rest-collingwood-float-infrared-sauna-ice-bath-contra',
   },
   {
@@ -1422,6 +1466,7 @@ export const VENUES: Venue[] = [
     description: 'ReGen Wellness offers infrared sauna in Hampton, Australia. Rated 5.0★ with 128 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@regenwellness.com.au',
     slug: 'regen-wellness',
   },
   {
@@ -1460,6 +1505,7 @@ export const VENUES: Venue[] = [
     description: 'Tally Floatation Therapy offers infrared sauna and float tank in Yarraville, Australia. Rated 4.7★ with 289 verified reviews.',
     verified: true,
     featured: false,
+    email: 'welcome@tallyfloathouse.com.au',
     slug: 'tally-floatation-therapy',
   },
   {
@@ -1479,6 +1525,7 @@ export const VENUES: Venue[] = [
     description: 'Beyond Rest Hawthorn: Float, Infrared Sauna, Ice bath, Red Light Therapy, Hocatt offers infrared sauna, cold plunge, float tank and red light therapy in Hawthorn East, Australia. Rated 4.9★ with 307 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hawthorn@beyondrest.com.au',
     slug: 'beyond-rest-hawthorn-float-infrared-sauna-ice-bath-red-light',
   },
   {
@@ -1498,6 +1545,7 @@ export const VENUES: Venue[] = [
     description: 'Urban Float offers float tank in Ringwood, Australia. Rated 4.8★ with 390 verified reviews.',
     verified: true,
     featured: true,
+    email: 'ringwood@urbanfloat.com.au',
     slug: 'urban-float',
   },
   {
@@ -1517,6 +1565,7 @@ export const VENUES: Venue[] = [
     description: 'Rest House Float Centre offers infrared sauna and float tank in Hampton East, Australia. Rated 4.8★ with 159 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@resthouse.com.au',
     slug: 'rest-house-float-centre',
   },
   {
@@ -1555,6 +1604,7 @@ export const VENUES: Venue[] = [
     description: 'IV Health: IV Infusion Clinic Glen Waverley offers IV therapy in Glen Waverley, Australia. Rated 4.8★ with 131 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@ivhealth.com.au',
     slug: 'iv-health-iv-infusion-clinic-glen-waverley',
   },
   {
@@ -1574,6 +1624,7 @@ export const VENUES: Venue[] = [
     description: 'FRESH Treatments offers IV therapy and infrared sauna in Melbourne, Australia. Rated 5.0★ with 494 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@freshtreatments.com.au',
     slug: 'fresh-treatments',
   },
   {
@@ -1593,6 +1644,7 @@ export const VENUES: Venue[] = [
     description: 'Vikasati Bathhouse Red Hill offers infrared sauna in Red Hill, Australia. Rated 4.9★ with 441 verified reviews.',
     verified: true,
     featured: true,
+    email: 'toowoomba@vikasati.com.au',
     slug: 'vikasati-bathhouse-red-hill',
   },
   {
@@ -1612,6 +1664,7 @@ export const VENUES: Venue[] = [
     description: 'Kylin Sauna - Seventeen Mile Rocks offers infrared sauna in Seventeen Mile Rocks, Australia. Rated 4.7★ with 59 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@kylinaustralia.com.au',
     slug: 'kylin-sauna-seventeen-mile-rocks',
   },
   {
@@ -1669,6 +1722,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Newstead offers infrared sauna in Newstead, Australia. Rated 4.8★ with 345 verified reviews.',
     verified: true,
     featured: true,
+    email: 'newstead@citycave.com.au',
     slug: 'city-cave-newstead',
   },
   {
@@ -1688,6 +1742,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Float & Wellness Centre Springfield offers float tank in Springfield Lakes, Australia. Rated 4.9★ with 445 verified reviews.',
     verified: true,
     featured: true,
+    email: 'springfield@citycave.com.au',
     slug: 'city-cave-float-wellness-centre-springfield',
   },
   {
@@ -1707,6 +1762,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Float & Wellness Centre Ipswich offers float tank in West Ipswich, Australia. Rated 4.9★ with 494 verified reviews.',
     verified: true,
     featured: true,
+    email: 'ipswich@citycave.com.au',
     slug: 'city-cave-float-wellness-centre-ipswich',
   },
   {
@@ -1726,6 +1782,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Everton Park offers infrared sauna in Everton Park, Australia. Rated 4.8★ with 295 verified reviews.',
     verified: true,
     featured: false,
+    email: 'evertonpark@citycave.com.au',
     slug: 'city-cave-everton-park',
   },
   {
@@ -1781,6 +1838,7 @@ export const VENUES: Venue[] = [
     description: 'ReVitaDrip Mobile IV Services offers IV therapy in Hope Island, Australia. Rated 5.0★ with 62 verified reviews.',
     verified: true,
     featured: false,
+    email: 'enquiry@revitadrip.com.au',
     slug: 'revitadrip-mobile-iv-services',
   },
   {
@@ -1800,6 +1858,7 @@ export const VENUES: Venue[] = [
     description: 'Cellular Beauty offers IV therapy in Helensvale, Australia. Rated 5.0★ with 349 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hello@cellularbeauty.com.au',
     slug: 'cellular-beauty',
   },
   {
@@ -1819,6 +1878,7 @@ export const VENUES: Venue[] = [
     description: 'Sauna Warehouse Perth offers infrared sauna in Joondalup, Australia. Rated 4.9★ with 94 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@saunawarehouse.com.au',
     slug: 'sauna-warehouse-perth',
   },
   {
@@ -1838,6 +1898,7 @@ export const VENUES: Venue[] = [
     description: 'Clear Mind Studio offers infrared sauna in Inglewood, Australia. Rated 4.9★ with 770 verified reviews.',
     verified: true,
     featured: true,
+    email: 'enquiries@clearmindstudio.com',
     slug: 'clear-mind-studio',
   },
   {
@@ -1857,6 +1918,7 @@ export const VENUES: Venue[] = [
     description: 'Sweat and Chill - Sauna and Ice Bath North Beach offers infrared sauna and cold plunge in North Beach, Australia. Rated 5.0★ with 131 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@sweatandchill.com.au',
     slug: 'sweat-and-chill-sauna-and-ice-bath-north-beach',
   },
   {
@@ -1876,6 +1938,7 @@ export const VENUES: Venue[] = [
     description: 'Salt Float Studio offers float tank in South Perth, Australia. Rated 4.7★ with 202 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@saltfloatstudio.com.au',
     slug: 'salt-float-studio',
   },
   {
@@ -1914,6 +1977,7 @@ export const VENUES: Venue[] = [
     description: 'Thrive Wellness Co - IV Infusions offers IV therapy in Stirling, Australia. Rated 5.0★ with 67 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@thrivewellnessco.com.au',
     slug: 'thrive-wellness-co-iv-infusions',
   },
   {
@@ -1932,6 +1996,7 @@ export const VENUES: Venue[] = [
     description: 'Studio2 Hyperbaric Oxygen Therapy Cottesloe offers hyperbaric oxygen in Perth, Australia. Rated 5.0★ with 66 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@studio2hbot.com.au',
     slug: 'studio2-hyperbaric-oxygen-therapy-cottesloe',
   },
   {
@@ -1970,6 +2035,7 @@ export const VENUES: Venue[] = [
     description: 'Dripclub Norwood offers IV therapy in Norwood, Australia. Rated 5.0★ with 91 verified reviews.',
     verified: true,
     featured: false,
+    email: 'support@thedripclub.com.au',
     slug: 'dripclub-norwood',
   },
   {
@@ -1989,6 +2055,7 @@ export const VENUES: Venue[] = [
     description: 'Dripclub Glenelg offers IV therapy in Adelaide, Australia. Rated 5.0★ with 100 verified reviews.',
     verified: true,
     featured: false,
+    email: 'support@thedripclub.com.au',
     slug: 'dripclub-glenelg',
   },
   {
@@ -2007,6 +2074,7 @@ export const VENUES: Venue[] = [
     description: 'Dripclub Unley offers IV therapy in Unley, Australia. Rated 4.8★ with 72 verified reviews.',
     verified: true,
     featured: false,
+    email: 'support@thedripclub.com.au',
     slug: 'dripclub-unley',
   },
   {
@@ -2045,6 +2113,7 @@ export const VENUES: Venue[] = [
     description: 'Lakeside Wellness offers infrared sauna in Canberra, Australia. Rated 4.9★ with 63 verified reviews.',
     verified: true,
     featured: false,
+    email: 'reception@lakesidewellness.com.au',
     slug: 'lakeside-wellness',
   },
   {
@@ -2083,6 +2152,7 @@ export const VENUES: Venue[] = [
     description: 'Optimal Health Clinic offers TRT clinic in Mermaid Beach, Australia. Rated 4.7★ with 71 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@optimalhealthclinic.com.au',
     slug: 'optimal-health-clinic',
   },
   {
@@ -2102,6 +2172,7 @@ export const VENUES: Venue[] = [
     description: 'Her Medical - Gold Coast Women\'s Health Specialist offers TRT clinic and women\'s health in Gold Coast, Australia. Rated 4.8★ with 537 verified reviews.',
     verified: true,
     featured: true,
+    email: 'reception@hermedical.com.au',
     slug: 'her-medical-gold-coast-women-s-health-specialist',
   },
   {
@@ -2140,6 +2211,7 @@ export const VENUES: Venue[] = [
     description: 'Wellness Sanctuary - Gold Coast offers TRT clinic and women\'s health in Gold Coast, Australia. Rated 4.8★ with 57 verified reviews.',
     verified: true,
     featured: false,
+    email: 'admin@wellnesssanctuary.au',
     slug: 'wellness-sanctuary-gold-coast',
   },
   {
@@ -2271,6 +2343,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Maroochydore offers infrared sauna in Sunshine Coast, Australia. Rated 4.9★ with 436 verified reviews.',
     verified: true,
     featured: true,
+    email: 'maroochydore@citycave.com.au',
     slug: 'city-cave-maroochydore',
   },
   {
@@ -2290,6 +2363,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Kawana offers infrared sauna in Birtinya, Australia. Rated 4.9★ with 351 verified reviews.',
     verified: true,
     featured: true,
+    email: 'marketing@citycave.com.au',
     slug: 'city-cave-kawana',
   },
   {
@@ -2309,6 +2383,7 @@ export const VENUES: Venue[] = [
     description: 'TLC Recovery offers infrared sauna in Alexandra Headland, Australia. Rated 4.9★ with 155 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@tlcrecovery.com.au',
     slug: 'tlc-recovery',
   },
   {
@@ -2328,6 +2403,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Caloundra offers infrared sauna in Sunshine Coast, Australia. Rated 4.9★ with 371 verified reviews.',
     verified: true,
     featured: true,
+    email: 'caloundra@citycave.com.au',
     slug: 'city-cave-caloundra',
   },
   {
@@ -2347,6 +2423,7 @@ export const VENUES: Venue[] = [
     description: 'FloCryo offers cryotherapy in Bokarina, Australia. Rated 5.0★ with 118 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@flocryo.com.au',
     slug: 'flocryo',
   },
   {
@@ -2385,6 +2462,7 @@ export const VENUES: Venue[] = [
     description: 'Thalassa Spa offers infrared sauna in Mooloolaba, Australia. Rated 4.9★ with 326 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hello@thalassaspa.com.au',
     slug: 'thalassa-spa',
   },
   {
@@ -2404,6 +2482,7 @@ export const VENUES: Venue[] = [
     description: 'Dr Hannah Chapman offers TRT clinic and women\'s health in Hobart, Australia. Rated 4.9★ with 52 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@drhannah.au',
     slug: 'dr-hannah-chapman',
   },
   {
@@ -2422,6 +2501,7 @@ export const VENUES: Venue[] = [
     description: 'Sauna Boat Tasmania offers infrared sauna in Kettering, Australia. Rated 5.0★ with 93 verified reviews.',
     verified: true,
     featured: false,
+    email: 'gday@saunaboattasmania.com.au',
     slug: 'sauna-boat-tasmania',
   },
   {
@@ -2460,6 +2540,7 @@ export const VENUES: Venue[] = [
     description: 'Cultivate Newcastle offers IV therapy and infrared sauna in Newcastle, Australia. Rated 5.0★ with 75 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@cultivaterecovery.com.au',
     slug: 'cultivate-newcastle',
   },
   {
@@ -2479,6 +2560,7 @@ export const VENUES: Venue[] = [
     description: 'Zadig - Infrared Sauna Studio offers infrared sauna in Newcastle, Australia. Rated 4.9★ with 67 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@zadigstudio.com.au',
     slug: 'zadig-infrared-sauna-studio',
   },
   {
@@ -2535,6 +2617,7 @@ export const VENUES: Venue[] = [
     description: 'Saunaus offers infrared sauna in Wollongong, Australia. Rated 5.0★ with 241 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@saunaus.com.au',
     slug: 'saunaus',
   },
   {
@@ -2554,6 +2637,7 @@ export const VENUES: Venue[] = [
     description: 'iFlow Drips offers IV therapy in Corrimal, Australia. Rated 5.0★ with 51 verified reviews.',
     verified: true,
     featured: false,
+    email: 'iflowdrips@gmail.com',
     slug: 'iflow-drips',
   },
   {
@@ -2573,6 +2657,7 @@ export const VENUES: Venue[] = [
     description: 'Healthspan offers infrared sauna in Miami, United States. Rated 5.0★ with 200 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@healthspanrecovery.com',
     slug: 'healthspan-mia',
   },
   {
@@ -2592,6 +2677,7 @@ export const VENUES: Venue[] = [
     description: 'The Plunge and Sauna Method offers infrared sauna in Miami, United States. Rated 4.9★ with 90 verified reviews.',
     verified: true,
     featured: false,
+    email: 'rahv3@yahoo.com',
     slug: 'the-plunge-and-sauna-method-mia',
   },
   {
@@ -2630,6 +2716,7 @@ export const VENUES: Venue[] = [
     description: 'Centner Wellness Gables Mindfulness & Biohacking, Cold Plunge, Float Pods, IVs, PEMF. Insomnia & Pain Relief. offers cold plunge and float tank in Miami, United States. Rated 5.0★ with 132 verified reviews.',
     verified: true,
     featured: false,
+    email: 'serenergysmartketing@gmail.com',
     slug: 'centner-wellness-gables-mindfulness-biohacking-cold-plunge-float-pods-ivs-pemf-insomnia-pain-relief-mia',
   },
   {
@@ -2649,6 +2736,7 @@ export const VENUES: Venue[] = [
     description: 'City Cave Float & Wellness Spa Flagler Village offers infrared sauna and float tank in Miami, United States. Rated 4.9★ with 403 verified reviews.',
     verified: true,
     featured: false,
+    email: 'support@citycave.com',
     slug: 'city-cave-float-wellness-spa-flagler-village-mia',
   },
   {
@@ -2668,6 +2756,7 @@ export const VENUES: Venue[] = [
     description: 'Float8 Delray Beach offers float tank in Miami, United States. Rated 4.9★ with 56 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@float8ion.com',
     slug: 'float8-delray-beach-mia',
   },
   {
@@ -2725,6 +2814,7 @@ export const VENUES: Venue[] = [
     description: 'ELIXR IV Therapy - Brickell Miami offers IV therapy and infrared sauna in Miami, United States. Rated 4.9★ with 205 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'elixr-iv-therapy-brickell-miami-mia',
   },
   {
@@ -2744,6 +2834,7 @@ export const VENUES: Venue[] = [
     description: 'Drip Wellness - Concierge IV Therapy & Functional Medicine offers IV therapy in Miami, United States. Rated 5.0★ with 85 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@dripmiamihealth.com',
     slug: 'drip-wellness-concierge-iv-therapy-functional-medicine-mia',
   },
   {
@@ -2763,6 +2854,7 @@ export const VENUES: Venue[] = [
     description: 'Key Basis IV & Wellness | Mobile IV Drip Therapy Miami offers IV therapy in Miami, United States. Rated 5.0★ with 88 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@keybasisiv.com',
     slug: 'key-basis-iv-wellness-mobile-iv-drip-therapy-miami-mia',
   },
   {
@@ -2782,6 +2874,7 @@ export const VENUES: Venue[] = [
     description: 'REVIV Miami Beach | Mobile IV Therapy offers IV therapy in Miami, United States. Rated 4.9★ with 286 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@revivme.com',
     slug: 'reviv-miami-beach-mobile-iv-therapy-mia',
   },
   {
@@ -2820,6 +2913,7 @@ export const VENUES: Venue[] = [
     description: 'REVIV - IV Therapy | NAD+ | Glutathione | B12 Shots offers IV therapy in Miami, United States. Rated 4.8★ with 54 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@revivme.com',
     slug: 'reviv-iv-therapy-nad-glutathione-b12-shots-mia',
   },
   {
@@ -2858,6 +2952,7 @@ export const VENUES: Venue[] = [
     description: 'Hyperbaric Medical Solutions offers hyperbaric oxygen in Miami, United States. Rated 4.9★ with 51 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@hyperbaricmedicalsolutions.com',
     slug: 'hyperbaric-medical-solutions-mia',
   },
   {
@@ -2877,6 +2972,7 @@ export const VENUES: Venue[] = [
     description: 'Alive Miami - IV Therapy | Peptides | NAD+ | Exosomes offers IV therapy in Miami, United States. Rated 5.0★ with 65 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@alivemiami.com',
     slug: 'alive-miami-iv-therapy-peptides-nad-exosomes-mia',
   },
   {
@@ -2896,6 +2992,7 @@ export const VENUES: Venue[] = [
     description: 'TRT Miami offers TRT clinic in Miami, United States. Rated 4.9★ with 53 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@trtmiami.com',
     slug: 'trt-miami-mia',
   },
   {
@@ -2953,6 +3050,7 @@ export const VENUES: Venue[] = [
     description: 'Florida Men\'s Health Center offers TRT clinic and IV therapy in Miami, United States. Rated 5.0★ with 228 verified reviews.',
     verified: true,
     featured: false,
+    email: 'ecohen@floridamenshealth.com',
     slug: 'florida-men-s-health-center-mia',
   },
   {
@@ -2972,6 +3070,7 @@ export const VENUES: Venue[] = [
     description: 'South Florida Men\'s Health offers TRT clinic in Miami, United States. Rated 5.0★ with 169 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@southfloridamenshealth.com',
     slug: 'south-florida-men-s-health-mia',
   },
   {
@@ -3010,6 +3109,7 @@ export const VENUES: Venue[] = [
     description: 'Elite HRT Wellness TRT P-shots -Low T- Erectile Dysfunction-Peptide - Miami Weight Loss -Pain Relief offers TRT clinic and women\'s health in Miami, United States. Rated 4.8★ with 58 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@elitehrtwellness.com',
     slug: 'elite-hrt-wellness-trt-p-shots-low-t-erectile-dysfunction-peptide-miami-weight-loss-pain-relief-mia',
   },
   {
@@ -3029,6 +3129,7 @@ export const VENUES: Venue[] = [
     description: 'Empower Men\'s Health Clinic offers TRT clinic and women\'s health in Miami, United States. Rated 5.0★ with 165 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hi@mystore.com',
     slug: 'empower-men-s-health-clinic-mia',
   },
   {
@@ -3048,6 +3149,7 @@ export const VENUES: Venue[] = [
     description: 'Miami Women\'s Health Associates offers TRT clinic and women\'s health in Miami, United States. Rated 4.9★ with 675 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@miamiwomensobgyn.com',
     slug: 'miami-women-s-health-associates-mia',
   },
   {
@@ -3067,6 +3169,7 @@ export const VENUES: Venue[] = [
     description: 'Trusted Women\'s Health Center offers TRT clinic and women\'s health in Miami, United States. Rated 4.9★ with 134 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'trusted-women-s-health-center-mia',
   },
   {
@@ -3143,6 +3246,7 @@ export const VENUES: Venue[] = [
     description: 'Perspire Sauna Studio Flatiron offers infrared sauna in New York City, United States. Rated 4.9★ with 73 verified reviews.',
     verified: true,
     featured: false,
+    email: 'flatiron@perspiresaunastudio.com',
     slug: 'perspire-sauna-studio-flatiron-nyc',
   },
   {
@@ -3162,6 +3266,7 @@ export const VENUES: Venue[] = [
     description: 'Elahni offers infrared sauna in New York City, United States. Rated 5.0★ with 89 verified reviews.',
     verified: true,
     featured: false,
+    email: 'team@elahni.com',
     slug: 'elahni-nyc',
   },
   {
@@ -3181,6 +3286,7 @@ export const VENUES: Venue[] = [
     description: 'Recoverie - Wellness Club offers infrared sauna in New York City, United States. Rated 4.9★ with 247 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@recoverienyc.com',
     slug: 'recoverie-wellness-club-nyc',
   },
   {
@@ -3200,6 +3306,7 @@ export const VENUES: Venue[] = [
     description: 'Vessel Floats offers float tank in New York City, United States. Rated 4.9★ with 443 verified reviews.',
     verified: true,
     featured: false,
+    email: 'contact@vesselfloats.com',
     slug: 'vessel-floats-nyc',
   },
   {
@@ -3219,6 +3326,7 @@ export const VENUES: Venue[] = [
     description: 'Lift / Next Level Floats offers float tank in New York City, United States. Rated 4.9★ with 590 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@liftfloats.com',
     slug: 'lift-next-level-floats-nyc',
   },
   {
@@ -3238,6 +3346,7 @@ export const VENUES: Venue[] = [
     description: 'Reset Float offers infrared sauna and float tank in New York City, United States. Rated 4.9★ with 183 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'reset-float-nyc',
   },
   {
@@ -3257,6 +3366,7 @@ export const VENUES: Venue[] = [
     description: 'REVIV New York - IV Therapy | NAD+ | Glutathione | B12 offers IV therapy in New York City, United States. Rated 4.9★ with 426 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@revivme.com',
     slug: 'reviv-new-york-iv-therapy-nad-glutathione-b12-nyc',
   },
   {
@@ -3276,6 +3386,7 @@ export const VENUES: Venue[] = [
     description: 'Best IV Drips- Mobile IV Therapy NYC offers IV therapy in New York City, United States. Rated 5.0★ with 100 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@bestivdrips.com',
     slug: 'best-iv-drips-mobile-iv-therapy-nyc-nyc',
   },
   {
@@ -3295,6 +3406,7 @@ export const VENUES: Venue[] = [
     description: 'Drip Alchemy NYC offers IV therapy in New York City, United States. Rated 5.0★ with 89 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@dripalchemynyc.com',
     slug: 'drip-alchemy-nyc-nyc',
   },
   {
@@ -3333,6 +3445,7 @@ export const VENUES: Venue[] = [
     description: 'Manhattan IV Therapy offers IV therapy in New York City, United States. Rated 5.0★ with 368 verified reviews.',
     verified: true,
     featured: false,
+    email: 'pm@mmedicalarts.com',
     slug: 'manhattan-iv-therapy-nyc',
   },
   {
@@ -3352,6 +3465,7 @@ export const VENUES: Venue[] = [
     description: 'Mobile IV Drip offers IV therapy in New York City, United States. Rated 5.0★ with 317 verified reviews.',
     verified: true,
     featured: false,
+    email: 'bookings@mobileivdrip.com',
     slug: 'mobile-iv-drip-nyc',
   },
   {
@@ -3390,6 +3504,7 @@ export const VENUES: Venue[] = [
     description: 'Best IV Drips- Mobile IV Therapy offers IV therapy in New York City, United States. Rated 5.0★ with 82 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@bestivdrips.com',
     slug: 'best-iv-drips-mobile-iv-therapy-nyc',
   },
   {
@@ -3409,6 +3524,7 @@ export const VENUES: Venue[] = [
     description: 'MD Hyperbaric offers hyperbaric oxygen in New York City, United States. Rated 5.0★ with 54 verified reviews.',
     verified: true,
     featured: false,
+    email: 'contact@mdhyperbaric.com',
     slug: 'md-hyperbaric-nyc',
   },
   {
@@ -3428,6 +3544,7 @@ export const VENUES: Venue[] = [
     description: 'Hyperbaric Medicine and Wound Treatment Center of Queens offers hyperbaric oxygen in New York City, United States. Rated 4.7★ with 76 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@hbotq.com',
     slug: 'hyperbaric-medicine-and-wound-treatment-center-of-queens-nyc',
   },
   {
@@ -3447,6 +3564,7 @@ export const VENUES: Venue[] = [
     description: 'Red Light Therapy NY offers red light therapy in New York City, United States. Rated 5.0★ with 265 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@redlighttherapyny.com',
     slug: 'red-light-therapy-ny-nyc',
   },
   {
@@ -3561,6 +3679,7 @@ export const VENUES: Venue[] = [
     description: 'Sauna Social Club offers infrared sauna in London, United Kingdom. Rated 4.9★ with 526 verified reviews.',
     verified: true,
     featured: true,
+    email: 'bookings@saunasocialclub.co.uk',
     slug: 'sauna-social-club-lon',
   },
   {
@@ -3599,6 +3718,7 @@ export const VENUES: Venue[] = [
     description: 'Lowlu Sauna & Plunge @ The Padel Yard offers infrared sauna in London, United Kingdom. Rated 4.7★ with 56 verified reviews.',
     verified: true,
     featured: false,
+    email: 'support@lowlu.co',
     slug: 'lowlu-sauna-plunge-the-padel-yard-lon',
   },
   {
@@ -3618,6 +3738,7 @@ export const VENUES: Venue[] = [
     description: 'Stoke Newington Sauna offers infrared sauna in London, United Kingdom. Rated 4.8★ with 94 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@stokenewingtonsauna.com',
     slug: 'stoke-newington-sauna-lon',
   },
   {
@@ -3637,6 +3758,7 @@ export const VENUES: Venue[] = [
     description: 'Community Sauna Baths - Hackney Wick offers infrared sauna in London, United Kingdom. Rated 4.8★ with 660 verified reviews.',
     verified: true,
     featured: true,
+    email: 'admin@community-sauna.co.uk',
     slug: 'community-sauna-baths-hackney-wick-lon',
   },
   {
@@ -3656,6 +3778,7 @@ export const VENUES: Venue[] = [
     description: 'Sweheat Sauna offers infrared sauna in London, United Kingdom. Rated 4.8★ with 142 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@sweheatsauna.co.uk',
     slug: 'sweheat-sauna-lon',
   },
   {
@@ -3694,6 +3817,7 @@ export const VENUES: Venue[] = [
     description: 'Banya No.1 - Hoxton offers infrared sauna in London, United Kingdom. Rated 4.8★ with 789 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hoxton@gobanya.co.uk',
     slug: 'banya-no-1-hoxton-lon',
   },
   {
@@ -3713,6 +3837,7 @@ export const VENUES: Venue[] = [
     description: 'Float Hub offers float tank in London, United Kingdom. Rated 4.8★ with 217 verified reviews.',
     verified: true,
     featured: false,
+    email: 'team@floathub.co.uk',
     slug: 'float-hub-lon',
   },
   {
@@ -3751,6 +3876,7 @@ export const VENUES: Venue[] = [
     description: 'Float Station offers float tank in London, United Kingdom. Rated 5.0★ with 269 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@floatstation.com',
     slug: 'float-station-lon',
   },
   {
@@ -3770,6 +3896,7 @@ export const VENUES: Venue[] = [
     description: 'London Float Therapy offers float tank in London, United Kingdom. Rated 4.7★ with 139 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@londonfloattherapy.com',
     slug: 'london-float-therapy-lon',
   },
   {
@@ -3865,6 +3992,7 @@ export const VENUES: Venue[] = [
     description: 'IV Drip London - Ozone Therapy offers IV therapy in London, United Kingdom. Rated 4.9★ with 145 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@ivdrip.uk',
     slug: 'iv-drip-london-ozone-therapy-lon',
   },
   {
@@ -3960,6 +4088,7 @@ export const VENUES: Venue[] = [
     description: 'NUMA Hyperbaric Oxygen Therapy | London offers hyperbaric oxygen in London, United Kingdom. Rated 4.9★ with 176 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@numaoxygen.com',
     slug: 'numa-hyperbaric-oxygen-therapy-london-lon',
   },
   {
@@ -3979,6 +4108,7 @@ export const VENUES: Venue[] = [
     description: 'Just Breathe Hyperbarics offers hyperbaric oxygen in London, United Kingdom. Rated 4.9★ with 52 verified reviews.',
     verified: true,
     featured: false,
+    email: 'justbreathehyperbarics@gmail.com',
     slug: 'just-breathe-hyperbarics-lon',
   },
   {
@@ -3998,6 +4128,7 @@ export const VENUES: Venue[] = [
     description: 'Oxyheal | Hyperbaric Oxygen Therapy London | Hyperbaric Chamber in London offers hyperbaric oxygen in London, United Kingdom. Rated 4.9★ with 77 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@oxyheal.co.uk',
     slug: 'oxyheal-hyperbaric-oxygen-therapy-london-hyperbaric-chamber-in-london-lon',
   },
   {
@@ -4017,6 +4148,7 @@ export const VENUES: Venue[] = [
     description: 'Trident Hyperbaric offers hyperbaric oxygen in London, United Kingdom. Rated 5.0★ with 79 verified reviews.',
     verified: true,
     featured: false,
+    email: 'doctor@tridenthyperbaric.co.uk',
     slug: 'trident-hyperbaric-lon',
   },
   {
@@ -4093,6 +4225,7 @@ export const VENUES: Venue[] = [
     description: 'Chicagoland Men\'s Health - Low Testosterone Replacement Therapy offers TRT clinic in London, United Kingdom. Rated 5.0★ with 487 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@chicagolandmenshealth.com',
     slug: 'chicagoland-men-s-health-low-testosterone-replacement-therapy-lon',
   },
   {
@@ -4112,6 +4245,7 @@ export const VENUES: Venue[] = [
     description: 'The Men\'s Health Clinic offers TRT clinic in London, United Kingdom. Rated 4.8★ with 81 verified reviews.',
     verified: true,
     featured: false,
+    email: 'support@themenshealthclinic.co.uk',
     slug: 'the-men-s-health-clinic-lon',
   },
   {
@@ -4131,6 +4265,7 @@ export const VENUES: Venue[] = [
     description: 'London Bioidentical Hormones offers TRT clinic and women\'s health in London, United Kingdom. Rated 4.7★ with 86 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@londonbioidenticalhormones.com',
     slug: 'london-bioidentical-hormones-lon',
   },
   {
@@ -4169,6 +4304,7 @@ export const VENUES: Venue[] = [
     description: 'Souler Float Wellness Center offers infrared sauna and float tank in Berlin, Germany. Rated 5.0★ with 614 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hello@soulerfloat.com',
     slug: 'souler-float-wellness-center-ber',
   },
   {
@@ -4188,6 +4324,7 @@ export const VENUES: Venue[] = [
     description: 'Salt Pearl - Your Salt & Float Lounge offers float tank in Berlin, Germany. Rated 4.8★ with 156 verified reviews.',
     verified: true,
     featured: false,
+    email: 'kontakt@salzperle-berlin.de',
     slug: 'salt-pearl-your-salt-float-lounge-ber',
   },
   {
@@ -4207,6 +4344,7 @@ export const VENUES: Venue[] = [
     description: 'CRYOPOINT Berlin Mitte - Kältekammer / Kältesauna / Kryosauna / Eissauna / Cryo offers infrared sauna and cryotherapy in Berlin, Germany. Rated 4.9★ with 143 verified reviews.',
     verified: true,
     featured: false,
+    email: 'deine@email.de',
     slug: 'cryopoint-berlin-mitte-k-ltekammer-k-ltesauna-kryosauna-eissauna-cryo-ber',
   },
   {
@@ -4245,6 +4383,7 @@ export const VENUES: Venue[] = [
     description: 'Ayvie Health GmbH offers IV therapy in Berlin, Germany. Rated 4.8★ with 79 verified reviews.',
     verified: true,
     featured: false,
+    email: 'kontakt@ayvie.de',
     slug: 'ayvie-health-gmbh-ber',
   },
   {
@@ -4264,6 +4403,7 @@ export const VENUES: Venue[] = [
     description: 'The IV Nurses offers TRT clinic and women\'s health in Berlin, Germany. Rated 5.0★ with 76 verified reviews.',
     verified: true,
     featured: false,
+    email: 'services@theivnurses.com',
     slug: 'the-iv-nurses-ber',
   },
   {
@@ -4283,6 +4423,7 @@ export const VENUES: Venue[] = [
     description: 'DripDrip GmbH offers IV therapy in Berlin, Germany. Rated 4.7★ with 102 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@dripdrip.eu',
     slug: 'dripdrip-gmbh-ber',
   },
   {
@@ -4302,6 +4443,7 @@ export const VENUES: Venue[] = [
     description: 'Desert Moon Hyperbarics and Wellness offers hyperbaric oxygen in Berlin, Germany. Rated 5.0★ with 156 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@desertmoonwellness.com',
     slug: 'desert-moon-hyperbarics-and-wellness-ber',
   },
   {
@@ -4340,6 +4482,7 @@ export const VENUES: Venue[] = [
     description: 'West Coast Men\'s Health - San Mateo offers TRT clinic in Berlin, Germany. Rated 4.9★ with 175 verified reviews.',
     verified: true,
     featured: false,
+    email: 'elkgrove@westcoastmenshealth.com',
     slug: 'west-coast-men-s-health-san-mateo-ber',
   },
   {
@@ -4397,6 +4540,7 @@ export const VENUES: Venue[] = [
     description: 'BADHUS Social Sauna offers infrared sauna in Amsterdam, Netherlands. Rated 4.9★ with 349 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@badhus-amsterdam.nl',
     slug: 'badhus-social-sauna-ams',
   },
   {
@@ -4435,6 +4579,7 @@ export const VENUES: Venue[] = [
     description: 'Yskamer | Sauna Amsterdam | Ice Bath Amsterdam offers infrared sauna and cold plunge in Amsterdam, Netherlands. Rated 5.0★ with 84 verified reviews.',
     verified: true,
     featured: false,
+    email: 'amsterdam@yskamer.nl',
     slug: 'yskamer-sauna-amsterdam-ice-bath-amsterdam-ams',
   },
   {
@@ -4454,6 +4599,7 @@ export const VENUES: Venue[] = [
     description: 'Cryo Cool Center offers cryotherapy in Amsterdam, Netherlands. Rated 5.0★ with 131 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@cryocoolcenter.nl',
     slug: 'cryo-cool-center-ams',
   },
   {
@@ -4473,6 +4619,7 @@ export const VENUES: Venue[] = [
     description: 'Led Light Therapy Amsterdam offers infrared sauna in Amsterdam, Netherlands. Rated 4.9★ with 62 verified reviews.',
     verified: true,
     featured: false,
+    email: 'virginie.lightangel@gmail.com',
     slug: 'led-light-therapy-amsterdam-ams',
   },
   {
@@ -4511,6 +4658,7 @@ export const VENUES: Venue[] = [
     description: 'Wellness Haus offers infrared sauna in Toronto, Canada. Rated 4.8★ with 251 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@wellnesshaus.com',
     slug: 'wellness-haus-tor',
   },
   {
@@ -4549,6 +4697,7 @@ export const VENUES: Venue[] = [
     description: 'Othership Adelaide offers infrared sauna in Toronto, Canada. Rated 4.9★ with 1352 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@othership.com',
     slug: 'othership-adelaide-tor',
   },
   {
@@ -4587,6 +4736,7 @@ export const VENUES: Venue[] = [
     description: 'Cryotherapy Toronto - Cryotherapy Health and Wellness Inc. offers cryotherapy in Toronto, Canada. Rated 5.0★ with 133 verified reviews.',
     verified: true,
     featured: false,
+    email: 'admin@cryotherapytoronto.ca',
     slug: 'cryotherapy-toronto-cryotherapy-health-and-wellness-inc-tor',
   },
   {
@@ -4606,6 +4756,7 @@ export const VENUES: Venue[] = [
     description: 'CryoStrong Toronto offers cryotherapy in Toronto, Canada. Rated 5.0★ with 104 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@cryostrongtoronto.com',
     slug: 'cryostrong-toronto-tor',
   },
   {
@@ -4644,6 +4795,7 @@ export const VENUES: Venue[] = [
     description: 'Atheria Wellness - Iron Infusions offers IV therapy in Toronto, Canada. Rated 4.9★ with 122 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@atheriawellness.com',
     slug: 'atheria-wellness-iron-infusions-tor',
   },
   {
@@ -4663,6 +4815,7 @@ export const VENUES: Venue[] = [
     description: 'DRIP CLUB INC. offers IV therapy in Toronto, Canada. Rated 4.8★ with 50 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@dripclub.ca',
     slug: 'drip-club-inc-tor',
   },
   {
@@ -4682,6 +4835,7 @@ export const VENUES: Venue[] = [
     description: 'Ontario HBOT (Hyperbaric Oxygen Therapy Centre) offers hyperbaric oxygen in Toronto, Canada. Rated 4.7★ with 108 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@ontariohbot.ca',
     slug: 'ontario-hbot-hyperbaric-oxygen-therapy-centre-tor',
   },
   {
@@ -4720,6 +4874,7 @@ export const VENUES: Venue[] = [
     description: 'Men\'s Care Clinic - Erectile Dysfunction Clinic in Toronto offers TRT clinic in Toronto, Canada. Rated 4.9★ with 63 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@menscareclinic.com',
     slug: 'men-s-care-clinic-erectile-dysfunction-clinic-in-toronto-tor',
   },
   {
@@ -4777,6 +4932,7 @@ export const VENUES: Venue[] = [
     description: 'Melt Well Sauna & Plunge Studio offers infrared sauna in Austin, United States. Rated 5.0★ with 62 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@meltsauna.com',
     slug: 'melt-well-sauna-plunge-studio-aus',
   },
   {
@@ -4815,6 +4971,7 @@ export const VENUES: Venue[] = [
     description: 'Kuya Wellness offers infrared sauna in Austin, United States. Rated 4.8★ with 155 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@kuyawellness.com',
     slug: 'kuya-wellness-aus',
   },
   {
@@ -4853,6 +5010,7 @@ export const VENUES: Venue[] = [
     description: 'Cryo Body Works offers cryotherapy in Austin, United States. Rated 4.9★ with 288 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'cryo-body-works-aus',
   },
   {
@@ -4872,6 +5030,7 @@ export const VENUES: Venue[] = [
     description: 'The Recovery Lab and Cryo offers cryotherapy in Austin, United States. Rated 5.0★ with 76 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'the-recovery-lab-and-cryo-aus',
   },
   {
@@ -4891,6 +5050,7 @@ export const VENUES: Venue[] = [
     description: 'Fluid Revival Mobile IV Therapy offers IV therapy in Austin, United States. Rated 5.0★ with 140 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@fluidrevival.com',
     slug: 'fluid-revival-mobile-iv-therapy-aus',
   },
   {
@@ -4948,6 +5108,7 @@ export const VENUES: Venue[] = [
     description: 'Hormones By Design offers TRT clinic, women\'s health and IV therapy in Austin, United States. Rated 4.8★ with 53 verified reviews.',
     verified: true,
     featured: false,
+    email: 'davis@hormonesbydesign.com',
     slug: 'hormones-by-design-aus',
   },
   {
@@ -4967,6 +5128,7 @@ export const VENUES: Venue[] = [
     description: 'Beit Sisu | Private Cold Plunge and Infrared Sauna offers infrared sauna and cold plunge in Dubai. Rated 4.9★ with 67 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@beitsisu.com',
     slug: 'beit-sisu-private-cold-plunge-and-infrared-sauna-dxb',
   },
   {
@@ -5081,6 +5243,7 @@ export const VENUES: Venue[] = [
     description: 'RESYNC Whole Body Cryotherapy studio offers cryotherapy in Dubai. Rated 5.0★ with 163 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@resync.ae',
     slug: 'resync-whole-body-cryotherapy-studio-dxb',
   },
   {
@@ -5100,6 +5263,7 @@ export const VENUES: Venue[] = [
     description: 'UCRYO Wellness - Creek Harbour offers cryotherapy in Dubai. Rated 4.7★ with 69 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@ucryowellness.com',
     slug: 'ucryo-wellness-creek-harbour-dxb',
   },
   {
@@ -5138,6 +5302,7 @@ export const VENUES: Venue[] = [
     description: 'IV Wellness Lounge - Premier IV Drip and Aesthetic Services offers IV therapy in Dubai. Rated 4.9★ with 1071 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hello@ivhub.com',
     slug: 'iv-wellness-lounge-premier-iv-drip-and-aesthetic-services-dxb',
   },
   {
@@ -5157,6 +5322,7 @@ export const VENUES: Venue[] = [
     description: 'Healthcarebia Home Healthcare │Premium Exclusive IV Drips at home in Dubai offers IV therapy in Dubai. Rated 4.9★ with 57 verified reviews.',
     verified: true,
     featured: false,
+    email: 'care@healthcarebia.ae',
     slug: 'healthcarebia-home-healthcare-premium-exclusive-iv-drips-at-home-in-dubai-dxb',
   },
   {
@@ -5176,6 +5342,7 @@ export const VENUES: Venue[] = [
     description: 'IV DRIPS offers IV therapy in New York City. Rated 5.0★ with 531 verified reviews.',
     verified: true,
     featured: true,
+    email: 'bookings@ivdrips.com',
     slug: 'iv-drips-dxb',
   },
   {
@@ -5195,6 +5362,7 @@ export const VENUES: Venue[] = [
     description: 'DripHub® | UAE\'s #1 Wellness IV Drips & Booster Shots Platform offers IV therapy in Dubai. Rated 5.0★ with 89 verified reviews.',
     verified: true,
     featured: false,
+    email: 'example@gmail.com',
     slug: 'driphub-uae-s-1-wellness-iv-drips-booster-shots-platform-dxb',
   },
   {
@@ -5214,6 +5382,7 @@ export const VENUES: Venue[] = [
     description: 'Rejuven8 Wellness Club offers infrared sauna in Dubai. Rated 5.0★ with 83 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@rejuven8wellness.club',
     slug: 'rejuven8-wellness-club-dxb',
   },
   {
@@ -5233,6 +5402,7 @@ export const VENUES: Venue[] = [
     description: 'Refresh biohacking clinic offers IV therapy in Dubai. Rated 4.8★ with 317 verified reviews.',
     verified: true,
     featured: false,
+    email: 'refresh.clinic@yandex.ru',
     slug: 'refresh-biohacking-clinic-dxb',
   },
   {
@@ -5252,6 +5422,7 @@ export const VENUES: Venue[] = [
     description: 'Plunge Club Singapore offers infrared sauna in Singapore, Singapore. Rated 4.8★ with 65 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@thetacollective.sg',
     slug: 'plunge-club-singapore-sgp',
   },
   {
@@ -5290,6 +5461,7 @@ export const VENUES: Venue[] = [
     description: 'The Ice Bath Club - River Valley offers cold plunge in Singapore, Singapore. Rated 4.9★ with 332 verified reviews.',
     verified: true,
     featured: false,
+    email: 'help@theicebathclubs.com',
     slug: 'the-ice-bath-club-river-valley-sgp',
   },
   {
@@ -5309,6 +5481,7 @@ export const VENUES: Venue[] = [
     description: 'The Ice Bath Club - Duxton offers cold plunge in Singapore, Singapore. Rated 5.0★ with 322 verified reviews.',
     verified: true,
     featured: false,
+    email: 'help@theicebathclubs.com',
     slug: 'the-ice-bath-club-duxton-sgp',
   },
   {
@@ -5347,6 +5520,7 @@ export const VENUES: Venue[] = [
     description: 'The Ice Bath Club - East Coast offers cold plunge in Singapore, Singapore. Rated 5.0★ with 522 verified reviews.',
     verified: true,
     featured: true,
+    email: 'help@theicebathclubs.com',
     slug: 'the-ice-bath-club-east-coast-sgp',
   },
   {
@@ -5385,6 +5559,7 @@ export const VENUES: Venue[] = [
     description: 'Avantir Wellness (Katong) Singapore | NovoTHOR Red Light Therapy, HBOT, StarFormer offers hyperbaric oxygen and red light therapy in Singapore, Singapore. Rated 5.0★ with 100 verified reviews.',
     verified: true,
     featured: false,
+    email: 'team@avantirwellness.com',
     slug: 'avantir-wellness-katong-singapore-novothor-red-light-therapy-hbot-starformer-sgp',
   },
   {
@@ -5442,6 +5617,7 @@ export const VENUES: Venue[] = [
     description: 'Sire Singapore - Discreet men\'s health telemedicine offers TRT clinic in Singapore, Singapore. Rated 4.8★ with 266 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@thesire.sg',
     slug: 'sire-singapore-discreet-men-s-health-telemedicine-sgp',
   },
   {
@@ -5518,6 +5694,7 @@ export const VENUES: Venue[] = [
     description: 'ICE HOUSE by Bangkok Ice Baths - Ice Bath and Sauna Tropical Garden offers infrared sauna and cold plunge in Bangkok, Thailand. Rated 4.9★ with 571 verified reviews.',
     verified: true,
     featured: true,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'ice-house-by-bangkok-ice-baths-ice-bath-and-sauna-tropical-garden-bkk',
   },
   {
@@ -5537,6 +5714,7 @@ export const VENUES: Venue[] = [
     description: 'ICE HOUSE Rooftop Baths - Ice Bath, Sauna & Hot Bath offers infrared sauna and cold plunge in Bangkok, Thailand. Rated 4.9★ with 179 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'ice-house-rooftop-baths-ice-bath-sauna-hot-bath-bkk',
   },
   {
@@ -5613,6 +5791,7 @@ export const VENUES: Venue[] = [
     description: '°CRYO On Gaysorn Village offers cryotherapy in Bangkok, Thailand. Rated 5.0★ with 74 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@cryo-on.com',
     slug: 'cryo-on-gaysorn-village-bkk',
   },
   {
@@ -5632,6 +5811,7 @@ export const VENUES: Venue[] = [
     description: 'Hangover/Jetlag/Dehydrate/Myers Bangkok Mobile IV Drip by TH IV MEDICS | IV therapy offers IV therapy in Bangkok, Thailand. Rated 4.9★ with 139 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@sjwellness.site',
     slug: 'hangover-jetlag-dehydrate-myers-bangkok-mobile-iv-drip-by-th-iv-medics-iv-therapy-bkk',
   },
   {
@@ -5708,6 +5888,7 @@ export const VENUES: Venue[] = [
     description: 'Cocoon Medical Spa offers TRT clinic and women\'s health in Bali, Indonesia. Rated 4.9★ with 1110 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@cocoonmedicalspa.com',
     slug: 'cocoon-medical-spa-bli',
   },
   {
@@ -5784,6 +5965,7 @@ export const VENUES: Venue[] = [
     description: 'Solace Float offers float tank in Bali, Indonesia. Rated 4.9★ with 472 verified reviews.',
     verified: true,
     featured: false,
+    email: 'contact@solacefloat.com',
     slug: 'solace-float-bli',
   },
   {
@@ -5803,6 +5985,7 @@ export const VENUES: Venue[] = [
     description: 'Cryoskin Indonesia - Maja Healing Center offers cryotherapy in Bali, Indonesia. Rated 5.0★ with 67 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'cryoskin-indonesia-maja-healing-center-bli',
   },
   {
@@ -5841,6 +6024,7 @@ export const VENUES: Venue[] = [
     description: 'Mobile IV Drip Hydration offers IV therapy in Bali, Indonesia. Rated 4.9★ with 92 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@hydratebali.com',
     slug: 'mobile-iv-drip-hydration-bli',
   },
   {
@@ -5898,6 +6082,7 @@ export const VENUES: Venue[] = [
     description: 'Thrive Wellness Bali offers IV therapy in Bali, Indonesia. Rated 5.0★ with 180 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@thrivewellnessbali.com',
     slug: 'thrive-wellness-bali-bli',
   },
   {
@@ -5936,6 +6121,7 @@ export const VENUES: Venue[] = [
     description: 'Performance Hyperbaric offers IV therapy, infrared sauna and hyperbaric oxygen in Bali, Indonesia. Rated 5.0★ with 54 verified reviews.',
     verified: true,
     featured: false,
+    email: 'office@performancehyperbaric.com',
     slug: 'performance-hyperbaric-bli',
   },
   {
@@ -5955,6 +6141,7 @@ export const VENUES: Venue[] = [
     description: 'HBOT Florida offers hyperbaric oxygen in Bali, Indonesia. Rated 5.0★ with 51 verified reviews.',
     verified: true,
     featured: false,
+    email: 'support@hbotfl.com',
     slug: 'hbot-florida-bli',
   },
   {
@@ -5974,6 +6161,7 @@ export const VENUES: Venue[] = [
     description: 'Iconic Health & Hyperbarics offers hyperbaric oxygen in Bali, Indonesia. Rated 5.0★ with 127 verified reviews.',
     verified: true,
     featured: false,
+    email: 'office@iconichealthmed.com',
     slug: 'iconic-health-hyperbarics-bli',
   },
   {
@@ -5993,6 +6181,7 @@ export const VENUES: Venue[] = [
     description: 'Rejuvo Life IV Drip offers IV therapy, infrared sauna, cryotherapy, hyperbaric oxygen and red light therapy in Bali, Indonesia. Rated 5.0★ with 490 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hi@rejuvo.life',
     slug: 'rejuvo-life-iv-drip-bli',
   },
   {
@@ -6012,6 +6201,7 @@ export const VENUES: Venue[] = [
     description: 'Atlas Mens Health Clinic - Long Island | TRT | Peptides | Weight Loss Clinic offers TRT clinic and women\'s health in Bali, Indonesia. Rated 5.0★ with 336 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@atlasmenshealthny.com',
     slug: 'atlas-mens-health-clinic-long-island-trt-peptides-weight-loss-clinic-bli',
   },
   {
@@ -6107,6 +6297,7 @@ export const VENUES: Venue[] = [
     description: 'GreaT Men’s Health & Testosterone offers TRT clinic and women\'s health in Tokyo, Japan. Rated 4.9★ with 54 verified reviews.',
     verified: true,
     featured: false,
+    email: 'astigma@astigmatic.com',
     slug: 'great-men-s-health-testosterone-tyo',
   },
   {
@@ -6145,6 +6336,7 @@ export const VENUES: Venue[] = [
     description: 'IV DRIPS Wellness drips & Longevity center offers IV therapy in Mexico City, Mexico. Rated 5.0★ with 634 verified reviews.',
     verified: true,
     featured: true,
+    email: 'citas@wellnessdrips.mx',
     slug: 'iv-drips-wellness-drips-longevity-center-mex',
   },
   {
@@ -6164,6 +6356,7 @@ export const VENUES: Venue[] = [
     description: 'Reviv México offers IV therapy in Mexico City, Mexico. Rated 4.8★ with 71 verified reviews.',
     verified: true,
     featured: false,
+    email: 'meztli@firefish.com.mx',
     slug: 'reviv-m-xico-mex',
   },
   {
@@ -6183,6 +6376,7 @@ export const VENUES: Venue[] = [
     description: 'IV Therapy in CDMX: Hangover, Dehydration and Nurse at home and hotel in CDMX offers IV therapy in Mexico City, Mexico. Rated 4.8★ with 70 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'iv-therapy-in-cdmx-hangover-dehydration-and-nurse-at-home-and-hotel-in-cdmx-mex',
   },
   {
@@ -6202,6 +6396,7 @@ export const VENUES: Venue[] = [
     description: 'Revive offers IV therapy in Mexico City, Mexico. Rated 4.9★ with 280 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'revive-mex',
   },
   {
@@ -6240,6 +6435,7 @@ export const VENUES: Venue[] = [
     description: 'Oxigena - Cámaras Hiperbáricas offers hyperbaric oxygen in Mexico City, Mexico. Rated 4.8★ with 203 verified reviews.',
     verified: true,
     featured: false,
+    email: 'administracion@oxigena.mx',
     slug: 'oxigena-c-maras-hiperb-ricas-mex',
   },
   {
@@ -6259,6 +6455,7 @@ export const VENUES: Venue[] = [
     description: 'Halsa Float Spa- Kitsilano, Vancouver offers infrared sauna and float tank in Vancouver, Canada. Rated 4.8★ with 410 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@halsa.ca',
     slug: 'halsa-float-spa-kitsilano-vancouver-van',
   },
   {
@@ -6278,6 +6475,7 @@ export const VENUES: Venue[] = [
     description: 'The Good Sauna offers infrared sauna in Vancouver, Canada. Rated 4.9★ with 279 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@thegoodsauna.com',
     slug: 'the-good-sauna-van',
   },
   {
@@ -6297,6 +6495,7 @@ export const VENUES: Venue[] = [
     description: 'Under the Rose Club offers infrared sauna in Vancouver, Canada. Rated 5.0★ with 60 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@undertherose.club',
     slug: 'under-the-rose-club-van',
   },
   {
@@ -6316,6 +6515,7 @@ export const VENUES: Venue[] = [
     description: 'Gatherwell Mount Pleasant offers infrared sauna in Vancouver, Canada. Rated 4.9★ with 452 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@gatherwell.ca',
     slug: 'gatherwell-mount-pleasant-van',
   },
   {
@@ -6335,6 +6535,7 @@ export const VENUES: Venue[] = [
     description: 'DRIP Infrared Sauna & Cold Plunge Studio offers IV therapy, infrared sauna and cold plunge in Vancouver, Canada. Rated 5.0★ with 81 verified reviews.',
     verified: true,
     featured: false,
+    email: 'saunastudio.drip@gmail.com',
     slug: 'drip-infrared-sauna-cold-plunge-studio-van',
   },
   {
@@ -6354,6 +6555,7 @@ export const VENUES: Venue[] = [
     description: 'Float House Vancouver offers float tank in Vancouver, Canada. Rated 4.8★ with 1050 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@floathouse.ca',
     slug: 'float-house-vancouver-van',
   },
   {
@@ -6373,6 +6575,7 @@ export const VENUES: Venue[] = [
     description: 'Kolm Kontrast offers infrared sauna in Vancouver, Canada. Rated 4.9★ with 700 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@kolmkontrast.com',
     slug: 'kolm-kontrast-van',
   },
   {
@@ -6392,6 +6595,7 @@ export const VENUES: Venue[] = [
     description: 'Tality Wellness Mount Pleasant offers infrared sauna in Vancouver, Canada. Rated 4.8★ with 213 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@talitywellness.ca',
     slug: 'tality-wellness-mount-pleasant-van',
   },
   {
@@ -6411,6 +6615,7 @@ export const VENUES: Venue[] = [
     description: 'Vital Cryotherapy Vancouver offers cold plunge and cryotherapy in Vancouver, Canada. Rated 4.8★ with 139 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@vitalcryotherapyvancouver.ca',
     slug: 'vital-cryotherapy-vancouver-van',
   },
   {
@@ -6430,6 +6635,7 @@ export const VENUES: Venue[] = [
     description: 'Okojie Wellness - IV Infusion Therapy Vancouver Washington offers IV therapy in Vancouver, Canada. Rated 5.0★ with 142 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@okojiewellness.com',
     slug: 'okojie-wellness-iv-infusion-therapy-vancouver-washington-van',
   },
   {
@@ -6449,6 +6655,7 @@ export const VENUES: Venue[] = [
     description: 'Prime IV Hydration & Wellness (East Vancouver-Camas) offers IV therapy in Vancouver, Canada. Rated 5.0★ with 72 verified reviews.',
     verified: true,
     featured: false,
+    email: 'eastvancouvercamas@primeivhydration.com',
     slug: 'prime-iv-hydration-wellness-east-vancouver-camas-van',
   },
   {
@@ -6468,6 +6675,7 @@ export const VENUES: Venue[] = [
     description: 'Promethean Clinic offers TRT clinic and women\'s health in Vancouver, Canada. Rated 5.0★ with 247 verified reviews.',
     verified: true,
     featured: false,
+    email: 'john@doe.com',
     slug: 'promethean-clinic-van',
   },
   {
@@ -6506,6 +6714,7 @@ export const VENUES: Venue[] = [
     description: 'In Light Hyperbarics LLC. offers hyperbaric oxygen in Vancouver, Canada. Rated 4.9★ with 157 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@inlightlife.com',
     slug: 'in-light-hyperbarics-llc-van',
   },
   {
@@ -6525,6 +6734,7 @@ export const VENUES: Venue[] = [
     description: 'Limelight Wellness Centre offers IV therapy in Vancouver, Canada. Rated 4.8★ with 438 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@limelightwellness.ca',
     slug: 'limelight-wellness-centre-van',
   },
   {
@@ -6544,6 +6754,7 @@ export const VENUES: Venue[] = [
     description: 'FloatWell Whole Body Wellness Spa offers float tank in Vancouver, Canada. Rated 4.8★ with 166 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@floatwellspa.com',
     slug: 'floatwell-whole-body-wellness-spa-van',
   },
   {
@@ -6582,6 +6793,7 @@ export const VENUES: Venue[] = [
     description: 'Perspire Sauna Studio offers infrared sauna in Chicago, United States. Rated 4.7★ with 77 verified reviews.',
     verified: true,
     featured: false,
+    email: 'westloop@perspiresaunastudio.com',
     slug: 'perspire-sauna-studio-chi',
   },
   {
@@ -6601,6 +6813,7 @@ export const VENUES: Venue[] = [
     description: 'Freeze & Float Spa offers float tank in Chicago, United States. Rated 4.9★ with 414 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@freezefloatspa.com',
     slug: 'freeze-float-spa-chi',
   },
   {
@@ -6639,6 +6852,7 @@ export const VENUES: Venue[] = [
     description: 'Lost Language offers infrared sauna in Chicago, United States. Rated 5.0★ with 72 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@lostlanguagesauna.com',
     slug: 'lost-language-chi',
   },
   {
@@ -6658,6 +6872,7 @@ export const VENUES: Venue[] = [
     description: 'Peak Saunas offers infrared sauna in Chicago, United States. Rated 4.9★ with 89 verified reviews.',
     verified: true,
     featured: false,
+    email: 'support@peaksaunas.com',
     slug: 'peak-saunas-chi',
   },
   {
@@ -6696,6 +6911,7 @@ export const VENUES: Venue[] = [
     description: 'Kiln Floating Sauna offers infrared sauna and float tank in Chicago, United States. Rated 4.9★ with 83 verified reviews.',
     verified: true,
     featured: false,
+    email: 'bake@kilnfloatingsauna.com',
     slug: 'kiln-floating-sauna-chi',
   },
   {
@@ -6734,6 +6950,7 @@ export const VENUES: Venue[] = [
     description: 'T-Float offers float tank in Chicago, United States. Rated 4.8★ with 64 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@tfloat.com',
     slug: 't-float-chi',
   },
   {
@@ -6791,6 +7008,7 @@ export const VENUES: Venue[] = [
     description: 'Float Sixty Chicago (River North) offers float tank in Chicago, United States. Rated 4.8★ with 358 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@floatsixtycorp.com',
     slug: 'float-sixty-chicago-river-north-chi',
   },
   {
@@ -6829,6 +7047,7 @@ export const VENUES: Venue[] = [
     description: 'The CryoBar offers infrared sauna and cryotherapy in Chicago, United States. Rated 4.8★ with 248 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@thecryobar.com',
     slug: 'the-cryobar-chi',
   },
   {
@@ -6867,6 +7086,7 @@ export const VENUES: Venue[] = [
     description: 'Next Health Lincoln Park - Chicago offers IV therapy in Chicago, United States. Rated 5.0★ with 154 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@next-health.com',
     slug: 'next-health-lincoln-park-chicago-chi',
   },
   {
@@ -6905,6 +7125,7 @@ export const VENUES: Venue[] = [
     description: 'Prime IV Hydration & Wellness (Chicago-Logan Square, IL) offers IV therapy in Chicago, United States. Rated 4.9★ with 126 verified reviews.',
     verified: true,
     featured: false,
+    email: 'logansquare@primeivhydration.com',
     slug: 'prime-iv-hydration-wellness-chicago-logan-square-il-chi',
   },
   {
@@ -6962,6 +7183,7 @@ export const VENUES: Venue[] = [
     description: 'Optimal Wellness & Beauty offers IV therapy in Chicago, United States. Rated 5.0★ with 328 verified reviews.',
     verified: true,
     featured: false,
+    email: 'optimalwellnessltd@gmail.com',
     slug: 'optimal-wellness-beauty-chi',
   },
   {
@@ -6981,6 +7203,7 @@ export const VENUES: Venue[] = [
     description: 'Men\'s Health Chicago offers TRT clinic in Chicago, United States. Rated 4.9★ with 178 verified reviews.',
     verified: true,
     featured: false,
+    email: 'schaumburg@menshealthadmin.com',
     slug: 'men-s-health-chicago-chi',
   },
   {
@@ -7076,6 +7299,7 @@ export const VENUES: Venue[] = [
     description: 'Chicago Center for Women\'s Health offers TRT clinic and women\'s health in Chicago, United States. Rated 4.7★ with 190 verified reviews.',
     verified: true,
     featured: false,
+    email: 'myccwh@gmail.com',
     slug: 'chicago-center-for-women-s-health-chi',
   },
   {
@@ -7133,6 +7357,7 @@ export const VENUES: Venue[] = [
     description: 'Chicago Center for Women\'s Health - Oak Lawn offers TRT clinic and women\'s health in Chicago, United States. Rated 4.9★ with 236 verified reviews.',
     verified: true,
     featured: false,
+    email: 'myccwh@gmail.com',
     slug: 'chicago-center-for-women-s-health-oak-lawn-chi',
   },
   {
@@ -7342,6 +7567,7 @@ export const VENUES: Venue[] = [
     description: 'Prime IV Hydration & Wellness - Las Vegas - Lake Mead & Buffalo offers IV therapy in Las Vegas, United States. Rated 4.9★ with 250 verified reviews.',
     verified: true,
     featured: false,
+    email: 'primeivlakemead@primeivhydration.com',
     slug: 'prime-iv-hydration-wellness-las-vegas-lake-mead-buffalo-lv',
   },
   {
@@ -7380,6 +7606,7 @@ export const VENUES: Venue[] = [
     description: 'IV Vitamin Therapy Clinic offers IV therapy in Las Vegas, United States. Rated 4.9★ with 88 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'iv-vitamin-therapy-clinic-lv',
   },
   {
@@ -7399,6 +7626,7 @@ export const VENUES: Venue[] = [
     description: 'Prime IV Hydration & Wellness - Summerlin (Las Vegas) offers IV therapy in Las Vegas, United States. Rated 4.8★ with 69 verified reviews.',
     verified: true,
     featured: false,
+    email: 'lasvegas@primeivhydration.com',
     slug: 'prime-iv-hydration-wellness-summerlin-las-vegas-lv',
   },
   {
@@ -7475,6 +7703,7 @@ export const VENUES: Venue[] = [
     description: 'TRTMD Health Clinic offers TRT clinic and women\'s health in Las Vegas, United States. Rated 4.9★ with 68 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@trtmd.com',
     slug: 'trtmd-health-clinic-lv',
   },
   {
@@ -7494,6 +7723,7 @@ export const VENUES: Venue[] = [
     description: 'Sudor Sauna Studio offers infrared sauna in Houston, United States. Rated 4.7★ with 115 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@sudorsauna.com',
     slug: 'sudor-sauna-studio-hou',
   },
   {
@@ -7513,6 +7743,7 @@ export const VENUES: Venue[] = [
     description: 'Löyly Sauna Lounge offers infrared sauna in Houston, United States. Rated 5.0★ with 261 verified reviews.',
     verified: true,
     featured: false,
+    email: 'engage@loylysaunalounge.com',
     slug: 'l-yly-sauna-lounge-hou',
   },
   {
@@ -7570,6 +7801,7 @@ export const VENUES: Venue[] = [
     description: 'Daily Dose Wellness Club offers IV therapy in Houston, United States. Rated 5.0★ with 129 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@dailydosewellness.com',
     slug: 'daily-dose-wellness-club-hou',
   },
   {
@@ -7703,6 +7935,7 @@ export const VENUES: Venue[] = [
     description: 'CryoTexas offers cryotherapy in Houston, United States. Rated 5.0★ with 59 verified reviews.',
     verified: true,
     featured: false,
+    email: 'luciano@latinotype.com',
     slug: 'cryotexas-hou',
   },
   {
@@ -7760,6 +7993,7 @@ export const VENUES: Venue[] = [
     description: 'ActIVate Drip Spa | Memorial offers IV therapy in Houston, United States. Rated 4.9★ with 127 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@activatedripspa.com',
     slug: 'activate-drip-spa-memorial-hou',
   },
   {
@@ -7779,6 +8013,7 @@ export const VENUES: Venue[] = [
     description: 'ThrIVe Drip Spa - Heights offers IV therapy in Houston, United States. Rated 5.0★ with 356 verified reviews.',
     verified: true,
     featured: false,
+    email: 'email@typeform.com',
     slug: 'thrive-drip-spa-heights-hou',
   },
   {
@@ -7798,6 +8033,7 @@ export const VENUES: Venue[] = [
     description: 'Thrive Drip Spa - Memorial Green offers IV therapy in Houston, United States. Rated 5.0★ with 612 verified reviews.',
     verified: true,
     featured: true,
+    email: 'email@typeform.com',
     slug: 'thrive-drip-spa-memorial-green-hou',
   },
   {
@@ -7836,6 +8072,7 @@ export const VENUES: Venue[] = [
     description: 'ALBI Wellness & Longevity offers infrared sauna in Houston, United States. Rated 5.0★ with 155 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@albiwellness.com',
     slug: 'albi-wellness-longevity-hou',
   },
   {
@@ -7855,6 +8092,7 @@ export const VENUES: Venue[] = [
     description: 'beem Light Sauna River Oaks offers infrared sauna in Houston, United States. Rated 5.0★ with 132 verified reviews.',
     verified: true,
     featured: false,
+    email: 'riveroaks@beemlightsauna.com',
     slug: 'beem-light-sauna-river-oaks-hou',
   },
   {
@@ -8007,6 +8245,7 @@ export const VENUES: Venue[] = [
     description: 'Dr Purity Carr Menopause Clinic offers specialist women\'s health and menopause care in Perth, Australia. Rated 5.0★ with 314 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@purity.health',
     slug: 'dr-purity-carr-menopause-clinic',
   },
   {
@@ -8026,6 +8265,7 @@ export const VENUES: Venue[] = [
     description: 'Restorative Health Clinic offers TRT clinic in Perth, Australia. Rated 5.0★ with 67 verified reviews.',
     verified: true,
     featured: false,
+    email: 'admin@rshealth.com.au',
     slug: 'restorative-health-clinic',
   },
   {
@@ -8045,6 +8285,7 @@ export const VENUES: Venue[] = [
     description: 'Medwell Medical & Wellness Clinic offers TRT clinic and women\'s health in Sunshine Coast, Australia. Rated 4.7★ with 109 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@medwellclinic.com.au',
     slug: 'medwell-medical-wellness-clinic',
   }
 ,
@@ -8065,6 +8306,7 @@ export const VENUES: Venue[] = [
     description: 'Chill Wellness offers infrared sauna in Auckland, New Zealand. Rated 5.0★ with 131 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@chillwellness.co.nz',
     slug: 'chill-wellness-akl',
   },
   {
@@ -8084,6 +8326,7 @@ export const VENUES: Venue[] = [
     description: 'HANA | Grey Lynn offers infrared sauna in Auckland, New Zealand. Rated 4.9★ with 138 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@hana.nz',
     slug: 'hana-grey-lynn-akl',
   },
   {
@@ -8103,6 +8346,7 @@ export const VENUES: Venue[] = [
     description: 'HANA | Parnell offers infrared sauna in Auckland, New Zealand. Rated 5.0★ with 68 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@hana.nz',
     slug: 'hana-parnell-akl',
   },
   {
@@ -8122,6 +8366,7 @@ export const VENUES: Venue[] = [
     description: 'Float Culture offers float tank in Auckland, New Zealand. Rated 4.8★ with 468 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@floatculture.co.nz',
     slug: 'float-culture-akl',
   },
   {
@@ -8141,6 +8386,7 @@ export const VENUES: Venue[] = [
     description: 'Infinity Float Centre offers float tank in Auckland, New Zealand. Rated 4.7★ with 359 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@infinityfloat.co.nz',
     slug: 'infinity-float-centre-akl',
   },
   {
@@ -8160,6 +8406,7 @@ export const VENUES: Venue[] = [
     description: 'Drips - Mobile IV & Concierge Medical Services offers IV therapy in Auckland, New Zealand. Rated 5.0★ with 135 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@drips.nz',
     slug: 'drips-mobile-iv-concierge-medical-services-akl',
   },
   {
@@ -8179,6 +8426,7 @@ export const VENUES: Venue[] = [
     description: 'Conscious Body Recovery offers infrared sauna in San Diego, USA. Rated 4.9★ with 154 verified reviews.',
     verified: true,
     featured: false,
+    email: 'wellness@consciousbodyrecovery.com',
     slug: 'conscious-body-recovery-sd',
   },
   {
@@ -8217,6 +8465,7 @@ export const VENUES: Venue[] = [
     description: 'GoCryo Cryotherapy offers cryotherapy in San Diego, USA. Rated 5.0★ with 176 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@gocryosd.com',
     slug: 'gocryo-cryotherapy-sd',
   },
   {
@@ -8236,6 +8485,7 @@ export const VENUES: Venue[] = [
     description: 'Hormones + Wellness by SDBotox - La Jolla offers infrared sauna in San Diego, USA. Rated 4.9★ with 80 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@hormonesbysdb.com',
     slug: 'hormones-wellness-by-sdbotox-la-jolla-sd',
   },
   {
@@ -8255,6 +8505,7 @@ export const VENUES: Venue[] = [
     description: 'Cold Plunge Florida offers cold plunge in San Diego, USA. Rated 5.0★ with 99 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@coldplungeflorida.com',
     slug: 'cold-plunge-florida-sd',
   },
   {
@@ -8293,6 +8544,7 @@ export const VENUES: Venue[] = [
     description: 'IceBurg Cold Plunge offers infrared sauna and cold plunge in San Diego, USA. Rated 5.0★ with 157 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@iceburgcoldplunge.com',
     slug: 'iceburg-cold-plunge-sd',
   },
   {
@@ -8349,6 +8601,7 @@ export const VENUES: Venue[] = [
     description: 'Chill N Out Cryotherapy UTC & Wellness offers cryotherapy in San Diego, USA. Rated 5.0★ with 159 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'chill-n-out-cryotherapy-utc-wellness-sd',
   },
   {
@@ -8368,6 +8621,7 @@ export const VENUES: Venue[] = [
     description: 'San Diego IV | Mobile IV Therapy offers IV therapy in San Diego, USA. Rated 5.0★ with 420 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hello@sdivservice.com',
     slug: 'san-diego-iv-mobile-iv-therapy-sd',
   },
   {
@@ -8387,6 +8641,7 @@ export const VENUES: Venue[] = [
     description: 'ASAP IVs - IV Clinic and Mobile IV Therapy for San Diego offers IV therapy in San Diego, USA. Rated 5.0★ with 2084 verified reviews.',
     verified: true,
     featured: true,
+    email: 'taylor@asapivs.com',
     slug: 'asap-ivs-iv-clinic-and-mobile-iv-therapy-for-san-diego-sd',
   },
   {
@@ -8425,6 +8680,7 @@ export const VENUES: Venue[] = [
     description: 'San Diego Mobile IV Therapy offers IV therapy in San Diego, USA. Rated 4.8★ with 52 verified reviews.',
     verified: true,
     featured: false,
+    email: 'sandiegomobileiv@gmail.com',
     slug: 'san-diego-mobile-iv-therapy-sd',
   },
   {
@@ -8482,6 +8738,7 @@ export const VENUES: Venue[] = [
     description: 'ASAP IVs - IV Therapy Clinic Encinitas offers IV therapy in San Diego, USA. Rated 5.0★ with 456 verified reviews.',
     verified: true,
     featured: true,
+    email: 'taylor@asapivs.com',
     slug: 'asap-ivs-iv-therapy-clinic-encinitas-sd',
   },
   {
@@ -8520,6 +8777,7 @@ export const VENUES: Venue[] = [
     description: 'Essential Medicine offers hyperbaric oxygen in San Diego, USA. Rated 5.0★ with 72 verified reviews.',
     verified: true,
     featured: false,
+    email: 'care@essentialmedi.com',
     slug: 'essential-medicine-sd',
   },
   {
@@ -8539,6 +8797,7 @@ export const VENUES: Venue[] = [
     description: 'Ravive Health & Vitality offers infrared sauna in San Diego, USA. Rated 4.8★ with 146 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@ravivevitality.com',
     slug: 'ravive-health-vitality-sd',
   },
   {
@@ -8558,6 +8817,7 @@ export const VENUES: Venue[] = [
     description: 'Blu Life Wellness Studio offers infrared sauna in San Diego, USA. Rated 5.0★ with 58 verified reviews.',
     verified: true,
     featured: false,
+    email: 'blulifewellness@gmail.com',
     slug: 'blu-life-wellness-studio-sd',
   },
   {
@@ -8577,6 +8837,7 @@ export const VENUES: Venue[] = [
     description: 'R3 Recover and Wellness offers infrared sauna in San Diego, USA. Rated 5.0★ with 57 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@r3revive.com',
     slug: 'r3-recover-and-wellness-sd',
   },
   {
@@ -8596,6 +8857,7 @@ export const VENUES: Venue[] = [
     description: 'REJUV Aesthetics & Wellness offers hyperbaric oxygen in San Diego, USA. Rated 4.9★ with 438 verified reviews.',
     verified: true,
     featured: true,
+    email: 'rejuvcryo@gmail.com',
     slug: 'rejuv-aesthetics-wellness-sd',
   },
   {
@@ -8634,6 +8896,7 @@ export const VENUES: Venue[] = [
     description: 'West Coast Men\'s Health - San Diego offers TRT clinic in San Diego, USA. Rated 4.9★ with 56 verified reviews.',
     verified: true,
     featured: false,
+    email: 'elkgrove@westcoastmenshealth.com',
     slug: 'west-coast-men-s-health-san-diego-sd',
   },
   {
@@ -8691,6 +8954,7 @@ export const VENUES: Venue[] = [
     description: 'San Diego Menopause offers specialist women\'s health and menopause care in San Diego, USA. Rated 4.9★ with 94 verified reviews.',
     verified: true,
     featured: false,
+    email: 'contact@sdmeno.com',
     slug: 'san-diego-menopause-sd',
   },
   {
@@ -8748,6 +9012,7 @@ export const VENUES: Venue[] = [
     description: 'Prime Wellness offers TRT clinic and women\'s health in San Diego, USA. Rated 4.9★ with 54 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'prime-wellness-sd',
   },
   {
@@ -8767,6 +9032,7 @@ export const VENUES: Venue[] = [
     description: 'Red Rock Sauna offers infrared sauna in Denver, USA. Rated 5.0★ with 227 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@redrocksauna.com',
     slug: 'red-rock-sauna-den',
   },
   {
@@ -8786,6 +9052,7 @@ export const VENUES: Venue[] = [
     description: 'The Cove Sauna and Cold Plunge offers infrared sauna and cold plunge in Denver, USA. Rated 5.0★ with 131 verified reviews.',
     verified: true,
     featured: false,
+    email: 'admin@thecovesauna.com',
     slug: 'the-cove-sauna-and-cold-plunge-den',
   },
   {
@@ -8824,6 +9091,7 @@ export const VENUES: Venue[] = [
     description: 'R3 Spa: Sauna + Cold Plunge offers infrared sauna and cold plunge in Denver, USA. Rated 5.0★ with 276 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@r3experience.com',
     slug: 'r3-spa-sauna-cold-plunge-den',
   },
   {
@@ -8843,6 +9111,7 @@ export const VENUES: Venue[] = [
     description: 'beem® Light Sauna - RiNo offers infrared sauna in Denver, USA. Rated 4.8★ with 68 verified reviews.',
     verified: true,
     featured: false,
+    email: 'rino@beemlightsauna.com',
     slug: 'beem-light-sauna-rino-den',
   },
   {
@@ -8900,6 +9169,7 @@ export const VENUES: Venue[] = [
     description: 'Sapa Spa and Wellness offers infrared sauna in Denver, USA. Rated 5.0★ with 86 verified reviews.',
     verified: true,
     featured: false,
+    email: 'hello@sapa-spa.com',
     slug: 'sapa-spa-and-wellness-den',
   },
   {
@@ -8919,6 +9189,7 @@ export const VENUES: Venue[] = [
     description: 'RÖK SPAS offers infrared sauna in Denver, USA. Rated 4.9★ with 413 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hello@rokspas.com',
     slug: 'r-k-spas-den',
   },
   {
@@ -8938,6 +9209,7 @@ export const VENUES: Venue[] = [
     description: 'Recovery Lounge & Spa offers infrared sauna in Denver, USA. Rated 4.9★ with 111 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@recoveryloungeandspa.com',
     slug: 'recovery-lounge-spa-den',
   },
   {
@@ -8956,6 +9228,7 @@ export const VENUES: Venue[] = [
     description: 'NAOSU SAUNA offers infrared sauna in Denver, USA. Rated 4.9★ with 120 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@naosusauna.com',
     slug: 'naosu-sauna-den',
   },
   {
@@ -8975,6 +9248,7 @@ export const VENUES: Venue[] = [
     description: 'Easy Float Sauna & Plunge offers infrared sauna and float tank in Denver, USA. Rated 4.8★ with 364 verified reviews.',
     verified: true,
     featured: true,
+    email: 'hello@easyfloat.com',
     slug: 'easy-float-sauna-plunge-den',
   },
   {
@@ -9031,6 +9305,7 @@ export const VENUES: Venue[] = [
     description: 'Cherry Hills Cryo offers cryotherapy in Denver, USA. Rated 5.0★ with 63 verified reviews.',
     verified: true,
     featured: false,
+    email: '605a7baede844d278b89dc95ae0a9123@sentry-next.wixpress.com',
     slug: 'cherry-hills-cryo-den',
   },
   {
@@ -9050,6 +9325,7 @@ export const VENUES: Venue[] = [
     description: 'Denver Sports Recovery offers IV therapy, infrared sauna and hyperbaric oxygen in Denver, USA. Rated 4.9★ with 414 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@denversportsrecovery.com',
     slug: 'denver-sports-recovery-den',
   },
   {
@@ -9088,6 +9364,7 @@ export const VENUES: Venue[] = [
     description: 'Aria Integrative Health offers infrared sauna in Denver, USA. Rated 4.7★ with 211 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@ariaintegrativehealth.com',
     slug: 'aria-integrative-health-den',
   },
   {
@@ -9107,6 +9384,7 @@ export const VENUES: Venue[] = [
     description: 'Castle Rock Regenerative Healthcare offers IV therapy in Denver, USA. Rated 5.0★ with 201 verified reviews.',
     verified: true,
     featured: true,
+    email: 'staff@castlerockregenerativehealth.com',
     slug: 'castle-rock-regenerative-healthcare-den',
   },
   {
@@ -9164,6 +9442,7 @@ export const VENUES: Venue[] = [
     description: 'Prime IV Hydration & Wellness - Cherry Creek offers IV therapy in Denver, USA. Rated 4.8★ with 114 verified reviews.',
     verified: true,
     featured: false,
+    email: 'cherrycreek@primeivhydration.com',
     slug: 'prime-iv-hydration-wellness-cherry-creek-den',
   },
   {
@@ -9259,6 +9538,7 @@ export const VENUES: Venue[] = [
     description: 'Prime IV Hydration & Wellness (Prime IV Belmar - Lakewood) offers IV therapy in Denver, USA. Rated 4.9★ with 125 verified reviews.',
     verified: true,
     featured: false,
+    email: 'belmar@primeivhydration.com',
     slug: 'prime-iv-hydration-wellness-prime-iv-belmar-lakewood-den',
   },
   {
@@ -9316,6 +9596,7 @@ export const VENUES: Venue[] = [
     description: 'HBOT Denver offers hyperbaric oxygen in Denver, USA. Rated 4.9★ with 61 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@hbotdenver.com',
     slug: 'hbot-denver-den',
   },
   {
@@ -9335,6 +9616,7 @@ export const VENUES: Venue[] = [
     description: 'HBOT NOW offers hyperbaric oxygen in Denver, USA. Rated 5.0★ with 272 verified reviews.',
     verified: true,
     featured: true,
+    email: 'info@hbotnow.com',
     slug: 'hbot-now-den',
   },
   {
@@ -9354,6 +9636,7 @@ export const VENUES: Venue[] = [
     description: 'HBOT of Aurora offers hyperbaric oxygen in Denver, USA. Rated 5.0★ with 60 verified reviews.',
     verified: true,
     featured: false,
+    email: 'marina.metcalf@hbotofaurora.com',
     slug: 'hbot-of-aurora-den',
   },
   {
@@ -9373,6 +9656,7 @@ export const VENUES: Venue[] = [
     description: 'Amy Gray Wellness offers infrared sauna in Denver, USA. Rated 5.0★ with 54 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@amygraywellness.com',
     slug: 'amy-gray-wellness-den',
   },
   {
@@ -9523,6 +9807,7 @@ export const VENUES: Venue[] = [
     description: 'Offline Wellness Club offers infrared sauna in Calgary, Canada. Rated 4.9★ with 51 verified reviews.',
     verified: true,
     featured: false,
+    email: 'online@offlinewellnessclub.com',
     slug: 'offline-wellness-club-yyc',
   },
   {
@@ -9542,6 +9827,7 @@ export const VENUES: Venue[] = [
     description: 'Redox Wellness offers infrared sauna in Calgary, Canada. Rated 5.0★ with 61 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@redoxwellness.ca',
     slug: 'redox-wellness-yyc',
   },
   {
@@ -9580,6 +9866,7 @@ export const VENUES: Venue[] = [
     description: 'clear float spa offers infrared sauna and float tank in Calgary, Canada. Rated 4.8★ with 201 verified reviews.',
     verified: true,
     featured: true,
+    email: 'concierge@clearfloat.ca',
     slug: 'clear-float-spa-yyc',
   },
   {
@@ -9599,6 +9886,7 @@ export const VENUES: Venue[] = [
     description: 'Silver Birch Sauna offers infrared sauna in Calgary, Canada. Rated 5.0★ with 176 verified reviews.',
     verified: true,
     featured: false,
+    email: 'krchnv@gmail.com',
     slug: 'silver-birch-sauna-yyc',
   },
   {
@@ -9618,6 +9906,7 @@ export const VENUES: Venue[] = [
     description: 'SaunaBuilder - Custom Indoor and Outdoor Saunas for Homes and Businesses offers infrared sauna in Calgary, Canada. Rated 4.8★ with 56 verified reviews.',
     verified: true,
     featured: false,
+    email: 'contact@saunabuilder.ca',
     slug: 'saunabuilder-custom-indoor-and-outdoor-saunas-for-homes-yyc',
   },
   {
@@ -9675,6 +9964,7 @@ export const VENUES: Venue[] = [
     description: 'Aquarius Spa offers infrared sauna in Calgary, Canada. Rated 5.0★ with 291 verified reviews.',
     verified: true,
     featured: true,
+    email: 'julia.ielina@icloud.com',
     slug: 'aquarius-spa-yyc',
   },
   {
@@ -9694,6 +9984,7 @@ export const VENUES: Venue[] = [
     description: 'Anara Infusion & Wellness Group offers IV therapy in Calgary, Canada. Rated 5.0★ with 59 verified reviews.',
     verified: true,
     featured: false,
+    email: 'zenaida@anarainfusion.com',
     slug: 'anara-infusion-wellness-group-yyc',
   },
   {
@@ -9713,6 +10004,7 @@ export const VENUES: Venue[] = [
     description: 'Vitality BioMed offers IV therapy in Calgary, Canada. Rated 5.0★ with 51 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@vitalitybiomed.com',
     slug: 'vitality-biomed-yyc',
   },
   {
@@ -9751,6 +10043,7 @@ export const VENUES: Venue[] = [
     description: 'Rejuve Health & Wellness offers infrared sauna in Calgary, Canada. Rated 4.8★ with 229 verified reviews.',
     verified: true,
     featured: true,
+    email: 'rejuveyourbody@gmail.com',
     slug: 'rejuve-health-wellness-yyc',
   },
   {
@@ -9789,6 +10082,7 @@ export const VENUES: Venue[] = [
     description: 'Calgary Menopause Wellness offers specialist women\'s health and menopause care in Calgary, Canada. Rated 5.0★ with 59 verified reviews.',
     verified: true,
     featured: false,
+    email: 'info@calgarymenopause.com',
     slug: 'calgary-menopause-wellness-yyc',
   },
   {
@@ -9920,6 +10214,7 @@ export const VENUES: Venue[] = [
     verified: true,
     featured: true,
     deliveryMode: 'online',
+    email: 'support@maximustribe.com',
     slug: 'maximus-tribe',
   },
   {
@@ -9938,6 +10233,7 @@ export const VENUES: Venue[] = [
     verified: true,
     featured: false,
     deliveryMode: 'online',
+    email: 'support@fountaintrt.com',
     slug: 'fountain-trt',
   },
   {
@@ -9994,6 +10290,7 @@ export const VENUES: Venue[] = [
     verified: true,
     featured: false,
     deliveryMode: 'online',
+    email: 'support@honehealth.com',
     slug: 'hone-health',
   },
 ];
