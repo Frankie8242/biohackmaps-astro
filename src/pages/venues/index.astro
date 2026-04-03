@@ -89,6 +89,11 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
           <button class="sort-btn" data-sort="reviews">💬 Reviews</button>
         </div>
 
+        <label class="online-toggle" title="Show telehealth and online providers">
+          <input type="checkbox" id="include-online" checked />
+          <span>💻 Online</span>
+        </label>
+
         <div class="venue-count" id="venue-count">Showing {venues.length} venues</div>
       </div>
 
@@ -109,6 +114,7 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
             data-reviews={venue.reviewCount}
             data-lat={venue.lat}
             data-lng={venue.lng}
+            data-delivery-mode={venue.deliveryMode || 'physical'}
           >
             <VenueCard venue={venue} />
           </div>
@@ -131,6 +137,7 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
   let currentSort = 'default';
   let activeMods = new Set<string>();
   let activeCity = '';
+  let includeOnline = true;
 
   // --- Elements ---
   const searchInput = document.getElementById('search-input') as HTMLInputElement;
@@ -145,6 +152,7 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
   const noResults = document.getElementById('no-results') as HTMLElement;
   const activeFiltersEl = document.getElementById('active-filters') as HTMLElement;
   const resetAll = document.getElementById('reset-all') as HTMLButtonElement;
+  const includeOnlineChk = document.getElementById('include-online') as HTMLInputElement;
 
   // --- Haversine distance (km) ---
   function haversine(lat1: number, lng1: number, lat2: number, lng2: number): number {
@@ -205,7 +213,10 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
       const matchesMod = activeMods.size === 0 ||
         Array.from(activeMods).some(m => mods.includes(m));
 
-      const visible = matchesSearch && matchesCity && matchesMod;
+      const deliveryMode = item.dataset.deliveryMode ?? 'physical';
+      const matchesOnline = includeOnline || deliveryMode === 'physical' || deliveryMode === 'hybrid';
+
+      const visible = matchesSearch && matchesCity && matchesMod && matchesOnline;
       item.style.display = visible ? '' : 'none';
       if (visible) shown++;
     });
@@ -327,6 +338,12 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
     applyFilters();
   });
 
+  // --- Online toggle ---
+  includeOnlineChk.addEventListener('change', () => {
+    includeOnline = includeOnlineChk.checked;
+    applyFilters();
+  });
+
   // --- Reset all ---
   resetAll?.addEventListener('click', () => {
     searchInput.value = '';
@@ -335,6 +352,8 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
     activeCity = '';
     activeMods.clear();
     modPills.forEach(p => p.classList.remove('active'));
+    includeOnline = true;
+    includeOnlineChk.checked = true;
     setSort('default');
   });
 
@@ -568,6 +587,27 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
     margin-bottom: 0.75rem;
     flex-wrap: wrap;
   }
+
+  .online-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
+    transition: border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+  }
+  .online-toggle:has(input:checked) {
+    border-color: rgba(99,102,241,0.4);
+    color: #818cf8;
+    background: rgba(99,102,241,0.06);
+  }
+  .online-toggle input { accent-color: #818cf8; cursor: pointer; }
 
   .city-select {
     padding: 9px 12px;

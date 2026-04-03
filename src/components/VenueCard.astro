@@ -28,11 +28,18 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
     <div class="badges">
       {venue.premium && <span class="badge premium">⭐ Premium</span>}
       {venue.verified && !venue.premium && <span class="badge verified">✓ Verified</span>}
+      {venue.deliveryMode === 'online' && <span class="badge telehealth">💻 Telehealth</span>}
+      {venue.deliveryMode === 'hybrid' && <span class="badge hybrid">🔀 Hybrid</span>}
     </div>
   </div>
   
   <div class="venue-info">
-    <p class="location">📍 <a href={`/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}`} class="city-link">{venue.city}</a>, {venue.country}</p>
+    <p class="location">
+      {venue.deliveryMode === 'online'
+        ? <>🌐 Online — serves <a href={`/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}`} class="city-link">{venue.city}</a> &amp; nationwide</>
+        : <>📍 <a href={`/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}`} class="city-link">{venue.city}</a>, {venue.country}</>
+      }
+    </p>
     <p class="rating">
       ⭐ {venue.rating.toFixed(1)}
       <span class="review-count">({venue.reviewCount.toLocaleString()} reviews)</span>
@@ -226,6 +233,18 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
     background: rgba(34, 197, 94, 0.15);
     color: var(--green);
     border: 1px solid rgba(34,197,94,0.2);
+  }
+
+  .badge.telehealth {
+    background: rgba(99, 102, 241, 0.15);
+    color: #818cf8;
+    border: 1px solid rgba(99,102,241,0.25);
+  }
+
+  .badge.hybrid {
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--accent2);
+    border: 1px solid rgba(6,182,212,0.25);
   }
 
   .venue-info {

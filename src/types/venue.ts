@@ -18,6 +18,7 @@ export interface Venue {
   verified: boolean;
   featured: boolean;
   premium?: boolean;
+  deliveryMode?: 'physical' | 'online' | 'hybrid';
   slug: string;
 }
 
