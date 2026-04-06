@@ -2,6 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+
+const MODALITY_OPTIONS = [
+  { value: 'infrared-sauna',    label: 'Infrared Sauna' },
+  { value: 'cryotherapy',       label: 'Cryotherapy' },
+  { value: 'float-tank',        label: 'Float Tank' },
+  { value: 'red-light-therapy', label: 'Red Light Therapy' },
+  { value: 'hyperbaric-oxygen', label: 'Hyperbaric Oxygen' },
+  { value: 'cold-plunge',       label: 'Cold Plunge' },
+  { value: 'trt-clinic',        label: 'TRT Clinic' },
+  { value: 'iv-therapy',        label: 'IV Therapy' },
+  { value: 'tanning',           label: 'Tanning' },
+  { value: 'womens-health',     label: "Women's Health" },
+];
 ---
 
 <Layout
@@ -100,6 +113,18 @@ import Footer from '../components/Footer.astro';
             <div class="form-group">
               <label for="email">Your email *</label>
               <input type="email" id="email" name="email" placeholder="you@yourvenue.com" required />
+            </div>
+
+            <div class="form-group">
+              <label>Services offered <span class="optional">(select all that apply)</span></label>
+              <div class="modality-checkboxes">
+                {MODALITY_OPTIONS.map(m => (
+                  <label class="checkbox-label">
+                    <input type="checkbox" name="modalities" value={m.value} />
+                    {m.label}
+                  </label>
+                ))}
+              </div>
             </div>
 
             <div class="form-group">
@@ -415,6 +440,39 @@ import Footer from '../components/Footer.astro';
   .optional {
     color: var(--muted);
     font-weight: 400;
+  }
+
+  .modality-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface2);
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .checkbox-label:hover {
+    border-color: var(--accent);
+    background: var(--surface);
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    accent-color: var(--accent);
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
   }
 
   .form-group input[type="text"],
