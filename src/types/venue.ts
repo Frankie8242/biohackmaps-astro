@@ -19,6 +19,7 @@ export interface Venue {
   featured: boolean;
   premium?: boolean;
   deliveryMode?: 'physical' | 'online' | 'hybrid';
+  pinnedUntil?: string; // ISO date string; venue is featured/pinned until this date
   slug: string;
 }
 

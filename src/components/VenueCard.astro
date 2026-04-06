@@ -4,9 +4,10 @@ import { MODALITIES } from '../data/modalities';
 
 interface Props {
   venue: Venue;
+  newListing?: boolean;
 }
 
-const { venue } = Astro.props;
+const { venue, newListing } = Astro.props;
 
 const modalityNames: Record<string, string> = Object.fromEntries(
   MODALITIES.map(m => [m.slug, m.name])
@@ -26,6 +27,7 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
   <div class="venue-header">
     <h3>{venue.name}</h3>
     <div class="badges">
+      {newListing && <span class="badge new-listing">✨ New Listing</span>}
       {venue.premium && <span class="badge premium">⭐ Premium</span>}
       {venue.verified && !venue.premium && <span class="badge verified">✓ Verified</span>}
       {venue.deliveryMode === 'online' && <span class="badge telehealth">💻 Telehealth</span>}
@@ -247,6 +249,18 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
     border: 1px solid rgba(6,182,212,0.25);
   }
 
+  .badge.new-listing {
+    background: linear-gradient(135deg, rgba(168,85,247,0.25), rgba(236,72,153,0.15));
+    color: #d946ef;
+    border: 1px solid rgba(168,85,247,0.4);
+    animation: pulse-glow 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(168,85,247,0.3); }
+    50% { box-shadow: 0 0 8px 2px rgba(168,85,247,0.25); }
+  }
+
   .venue-info {
     margin-bottom: 1rem;
     font-size: 13px;
@@ -295,7 +309,7 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
   }
 
   .description {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--muted);
     margin: 0 0 1rem 0;
     line-height: 1.5;

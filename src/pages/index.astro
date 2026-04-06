@@ -13,6 +13,12 @@ const modalities = getAllModalities();
 const allVenues = getAllVenues();
 const featuredVenues = allVenues.filter(v => v.featured).slice(0, 6);
 const orgSchema = generateOrganizationSchema(Astro.url.origin);
+
+// Find any venue pinned via pinnedUntil that is still active as of build time
+const today = new Date().toISOString().slice(0, 10);
+const pinnedVenue = allVenues.find(v => v.pinnedUntil && v.pinnedUntil >= today) ?? null;
+// Exclude the pinned venue from the regular grid to avoid duplication
+const gridVenues = pinnedVenue ? allVenues.filter(v => v.slug !== pinnedVenue.slug) : allVenues;
 const uniqueCities = new Set(allVenues.map(v => v.city)).size;
 ---
 
@@ -52,14 +58,26 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
     </div>
   </section>
 
-  {featuredVenues.length > 0 && (
+  {(featuredVenues.length > 0 || pinnedVenue) && (
     <section class="section section-dark">
       <div class="container">
         <h2 id="venues-heading">Featured Venues</h2>
         <p class="section-subtitle" id="venues-subtitle">Hand-picked biohacking destinations</p>
-        
+
+        {pinnedVenue && (
+          <div class="new-arrival-banner">
+            <div class="new-arrival-label">
+              <span class="new-arrival-dot"></span>
+              New Arrival — Just Added
+            </div>
+            <div class="new-arrival-card">
+              <VenueCard venue={pinnedVenue} newListing={true} />
+            </div>
+          </div>
+        )}
+
         <div class="venue-grid" id="venue-grid">
-          {allVenues.map(venue => (
+          {gridVenues.map(venue => (
             <div class="venue-wrapper" data-city={venue.city.toLowerCase()} data-featured={venue.featured} style="display:none">
               <VenueCard venue={venue} />
             </div>
@@ -207,6 +225,54 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
+  }
+
+  .new-arrival-banner {
+    margin-bottom: 2.5rem;
+    border: 1px solid rgba(168,85,247,0.3);
+    border-radius: 12px;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, rgba(168,85,247,0.06) 0%, rgba(236,72,153,0.04) 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .new-arrival-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(168,85,247,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .new-arrival-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #d946ef;
+    margin-bottom: 1rem;
+  }
+
+  .new-arrival-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #d946ef;
+    animation: blink 1.4s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .new-arrival-card {
+    max-width: 380px;
   }
 
   .venue-grid {
