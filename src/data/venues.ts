@@ -10293,6 +10293,22 @@ export const VENUES: Venue[] = [
     email: 'support@honehealth.com',
     slug: 'hone-health',
   },
+  {
+    id: '1007',
+    name: 'Iv Glow Bar',
+    address: '',
+    city: 'Los Angeles',
+    country: 'United States',
+    lat: 34.0522,
+    lng: -118.2437,
+    website: 'https://ivglowbar.com/',
+    modalities: ['red-light-therapy'],
+    description: 'Iv Glow Bar offers red light therapy in Los Angeles, United States.',
+    verified: false,
+    featured: false,
+    email: 'mark@ivglowbar.com',
+    slug: 'iv-glow-bar-la',
+  },
 ];
 
 export function getVenueBySlug(slug: string): Venue | undefined {
