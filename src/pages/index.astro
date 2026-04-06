@@ -45,11 +45,34 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
     </div>
   </div>
 
+  {pinnedVenue && (
+    <section class="spotlight-section">
+      <div class="spotlight-glow"></div>
+      <div class="container">
+        <div class="spotlight-eyebrow">
+          <span class="spotlight-dot"></span>
+          New Listing · Featured This Week
+        </div>
+        <div class="spotlight-layout">
+          <div class="spotlight-info">
+            <h2 class="spotlight-name">{pinnedVenue.name}</h2>
+            <p class="spotlight-location">📍 {pinnedVenue.city}, {pinnedVenue.country}</p>
+            <p class="spotlight-desc">{pinnedVenue.description}</p>
+            <a href={`/venues/${pinnedVenue.slug}`} class="spotlight-cta">View Venue →</a>
+          </div>
+          <div class="spotlight-card">
+            <VenueCard venue={pinnedVenue} newListing={true} />
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
   <section class="section">
     <div class="container">
       <h2>Browse Modalities</h2>
       <p class="section-subtitle">Discover the science of self-optimization</p>
-      
+
       <div class="modality-grid">
         {modalities.map(mod => (
           <ModalityCard modality={mod} />
@@ -58,23 +81,11 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
     </div>
   </section>
 
-  {(featuredVenues.length > 0 || pinnedVenue) && (
+  {(featuredVenues.length > 0 || gridVenues.some(v => v.featured)) && (
     <section class="section section-dark">
       <div class="container">
         <h2 id="venues-heading">Featured Venues</h2>
         <p class="section-subtitle" id="venues-subtitle">Hand-picked biohacking destinations</p>
-
-        {pinnedVenue && (
-          <div class="new-arrival-banner">
-            <div class="new-arrival-label">
-              <span class="new-arrival-dot"></span>
-              New Arrival — Just Added
-            </div>
-            <div class="new-arrival-card">
-              <VenueCard venue={pinnedVenue} newListing={true} />
-            </div>
-          </div>
-        )}
 
         <div class="venue-grid" id="venue-grid">
           {gridVenues.map(venue => (
@@ -227,39 +238,44 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
     margin-bottom: 2rem;
   }
 
-  .new-arrival-banner {
-    margin-bottom: 2.5rem;
-    border: 1px solid rgba(168,85,247,0.3);
-    border-radius: 12px;
-    padding: 1.25rem;
-    background: linear-gradient(135deg, rgba(168,85,247,0.06) 0%, rgba(236,72,153,0.04) 100%);
+  /* ── Spotlight / New Arrival section ── */
+  .spotlight-section {
     position: relative;
     overflow: hidden;
+    padding: 3rem 2rem;
+    border-bottom: 1px solid rgba(168,85,247,0.25);
+    background: linear-gradient(135deg, rgba(168,85,247,0.07) 0%, rgba(236,72,153,0.04) 50%, var(--bg,#0a0a0a) 100%);
   }
 
-  .new-arrival-banner::before {
-    content: '';
+  .spotlight-glow {
     position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse at top left, rgba(168,85,247,0.12) 0%, transparent 60%);
+    top: -80px;
+    left: -80px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(168,85,247,0.18) 0%, transparent 70%);
     pointer-events: none;
   }
 
-  .new-arrival-label {
+  .spotlight-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     font-size: 11px;
     font-weight: 700;
-    letter-spacing: 0.15em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: #d946ef;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(168,85,247,0.3);
+    padding: 4px 14px;
+    border-radius: 100px;
+    background: rgba(168,85,247,0.06);
   }
 
-  .new-arrival-dot {
-    width: 8px;
-    height: 8px;
+  .spotlight-dot {
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: #d946ef;
     animation: blink 1.4s ease-in-out infinite;
@@ -268,11 +284,66 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
 
   @keyframes blink {
     0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    50% { opacity: 0.25; }
   }
 
-  .new-arrival-card {
-    max-width: 380px;
+  .spotlight-layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .spotlight-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    letter-spacing: 2px;
+    margin: 0 0 0.5rem 0;
+    line-height: 1;
+    background: linear-gradient(135deg, #fff 40%, #d946ef 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .spotlight-location {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 0 0 1rem 0;
+  }
+
+  .spotlight-desc {
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.65;
+    margin: 0 0 1.75rem 0;
+    max-width: 480px;
+  }
+
+  .spotlight-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, #a855f7, #ec4899);
+    color: #fff;
+    padding: 12px 28px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.03em;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 0 24px rgba(168,85,247,0.3);
+  }
+
+  .spotlight-cta:hover {
+    opacity: 0.88;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .spotlight-layout {
+      grid-template-columns: 1fr;
+    }
+    .spotlight-name { font-size: 38px; }
   }
 
   .venue-grid {
