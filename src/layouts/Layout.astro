@@ -27,7 +27,8 @@ const ogImage = image.startsWith("http") ? image : `https://biohackmaps.com${ima
     
     <!-- Canonical -->
     <link rel="canonical" href={canonicalURL} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="robots" content="noai, noimageai" />
     <meta name="language" content="English" />
 
     <!-- Favicons -->
