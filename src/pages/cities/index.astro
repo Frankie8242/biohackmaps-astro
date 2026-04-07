@@ -1,0 +1,186 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { getAllVenues, getUniqueCities } from '../../data/venues';
+import { getAllModalities } from '../../data/modalities';
+
+const toSlug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+
+const allVenues = getAllVenues();
+const allCities = getUniqueCities();
+const modalities = getAllModalities();
+
+// Group cities by country, sorted by venue count within each country
+const cityData = allCities.map(c => {
+  const cityVenues = allVenues.filter(v => v.city === c);
+  const mods = [...new Set(cityVenues.flatMap(v => v.modalities))];
+  return {
+    name: c,
+    slug: toSlug(c),
+    count: cityVenues.length,
+    country: cityVenues[0]?.country ?? 'Unknown',
+    modalities: mods.slice(0, 5),
+    avgRating: (cityVenues.reduce((sum, v) => sum + v.rating, 0) / cityVenues.length).toFixed(1),
+  };
+});
+
+const byCountry = new Map<string, typeof cityData>();
+for (const c of cityData) {
+  if (!byCountry.has(c.country)) byCountry.set(c.country, []);
+  byCountry.get(c.country)!.push(c);
+}
+// Sort countries by total venue count, cities within by count
+const sortedCountries = [...byCountry.entries()]
+  .map(([country, cities]) => ({
+    country,
+    cities: cities.sort((a, b) => b.count - a.count),
+    total: cities.reduce((s, c) => s + c.count, 0),
+  }))
+  .sort((a, b) => b.total - a.total);
+
+const totalCities = allCities.length;
+const totalVenues = allVenues.length;
+const totalCountries = sortedCountries.length;
+---
+
+<Layout
+  title="All Cities"
+  description={`Browse biohacking venues in ${totalCities} cities across ${totalCountries} countries. Find infrared saunas, cryotherapy, float tanks, and more near you.`}
+>
+  <Nav current="venues" />
+
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="/">Home</a>
+      <span class="sep">›</span>
+      <a href="/venues/">Venues</a>
+      <span class="sep">›</span>
+      <span class="current">All Cities</span>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>Browse by City</h1>
+      <p class="subtitle">{totalVenues} verified venues across {totalCities} cities in {totalCountries} countries</p>
+    </div>
+  </section>
+
+  <!-- Quick jump nav -->
+  <section class="section jump-nav-section">
+    <div class="container">
+      <div class="jump-nav">
+        {sortedCountries.map(({ country }) => (
+          <a href={`#${toSlug(country)}`} class="jump-link">{country}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {sortedCountries.map(({ country, cities, total }) => (
+    <section class="section country-section" id={toSlug(country)}>
+      <div class="container">
+        <div class="country-header">
+          <h2>{country}</h2>
+          <span class="country-meta">{cities.length} {cities.length === 1 ? 'city' : 'cities'} · {total} venues</span>
+        </div>
+        <div class="city-grid">
+          {cities.map(c => (
+            <a href={`/cities/${c.slug}`} class="city-card">
+              <div class="city-top">
+                <span class="city-name">{c.name}</span>
+                <span class="city-rating">{c.avgRating}★</span>
+              </div>
+              <span class="city-count">{c.count} {c.count === 1 ? 'venue' : 'venues'}</span>
+              <div class="city-mods">
+                {c.modalities.map(mod => {
+                  const m = modalities.find(x => x.id === mod);
+                  return m ? <span class="mod-tag">{m.icon} {m.name}</span> : null;
+                })}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- Modalities cross-link -->
+  <section class="section section-dark">
+    <div class="container">
+      <h2>Or browse by modality</h2>
+      <div class="mod-links">
+        {modalities.map(m => (
+          <a href={`/modalities/${m.slug}`} class="mod-chip">{m.icon} {m.name}</a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .breadcrumb-nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0.75rem 2rem; font-size: 13px; }
+  .breadcrumb-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 0.5rem; color: var(--muted); }
+  .breadcrumb-inner a { color: var(--muted); text-decoration: none; }
+  .breadcrumb-inner a:hover { color: var(--accent); }
+  .breadcrumb-inner .sep { color: var(--border); }
+  .breadcrumb-inner .current { color: var(--text); }
+
+  .page-hero { background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%); border-bottom: 1px solid var(--border); padding: 3rem 2rem; text-align: center; }
+  h1 { font-size: 48px; margin-bottom: 0.75rem; }
+  .subtitle { color: var(--muted); font-size: 16px; }
+
+  .section { padding: 2.5rem 2rem; }
+  .section-dark { background: var(--surface); }
+  .container { max-width: 1200px; margin: 0 auto; }
+
+  .jump-nav-section { padding: 1.5rem 2rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .jump-nav { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+  .jump-link {
+    padding: 5px 14px; font-size: 13px; color: var(--accent2); text-decoration: none;
+    border: 1px solid rgba(6,182,212,0.2); border-radius: 100px; transition: all 0.2s;
+  }
+  .jump-link:hover { background: rgba(6,182,212,0.1); }
+
+  .country-section { border-bottom: 1px solid var(--border); }
+  .country-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .country-header h2 { font-size: 32px; margin: 0; }
+  .country-meta { font-size: 14px; color: var(--muted); }
+
+  .city-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+  .city-card {
+    display: flex; flex-direction: column; gap: 0.35rem;
+    padding: 1.25rem; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; text-decoration: none; transition: all 0.2s;
+  }
+  .city-card:hover { border-color: var(--accent2); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+  .city-top { display: flex; justify-content: space-between; align-items: center; }
+  .city-name { color: var(--text); font-weight: 600; font-size: 16px; }
+  .city-rating { color: var(--accent); font-size: 13px; font-weight: 600; }
+  .city-count { color: var(--muted); font-size: 13px; }
+  .city-mods { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.25rem; }
+  .mod-tag { font-size: 11px; color: var(--muted); background: var(--surface2); padding: 2px 8px; border-radius: 3px; }
+
+  .section-dark h2 { font-size: 28px; margin-bottom: 1rem; text-align: center; }
+  .mod-links { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; }
+  .mod-chip {
+    padding: 8px 18px; border-radius: 100px; font-size: 14px;
+    background: rgba(6,182,212,0.1); color: var(--accent2); text-decoration: none;
+    border: 1px solid rgba(6,182,212,0.2); transition: all 0.2s;
+  }
+  .mod-chip:hover { background: rgba(6,182,212,0.2); }
+
+  @media (max-width: 768px) {
+    h1 { font-size: 32px; }
+    .section { padding: 2rem 1rem; }
+    .page-hero { padding: 2rem 1rem; }
+    .city-grid { grid-template-columns: 1fr 1fr; }
+    .country-header h2 { font-size: 24px; }
+  }
+  @media (max-width: 480px) {
+    .city-grid { grid-template-columns: 1fr; }
+  }
+</style>

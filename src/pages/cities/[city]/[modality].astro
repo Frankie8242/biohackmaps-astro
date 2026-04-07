@@ -77,6 +77,9 @@ const avgRating = (venues.reduce((sum, v) => sum + v.rating, 0) / venues.length)
 const totalReviews = venues.reduce((sum, v) => sum + v.reviewCount, 0).toLocaleString();
 const topVenue = venues[0];
 
+// Build date for freshness signal
+const buildDate = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
 // BreadcrumbList schema
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
@@ -173,7 +176,7 @@ const faqSchema = {
     <div class="container">
       <div class="results-header">
         <h2>{venues.length} {modality.name} Venues in {city}</h2>
-        <span class="sort-note">Ranked by rating & reviews · Premium venues first</span>
+        <span class="sort-note">Ranked by rating & reviews · Premium venues first · Updated {buildDate}</span>
       </div>
       <div class="venue-grid">
         {venues.map((venue, i) => (
