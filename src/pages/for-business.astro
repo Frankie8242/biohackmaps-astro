@@ -2,15 +2,64 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { getAllVenues, getUniqueCities } from '../data/venues';
+import { getAllModalities } from '../data/modalities';
+
+const venues = getAllVenues();
+const cities = getUniqueCities();
+const modalities = getAllModalities();
+const totalReviews = venues.reduce((s, v) => s + v.reviewCount, 0);
+const countries = [...new Set(venues.map(v => v.country))].length;
 ---
 
-<Layout title="For Business">
+<Layout title="For Business" description="List your biohacking venue on BiohackMap — the world's largest directory with ${venues.length}+ venues across ${cities.length} cities. Free and premium listings available.">
   <Nav current="business" />
 
   <section class="hero">
     <div class="hero-content">
-      <h1>For Business Owners</h1>
-      <p>Get your biohacking venue on BiohackMap</p>
+      <h1>Get discovered by biohackers worldwide</h1>
+      <p>BiohackMap is the #1 directory for biohacking venues. List your venue and reach customers actively searching for your services.</p>
+    </div>
+  </section>
+
+  <!-- Stats bar — real numbers -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat"><span class="stat-num">{venues.length}+</span><span class="stat-label">Verified Venues</span></div>
+      <div class="stat-sep">·</div>
+      <div class="stat"><span class="stat-num">{cities.length}</span><span class="stat-label">Cities</span></div>
+      <div class="stat-sep">·</div>
+      <div class="stat"><span class="stat-num">{countries}</span><span class="stat-label">Countries</span></div>
+      <div class="stat-sep">·</div>
+      <div class="stat"><span class="stat-num">{(totalReviews / 1000).toFixed(0)}K+</span><span class="stat-label">Aggregated Reviews</span></div>
+      <div class="stat-sep">·</div>
+      <div class="stat"><span class="stat-num">790</span><span class="stat-label">Indexed Pages</span></div>
+      <div class="stat-sep">·</div>
+      <div class="stat"><span class="stat-num">{modalities.length}</span><span class="stat-label">Modalities</span></div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <section class="section how-it-works">
+    <div class="container">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step-num">1</span>
+          <h3>We list your venue</h3>
+          <p>Your venue gets a dedicated page with your address, hours, services, rating, and map — optimized for Google.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <h3>Customers find you</h3>
+          <p>When someone searches "cryotherapy in {cities[0]}" or "infrared sauna near me", your venue appears in results.</p>
+        </div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <h3>They call, visit, book</h3>
+          <p>Each listing has call, website, and directions buttons. We send qualified, high-intent traffic directly to you.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -99,7 +148,7 @@ import Footer from '../components/Footer.astro';
             <li>🏠 Full-width branded section on the homepage</li>
             <li>🔗 Direct link with your UTM tracking</li>
             <li>📣 Your tagline & call-to-action button</li>
-            <li>🌍 Seen by visitors across 35+ cities</li>
+            <li>🌍 Seen by visitors across {cities.length}+ cities</li>
             <li>📊 Monthly traffic report</li>
             <li>🤝 "Major Sponsor" badge — only 1 slot available</li>
           </ul>
@@ -114,7 +163,7 @@ import Footer from '../components/Footer.astro';
               <span class="preview-name">YOUR BRAND</span>
             </div>
             <p class="preview-tagline">YOUR SLOGAN. <span>HERE.</span></p>
-            <p class="preview-desc">Your product or service described to thousands of health-conscious biohackers every month across 35+ cities.</p>
+            <p class="preview-desc">Your product or service described to thousands of health-conscious biohackers every month across {cities.length}+ cities.</p>
             <a class="preview-btn">Get Early Access →</a>
           </div>
         </div>
@@ -171,6 +220,34 @@ import Footer from '../components/Footer.astro';
 </Layout>
 
 <style>
+  .stats-bar { background: var(--surface2); border-bottom: 1px solid var(--border); padding: 1.25rem 2rem; }
+  .stats-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .stat { display: flex; align-items: baseline; gap: 0.4rem; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 24px; color: var(--accent); letter-spacing: 1px; }
+  .stat-label { font-size: 13px; color: var(--muted); }
+  .stat-sep { color: var(--border); font-size: 18px; }
+
+  .how-it-works { border-bottom: 1px solid var(--border); }
+  .how-it-works h2 { font-size: 36px; text-align: center; margin-bottom: 2.5rem; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .step { text-align: center; padding: 1.5rem; }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(249,115,22,0.1); border: 2px solid var(--accent);
+    color: var(--accent); font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; margin-bottom: 1rem;
+  }
+  .step h3 { font-size: 18px; margin-bottom: 0.5rem; }
+  .step p { color: var(--muted); font-size: 14px; line-height: 1.6; }
+
+  @media (max-width: 768px) {
+    .steps { grid-template-columns: 1fr; gap: 1rem; }
+  }
+
   .hero {
     background: linear-gradient(135deg, var(--surface) 0%, var(--surface2) 100%);
     border-bottom: 1px solid var(--border);
