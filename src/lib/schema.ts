@@ -83,7 +83,7 @@ export function generateOrganizationSchema(baseUrl: string) {
     logo: `${baseUrl}/og-image.png`,
     sameAs: [
       'https://twitter.com/biohackmaps',
-      'https://instagram.com/biohackmaps',
+      'https://www.instagram.com/biohackmap/',
     ],
     areaServed: 'Worldwide',
     serviceType: ['Infrared Sauna', 'Cryotherapy', 'Float Tank', 'Red Light Therapy', 'Hyperbaric Oxygen', 'TRT Clinic', 'Cold Plunge', 'IV Therapy', 'HRT Clinic'],
