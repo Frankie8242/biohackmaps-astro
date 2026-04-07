@@ -64,8 +64,8 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
 </a>
 
 <script>
-  // "Open Now" status — runs once after DOM ready
-  document.addEventListener('DOMContentLoaded', () => {
+  // "Open Now" status — runs on page load and View Transition navigations
+  function initOpenStatus() {
     document.querySelectorAll<HTMLElement>('.venue-card[data-hours]').forEach(card => {
       const hoursStr = card.dataset.hours || '';
       if (!hoursStr) return;
@@ -139,7 +139,10 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
         statusEl.innerHTML = `<span class="closed-badge">● Closed</span>`;
       }
     });
-  });
+  }
+  // Run on initial load and after View Transition navigations
+  initOpenStatus();
+  document.addEventListener('astro:page-load', initOpenStatus);
 </script>
 
 <style>

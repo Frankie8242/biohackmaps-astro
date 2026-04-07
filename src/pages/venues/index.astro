@@ -161,32 +161,32 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
   <Footer />
 </Layout>
 
-<script>
+<script is:inline>
   // --- State ---
-  let userLat: number | null = null;
-  let userLng: number | null = null;
+  let userLat = null;
+  let userLng = null;
   let currentSort = 'default';
-  let activeMods = new Set<string>();
+  let activeMods = new Set();
   let activeCity = '';
   let includeOnline = true;
 
   // --- Elements ---
-  const searchInput = document.getElementById('search-input') as HTMLInputElement;
-  const clearBtn = document.getElementById('clear-search') as HTMLButtonElement;
-  const citySelect = document.getElementById('city-select') as HTMLSelectElement;
-  const nearMeBtn = document.getElementById('near-me-btn') as HTMLButtonElement;
-  const sortBtns = document.querySelectorAll<HTMLButtonElement>('.sort-btn');
-  const sortNearestBtn = document.getElementById('sort-nearest') as HTMLButtonElement;
-  const modPills = document.querySelectorAll<HTMLButtonElement>('.mod-pill');
-  const grid = document.getElementById('venue-grid') as HTMLElement;
-  const countEl = document.getElementById('venue-count') as HTMLElement;
-  const noResults = document.getElementById('no-results') as HTMLElement;
-  const activeFiltersEl = document.getElementById('active-filters') as HTMLElement;
-  const resetAll = document.getElementById('reset-all') as HTMLButtonElement;
-  const includeOnlineChk = document.getElementById('include-online') as HTMLInputElement;
+  const searchInput = document.getElementById('search-input');
+  const clearBtn = document.getElementById('clear-search');
+  const citySelect = document.getElementById('city-select');
+  const nearMeBtn = document.getElementById('near-me-btn');
+  const sortBtns = document.querySelectorAll('.sort-btn');
+  const sortNearestBtn = document.getElementById('sort-nearest');
+  const modPills = document.querySelectorAll('.mod-pill');
+  const grid = document.getElementById('venue-grid');
+  const countEl = document.getElementById('venue-count');
+  const noResults = document.getElementById('no-results');
+  const activeFiltersEl = document.getElementById('active-filters');
+  const resetAll = document.getElementById('reset-all');
+  const includeOnlineChk = document.getElementById('include-online');
 
   // --- Haversine distance (km) ---
-  function haversine(lat1: number, lng1: number, lat2: number, lng2: number): number {
+  function haversine(lat1, lng1, lat2, lng2) {
     const R = 6371;
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLng = (lng2 - lng1) * Math.PI / 180;
@@ -194,14 +194,14 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   }
 
-  function formatDist(km: number): string {
+  function formatDist(km) {
     return km < 1 ? `${Math.round(km*1000)}m` : `${km.toFixed(1)}km`;
   }
 
   // --- Update distance badges ---
   function updateDistanceBadges() {
-    document.querySelectorAll<HTMLElement>('.venue-item').forEach(item => {
-      let badge = item.querySelector<HTMLElement>('.dist-badge');
+    document.querySelectorAll('.venue-item').forEach(item => {
+      let badge = item.querySelector('.dist-badge');
       if (userLat !== null && userLng !== null) {
         const lat = parseFloat(item.dataset.lat ?? '0');
         const lng = parseFloat(item.dataset.lng ?? '0');
@@ -225,7 +225,7 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
     const query = searchInput.value.toLowerCase().trim();
     const cityVal = citySelect.value.toLowerCase();
 
-    const items = Array.from(document.querySelectorAll<HTMLElement>('.venue-item'));
+    const items = Array.from(document.querySelectorAll('.venue-item'));
     let shown = 0;
 
     items.forEach(item => {
@@ -280,7 +280,7 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
       activeFiltersEl.appendChild(chip);
     }
     activeMods.forEach(mod => {
-      const pill = document.querySelector<HTMLButtonElement>(`.mod-pill[data-mod="${mod}"]`);
+      const pill = document.querySelector(`.mod-pill[data-mod="${mod}"]`);
       const label = pill?.querySelector('.pill-label')?.textContent ?? mod;
       const chip = makeChip(label, () => {
         activeMods.delete(mod);
@@ -291,7 +291,7 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
     });
   }
 
-  function makeChip(label: string, onRemove: () => void): HTMLElement {
+  function makeChip(label, onRemove) {
     const chip = document.createElement('span');
     chip.className = 'active-chip';
     chip.innerHTML = `${label} <button aria-label="Remove filter">✕</button>`;
@@ -330,7 +330,7 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
   });
 
   // --- Sort buttons ---
-  function setSort(val: string) {
+  function setSort(val) {
     currentSort = val;
     sortBtns.forEach(b => b.classList.toggle('active', b.dataset.sort === val));
     applyFilters();
@@ -404,7 +404,7 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
       if (!detected) return;
 
       // Find best match in city dropdown
-      const options = Array.from(citySelect.options) as HTMLOptionElement[];
+      const options = Array.from(citySelect.options);
       const match = options.find(o =>
         o.value && (o.value === detected || detected.startsWith(o.value) || o.value.startsWith(detected))
       );
