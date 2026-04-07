@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Layout title="Page Not Found" description="The page you're looking for doesn't exist. Browse biohacking venues, cities, and modalities instead.">
+  <Nav />
+
+  <section class="not-found">
+    <div class="container">
+      <h1>404</h1>
+      <p class="subtitle">This page doesn't exist</p>
+      <p class="message">The link you followed may be broken, or the page may have been removed.</p>
+      <div class="actions">
+        <a href="/" class="btn btn-primary">Go Home</a>
+        <a href="/venues/" class="btn btn-secondary">Browse Venues</a>
+        <a href="/cities/" class="btn btn-secondary">Browse Cities</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>
+
+<style>
+  .not-found {
+    padding: 6rem 2rem;
+    text-align: center;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .container { max-width: 500px; }
+  h1 {
+    font-size: 120px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .subtitle { font-size: 24px; font-family: 'Bebas Neue', sans-serif; letter-spacing: 2px; margin-bottom: 1rem; }
+  .message { color: var(--muted); font-size: 15px; margin-bottom: 2rem; }
+  .actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 10px 24px; border-radius: 6px; font-weight: 600; font-size: 14px;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: var(--black); }
+  .btn-primary:hover { background: #fb923c; }
+  .btn-secondary { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--accent2); color: var(--accent2); }
+</style>

@@ -32,6 +32,8 @@ const ogImage = image.startsWith("http") ? image : `https://biohackmaps.com${ima
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
     <meta name="robots" content="noai, noimageai" />
     <meta name="language" content="English" />
+    <link rel="alternate" hreflang="en" href={canonicalURL} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL} />
 
     <!-- Favicons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -62,10 +64,14 @@ const ogImage = image.startsWith("http") ? image : `https://biohackmaps.com${ima
     <ClientRouter />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Outfit:wght@900&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Outfit:wght@900&display=swap" rel="stylesheet" /></noscript>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YQF2PSNPVS"></script>

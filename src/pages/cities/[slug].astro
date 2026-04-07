@@ -32,6 +32,7 @@ const venues = [...allVenues].sort((a, b) => {
 });
 const citySchema = generateCitySchema(city, venues.length, Astro.url.origin);
 const breadcrumbSchema = generateCityBreadcrumbSchema(city, Astro.url.origin);
+
 const citySlug = toSlug(city);
 const buildDate = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
 
@@ -45,6 +46,38 @@ const topModNames = topMods
   .slice(0, 4);
 const topVenue = allVenues.sort((a, b) => b.reviewCount - a.reviewCount)[0];
 const cityIntro = `${city} is home to ${allVenues.length} verified biohacking venues averaging ${avgRating}★ across ${totalReviews} reviews. The most popular modalities are ${topModNames.join(', ')}. ${topVenue.name} is the most reviewed venue with ${topVenue.reviewCount.toLocaleString()} reviews.`;
+
+// FAQ schema for city page
+const cityFaqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: `How many biohacking venues are in ${city}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `There are ${allVenues.length} verified biohacking venues in ${city} on BiohackMaps, all rated 4.7★ or higher with 50+ reviews.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: `What biohacking modalities are available in ${city}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `${city} offers ${topModNames.join(', ')} across ${allVenues.length} verified venues.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: `What is the best-rated biohacking venue in ${city}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `${venues[0].name} is the top-rated biohacking venue in ${city} with a ${venues[0].rating}★ rating from ${venues[0].reviewCount.toLocaleString()} reviews.`,
+      },
+    },
+  ],
+};
 
 // Modality sub-pages for this city (2+ venues)
 const allModalities = getAllModalities();
@@ -76,6 +109,7 @@ const relatedCities = getUniqueCities()
   <Nav current="venues" />
   <script type="application/ld+json" set:html={JSON.stringify(citySchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(cityFaqSchema)} />
 
   <!-- Breadcrumb -->
   <nav class="breadcrumb-nav" aria-label="Breadcrumb">
