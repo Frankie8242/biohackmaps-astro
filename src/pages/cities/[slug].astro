@@ -4,8 +4,11 @@ import Nav from '../../components/Nav.astro';
 import HeroSection from '../../components/HeroSection.astro';
 import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
-import { getVenuesByCity, getUniqueCities } from '../../data/venues';
+import { getVenuesByCity, getUniqueCities, getAllVenues } from '../../data/venues';
+import { getAllModalities } from '../../data/modalities';
 import { generateCitySchema, generateCityBreadcrumbSchema } from '../../lib/schema';
+
+const toSlug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
 
 export async function getStaticPaths() {
   const cities = getUniqueCities();
@@ -29,6 +32,29 @@ const venues = [...allVenues].sort((a, b) => {
 });
 const citySchema = generateCitySchema(city, venues.length, Astro.url.origin);
 const breadcrumbSchema = generateCityBreadcrumbSchema(city, Astro.url.origin);
+const citySlug = toSlug(city);
+
+// Modality sub-pages for this city (2+ venues)
+const allModalities = getAllModalities();
+const modalitySubPages = allModalities
+  .map(m => ({
+    ...m,
+    count: allVenues.filter(v => v.modalities.includes(m.id)).length,
+  }))
+  .filter(m => m.count >= 2);
+
+// Related cities (same country, most venues, limit 8)
+const allVenuesData = getAllVenues();
+const country = allVenues[0]?.country;
+const relatedCities = getUniqueCities()
+  .filter(c => c !== city)
+  .map(c => {
+    const cv = allVenuesData.filter(v => v.city === c);
+    return { name: c, slug: toSlug(c), count: cv.length, country: cv[0]?.country };
+  })
+  .filter(c => c.country === country)
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 8);
 ---
 
 <Layout
@@ -60,8 +86,10 @@ const breadcrumbSchema = generateCityBreadcrumbSchema(city, Astro.url.origin);
       <div class="city-header">
         <h2>Popular Modalities in {city}</h2>
         <div class="modality-list">
-          {Array.from(new Set(venues.flatMap(v => v.modalities))).map(mod => (
-            <a href={`/modalities/${mod}`} class="modality-tag">{mod}</a>
+          {modalitySubPages.map(mod => (
+            <a href={`/cities/${citySlug}/${mod.slug}`} class="modality-tag">
+              {mod.icon} {mod.name} ({mod.count})
+            </a>
           ))}
         </div>
       </div>
@@ -84,6 +112,19 @@ const breadcrumbSchema = generateCityBreadcrumbSchema(city, Astro.url.origin);
       <div class="container">
         <div class="no-venues">
           <p>No venues yet in {city}. Check back soon.</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {relatedCities.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2>Explore Other Cities</h2>
+        <div class="modality-list">
+          {relatedCities.map(c => (
+            <a href={`/cities/${c.slug}`} class="modality-tag">{c.name} ({c.count})</a>
+          ))}
         </div>
       </div>
     </section>

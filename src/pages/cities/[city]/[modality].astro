@@ -6,6 +6,8 @@ import Footer from '../../../components/Footer.astro';
 import { getAllVenues, getUniqueCities } from '../../../data/venues';
 import { getAllModalities } from '../../../data/modalities';
 
+const toSlug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+
 export async function getStaticPaths() {
   const allVenues = getAllVenues();
   const cities = getUniqueCities();
@@ -46,9 +48,34 @@ const venues = [...rawVenues].sort((a, b) => {
   return (b.rating * Math.log(b.reviewCount + 1)) - (a.rating * Math.log(a.reviewCount + 1));
 });
 
-const citySlug = city.toLowerCase().replace(/\s+/g, '-');
+const citySlug = toSlug(city);
 const pageTitle = `Best ${modality.name} in ${city}`;
 const pageDesc = `Find the top ${venues.length} verified ${modality.name} venues in ${city}. All rated 4.7★+ with 50+ reviews. Discover the best ${modality.name.toLowerCase()} spots near you.`;
+
+// Cross-link data: other modalities in this city (with 2+ venues)
+const allVenuesData = getAllVenues();
+const allModalities = getAllModalities();
+const otherModsInCity = allModalities.filter(m =>
+  m.id !== modality.id &&
+  allVenuesData.filter(v => v.city === city && v.modalities.includes(m.id)).length >= 2
+);
+
+// Cross-link data: top cities for this modality (with 2+ venues, exclude current)
+const citiesForMod = getUniqueCities()
+  .filter(c => c !== city)
+  .map(c => ({
+    name: c,
+    slug: toSlug(c),
+    count: allVenuesData.filter(v => v.city === c && v.modalities.includes(modality.id)).length,
+  }))
+  .filter(c => c.count >= 2)
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 12);
+
+// Unique intro paragraph per city×modality
+const avgRating = (venues.reduce((sum, v) => sum + v.rating, 0) / venues.length).toFixed(1);
+const totalReviews = venues.reduce((sum, v) => sum + v.reviewCount, 0).toLocaleString();
+const topVenue = venues[0];
 
 // BreadcrumbList schema
 const breadcrumbSchema = {
@@ -132,6 +159,9 @@ const faqSchema = {
       <p class="subtitle">
         {venues.length} verified venues · All rated 4.7★+ · {modality.description}
       </p>
+      <p class="hero-intro">
+        {city} has {venues.length} top-rated {modality.name.toLowerCase()} venues with an average rating of {avgRating}★ across {totalReviews} verified reviews. {topVenue.name} leads the pack with {topVenue.rating}★ from {topVenue.reviewCount.toLocaleString()} reviews.
+      </p>
       <div class="hero-links">
         <a href={`/cities/${citySlug}`} class="link-chip">All venues in {city}</a>
         <a href={`/modalities/${modality.slug}`} class="link-chip">{modality.name} worldwide</a>
@@ -195,23 +225,36 @@ const faqSchema = {
   </section>
 
   <!-- Internal links -->
-  <section class="section">
-    <div class="container">
-      <h2>Explore More in {city}</h2>
-      <div class="internal-links" id="more-modalities"></div>
-      <h2>Find {modality.name} in Other Cities</h2>
-      <div class="internal-links" id="more-cities"></div>
-    </div>
-  </section>
+  {otherModsInCity.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2>Other Modalities in {city}</h2>
+        <div class="internal-links">
+          {otherModsInCity.map(m => (
+            <a href={`/cities/${citySlug}/${m.slug}`} class="link-chip">{m.icon} {m.name}</a>
+          ))}
+          <a href={`/cities/${citySlug}`} class="link-chip link-chip-all">All venues in {city} →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {citiesForMod.length > 0 && (
+    <section class="section section-dark">
+      <div class="container">
+        <h2>{modality.name} in Other Cities</h2>
+        <div class="internal-links">
+          {citiesForMod.map(c => (
+            <a href={`/cities/${c.slug}/${modality.slug}`} class="link-chip">{c.name} ({c.count})</a>
+          ))}
+          <a href={`/modalities/${modality.slug}`} class="link-chip link-chip-all">All {modality.name} venues →</a>
+        </div>
+      </div>
+    </section>
+  )}
 
   <Footer />
 </Layout>
-
-<script>
-  // Inject city × modality internal links client-side from static data embedded in page
-  const citySlugEl = document.querySelector('[data-city-slug]') as HTMLElement;
-  const modalitySlugEl = document.querySelector('[data-modality-slug]') as HTMLElement;
-</script>
 
 <style>
   .breadcrumb-nav {
@@ -289,8 +332,11 @@ const faqSchema = {
   .faq-item p { color: var(--muted); font-size: 14px; line-height: 1.6; }
   .faq-item strong { color: var(--text); }
 
+  .hero-intro { color: var(--muted); font-size: 15px; max-width: 700px; margin: 0 auto 1.5rem; line-height: 1.7; }
   .section h2 { font-size: 24px; margin-bottom: 1rem; }
   .internal-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .link-chip-all { background: rgba(249,115,22,0.1); color: var(--accent); border-color: rgba(249,115,22,0.2); }
+  .link-chip-all:hover { background: rgba(249,115,22,0.2); }
 
   @media (max-width: 768px) {
     h1 { font-size: 32px; }

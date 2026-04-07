@@ -5,8 +5,10 @@ import HeroSection from '../../components/HeroSection.astro';
 import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
 import { getAllModalities } from '../../data/modalities';
-import { getVenuesByModality } from '../../data/venues';
+import { getVenuesByModality, getAllVenues, getUniqueCities } from '../../data/venues';
 import { generateModalitySchema, generateModalityBreadcrumbSchema } from '../../lib/schema';
+
+const toSlug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
 
 export async function getStaticPaths() {
   const modalities = getAllModalities();
@@ -35,6 +37,18 @@ const venues = [...allVenues].sort((a, b) => {
 });
 const modalitySchema = generateModalitySchema(modality, venues.length, Astro.url.origin);
 const breadcrumbSchema = generateModalityBreadcrumbSchema(modality, Astro.url.origin);
+
+// Top cities for this modality (2+ venues, sorted by count)
+const allVenuesData = getAllVenues();
+const topCities = getUniqueCities()
+  .map(c => ({
+    name: c,
+    slug: toSlug(c),
+    count: allVenuesData.filter(v => v.city === c && v.modalities.includes(modality.id)).length,
+  }))
+  .filter(c => c.count >= 2)
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 15);
 ---
 
 <Layout
@@ -95,6 +109,21 @@ const breadcrumbSchema = generateModalityBreadcrumbSchema(modality, Astro.url.or
         <div class="venue-grid">
           {venues.map(venue => (
             <VenueCard venue={venue} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {topCities.length > 0 && (
+    <section class="section">
+      <div class="container">
+        <h2>Top Cities for {modality.name}</h2>
+        <div class="city-links">
+          {topCities.map(c => (
+            <a href={`/cities/${c.slug}/${modality.slug}`} class="city-chip">
+              {c.name} ({c.count})
+            </a>
           ))}
         </div>
       </div>
@@ -217,6 +246,15 @@ const breadcrumbSchema = generateModalityBreadcrumbSchema(modality, Astro.url.or
       grid-template-columns: 1fr;
     }
   }
+
+  .city-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .city-chip {
+    padding: 6px 16px; border-radius: 100px;
+    background: rgba(6,182,212,0.1); color: var(--accent2);
+    text-decoration: none; font-size: 13px; border: 1px solid rgba(6,182,212,0.2);
+    transition: all 0.2s;
+  }
+  .city-chip:hover { background: rgba(6,182,212,0.2); }
 
   .breadcrumb-nav {
     background: var(--surface);
