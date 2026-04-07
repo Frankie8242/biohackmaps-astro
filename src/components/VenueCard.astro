@@ -35,8 +35,8 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
   <div class="venue-info">
     <p class="location">
       {venue.deliveryMode === 'online'
-        ? <>🌐 Online — serves <a href={`/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}`} class="city-link">{venue.city}</a> &amp; nationwide</>
-        : <>📍 <a href={`/cities/${venue.city.toLowerCase().replace(/\s+/g, '-')}`} class="city-link">{venue.city}</a>, {venue.country}</>
+        ? <>🌐 Online — serves <span class="city-link">{venue.city}</span> &amp; nationwide</>
+        : <>📍 <span class="city-link">{venue.city}</span>, {venue.country}</>
       }
     </p>
     <p class="rating">
@@ -144,7 +144,8 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
 
 <style>
   .venue-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     background: var(--surface);
     border: 1px solid var(--border);
     padding: 1.5rem;
@@ -154,9 +155,9 @@ const modalityIcons: Record<string, string> = Object.fromEntries(
     transition: all 0.3s;
     cursor: pointer;
     height: 100%;
-    display: flex;
-    flex-direction: column;
+    -webkit-text-decoration: none;
   }
+  .venue-card:visited { color: inherit; }
 
   .venue-card.premium {
     border-color: rgba(251,191,36,0.3);
