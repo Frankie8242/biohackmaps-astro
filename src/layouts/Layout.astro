@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+
 interface Props {
   title: string;
   description?: string;
@@ -57,6 +59,8 @@ const ogImage = image.startsWith("http") ? image : `https://biohackmaps.com${ima
     <meta name="twitter:creator" content="@biohackmaps" />
     <meta name="twitter:site" content="@biohackmaps" />
     
+    <ClientRouter />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Outfit:wght@900&display=swap"
