@@ -4,10 +4,17 @@ import Nav from '../../components/Nav.astro';
 import HeroSection from '../../components/HeroSection.astro';
 import VenueCard from '../../components/VenueCard.astro';
 import Footer from '../../components/Footer.astro';
-import { getAllVenues } from '../../data/venues';
+import { getAllVenues, getUniqueCities } from '../../data/venues';
 import { MODALITIES } from '../../data/modalities';
 
+const toSlug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
+
 const venues = getAllVenues();
+
+// All cities sorted by venue count for the SEO hub
+const allCities = getUniqueCities()
+  .map(c => ({ name: c, slug: toSlug(c), count: venues.filter(v => v.city === c).length }))
+  .sort((a, b) => b.count - a.count);
 
 // Group cities by country for the dropdown
 const cityCountryMap = new Map<string, string>();
@@ -123,6 +130,30 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
 
       <div class="no-results" id="no-results" style="display:none">
         <p>No venues match your search. <button id="reset-all" class="reset-link">Clear all filters</button></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEO hub: browse by city and modality -->
+  <section class="seo-hub">
+    <div class="container">
+      <div class="hub-grid">
+        <div class="hub-col">
+          <h2>Browse by City</h2>
+          <div class="hub-links">
+            {allCities.map(c => (
+              <a href={`/cities/${c.slug}`}>{c.name} ({c.count})</a>
+            ))}
+          </div>
+        </div>
+        <div class="hub-col">
+          <h2>Browse by Modality</h2>
+          <div class="hub-links">
+            {availableModalities.map(mod => (
+              <a href={`/modalities/${mod.slug}`}>{mod.icon} {mod.name}</a>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -402,6 +433,18 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
 </script>
 
 <style>
+  .seo-hub { padding: 3rem 2rem; background: var(--surface); border-top: 1px solid var(--border); }
+  .hub-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 3rem; }
+  .hub-col h2 { font-size: 22px; margin-bottom: 1rem; font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+  .hub-links { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .hub-links a {
+    padding: 5px 12px; font-size: 13px; color: var(--accent2);
+    text-decoration: none; border: 1px solid rgba(6,182,212,0.15);
+    border-radius: 4px; transition: all 0.2s; background: rgba(6,182,212,0.04);
+  }
+  .hub-links a:hover { background: rgba(6,182,212,0.12); border-color: rgba(6,182,212,0.3); }
+  @media (max-width: 768px) { .hub-grid { grid-template-columns: 1fr; gap: 2rem; } }
+
   .geo-toast {
     background: #0f172a;
     border: 1px solid #1e3a5f;

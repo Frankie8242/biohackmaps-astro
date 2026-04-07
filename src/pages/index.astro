@@ -6,8 +6,10 @@ import ModalityCard from '../components/ModalityCard.astro';
 import VenueCard from '../components/VenueCard.astro';
 import Footer from '../components/Footer.astro';
 import { getAllModalities } from '../data/modalities';
-import { getAllVenues } from '../data/venues';
+import { getAllVenues, getUniqueCities } from '../data/venues';
 import { generateOrganizationSchema } from '../lib/schema';
+
+const toSlug = (s: string) => s.toLowerCase().replace(/\s+/g, '-');
 
 const modalities = getAllModalities();
 const allVenues = getAllVenues();
@@ -19,7 +21,19 @@ const today = new Date().toISOString().slice(0, 10);
 const pinnedVenue = allVenues.find(v => v.pinnedUntil && v.pinnedUntil >= today) ?? null;
 // Exclude the pinned venue from the regular grid to avoid duplication
 const gridVenues = pinnedVenue ? allVenues.filter(v => v.slug !== pinnedVenue.slug) : allVenues;
-const uniqueCities = new Set(allVenues.map(v => v.city)).size;
+const uniqueCities = getUniqueCities();
+const uniqueCityCount = uniqueCities.length;
+
+// Top cities by venue count for "Browse by City" section
+const topCities = uniqueCities
+  .map(c => ({
+    name: c,
+    slug: toSlug(c),
+    count: allVenues.filter(v => v.city === c).length,
+    country: allVenues.find(v => v.city === c)?.country ?? '',
+  }))
+  .sort((a, b) => b.count - a.count)
+  .slice(0, 16);
 ---
 
 <Layout title="Home">
@@ -37,7 +51,7 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
     <div class="stats-inner">
       <div class="stat"><span class="stat-num">{allVenues.length}</span><span class="stat-label">Verified Venues</span></div>
       <div class="stat-sep">·</div>
-      <div class="stat"><span class="stat-num">35+</span><span class="stat-label">Cities</span></div>
+      <div class="stat"><span class="stat-num">{uniqueCityCount}</span><span class="stat-label">Cities</span></div>
       <div class="stat-sep">·</div>
       <div class="stat"><span class="stat-num">{modalities.length}</span><span class="stat-label">Modalities</span></div>
       <div class="stat-sep">·</div>
@@ -77,6 +91,24 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
         {modalities.map(mod => (
           <ModalityCard modality={mod} />
         ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>Browse by City</h2>
+      <p class="section-subtitle">Find biohacking venues in {uniqueCityCount} cities worldwide</p>
+      <div class="city-grid">
+        {topCities.map(c => (
+          <a href={`/cities/${c.slug}`} class="city-card">
+            <span class="city-name">{c.name}</span>
+            <span class="city-meta">{c.count} venues · {c.country}</span>
+          </a>
+        ))}
+      </div>
+      <div class="cta-center">
+        <a href="/venues/" class="button button-outline">View All Cities →</a>
       </div>
     </div>
   </section>
@@ -345,6 +377,25 @@ const uniqueCities = new Set(allVenues.map(v => v.city)).size;
     }
     .spotlight-name { font-size: 38px; }
   }
+
+  .city-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .city-card {
+    display: flex; flex-direction: column; gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .city-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+  .city-name { color: var(--text); font-weight: 600; font-size: 15px; }
+  .city-meta { color: var(--muted); font-size: 12px; }
 
   .venue-grid {
     display: grid;
