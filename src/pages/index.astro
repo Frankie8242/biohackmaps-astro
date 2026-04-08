@@ -135,22 +135,26 @@ const topCities = uniqueCities
   )}
 
   <section class="sponsor-section">
-    <div class="sponsor-eyebrow">Major Sponsor</div>
-    <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor" target="_blank" rel="noopener noreferrer" class="sponsor-brand">
-      <img src="/sauna-mind-logo.png" alt="SaunaMind logo" class="sponsor-logo" />
-    </a>
-    <p class="sponsor-sub">Physiological Recovery Intelligence</p>
-    <h2 class="sponsor-headline">38.5° is the goal.<br /><span>We get you there.</span></h2>
-    <p class="sponsor-desc">Every other sauna app runs a timer. 38.5° tracks what's actually happening inside your body — guided by peer-reviewed research.</p>
-    <div class="sponsor-zones">
-      <span class="zone zone-warmup">Warm Up</span>
-      <span class="zone zone-adapt">Adaptation</span>
-      <span class="zone zone-hsp">HSP Activation</span>
-      <span class="zone zone-deep">Deep Hormesis</span>
-      <span class="zone zone-caution">Caution</span>
+    <div class="sponsor-inner">
+      <div class="sponsor-eyebrow">Major Sponsor</div>
+      <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor" target="_blank" rel="noopener noreferrer" class="sponsor-brand">
+        <img src="/sauna-mind-logo.png" alt="SaunaMind logo" class="sponsor-logo" />
+      </a>
+      <p class="sponsor-sub">PHYSIOLOGICAL RECOVERY INTELLIGENCE</p>
+      <h2 class="sponsor-headline">38.5° IS THE GOAL.<br /><span>WE GET YOU THERE.</span></h2>
+      <p class="sponsor-desc">Every other sauna app runs a timer. 38.5° tracks what's actually happening inside your body — guided by peer-reviewed research.</p>
+      <div class="sponsor-zones">
+        <span class="zone zone-warmup">WARM UP</span>
+        <span class="zone zone-adapt">ADAPTATION</span>
+        <span class="zone zone-hsp">HSP ACTIVATION</span>
+        <span class="zone zone-deep">DEEP HORMESIS</span>
+        <span class="zone zone-caution">CAUTION</span>
+      </div>
+      <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor_cta" target="_blank" rel="noopener noreferrer" class="sponsor-appstore">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="appstore-badge" />
+      </a>
+      <p class="sponsor-founding">Founding Members — $19.99/yr · locked forever</p>
     </div>
-    <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor_cta" target="_blank" rel="noopener noreferrer" class="sponsor-cta">Download on the App Store →</a>
-    <p class="sponsor-founding">Founding Members — $19.99/yr · locked forever</p>
   </section>
 
   <Footer />
@@ -445,15 +449,22 @@ const topCities = uniqueCities
   }
 
   .sponsor-section {
-    background: radial-gradient(ellipse at 50% 30%, rgba(180,80,30,0.2) 0%, #080808 70%);
-    border-top: 1px solid #2a1a0e;
-    border-bottom: 1px solid #2a1a0e;
+    background: #080808;
+    background-image: radial-gradient(ellipse at 50% 40%, rgba(160,60,10,0.25) 0%, transparent 60%);
+    border-top: 1px solid #1a1008;
+    border-bottom: 1px solid #1a1008;
+    padding: 0;
+    overflow: hidden;
+  }
+  .sponsor-inner {
+    max-width: 700px;
+    margin: 0 auto;
     padding: 5rem 2rem;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   .sponsor-eyebrow {
@@ -467,92 +478,79 @@ const topCities = uniqueCities
     border-radius: 100px;
   }
 
-  .sponsor-brand {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: opacity 0.2s;
-  }
+  .sponsor-brand { text-decoration: none; transition: opacity 0.2s; }
   .sponsor-brand:hover { opacity: 0.85; }
 
   .sponsor-logo {
-    height: 64px;
+    height: 56px;
     width: auto;
-    filter: drop-shadow(0 0 20px rgba(232,149,106,0.4));
   }
 
   .sponsor-sub {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #666;
-    margin: 0;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    color: #555;
+    margin: 0.25rem 0 0;
   }
 
   .sponsor-headline {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 64px;
-    line-height: 1.05;
+    font-size: 72px;
+    line-height: 1;
     color: #fff;
-    margin: 0;
+    margin: 0.5rem 0;
     letter-spacing: 2px;
   }
-  .sponsor-headline span { color: #E8956A; }
+  .sponsor-headline span {
+    display: block;
+    color: #E8956A;
+  }
 
   .sponsor-desc {
-    font-size: 15px;
-    color: #888;
-    max-width: 520px;
+    font-size: 14px;
+    color: #777;
+    max-width: 480px;
     line-height: 1.7;
+    margin: 0;
   }
 
   .sponsor-zones {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 0.5rem 0;
   }
   .zone {
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 700;
-    text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 5px 14px;
-    border-radius: 4px;
+    padding: 5px 12px;
+    border-radius: 3px;
+    border: none;
   }
-  .zone-warmup { background: rgba(234,179,8,0.15); color: #eab308; }
-  .zone-adapt { background: rgba(249,115,22,0.15); color: #f97316; }
-  .zone-hsp { background: rgba(239,68,68,0.15); color: #ef4444; }
-  .zone-deep { background: rgba(220,38,38,0.2); color: #dc2626; }
-  .zone-caution { background: rgba(153,27,27,0.2); color: #991b1b; }
+  .zone-warmup { background: #3B8BF5; color: #fff; }
+  .zone-adapt { background: #22D47A; color: #fff; }
+  .zone-hsp { background: #F5A623; color: #fff; }
+  .zone-deep { background: #F53B3B; color: #fff; }
+  .zone-caution { background: #C41717; color: #fff; }
 
-  .sponsor-cta {
-    display: inline-block;
-    background: #fff;
-    color: #000;
-    padding: 14px 36px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.02em;
-    transition: all 0.2s;
-    margin-top: 0.5rem;
-  }
-  .sponsor-cta:hover {
-    background: #e5e5e5;
-    transform: translateY(-2px);
-  }
+  .sponsor-appstore { display: inline-block; margin-top: 0.5rem; transition: opacity 0.2s; }
+  .sponsor-appstore:hover { opacity: 0.8; }
+  .appstore-badge { height: 44px; width: auto; }
 
   .sponsor-founding {
     font-size: 13px;
     color: #b46438;
     font-weight: 600;
+    margin: 0;
   }
 
   @media (max-width: 600px) {
-    .sponsor-headline { font-size: 38px; }
-    .sponsor-logo { height: 48px; }
+    .sponsor-headline { font-size: 44px; }
+    .sponsor-logo { height: 44px; }
+    .sponsor-inner { padding: 3.5rem 1.5rem; }
+    .zone { font-size: 8px; padding: 4px 8px; }
   }
 
   @media (max-width: 768px) {
