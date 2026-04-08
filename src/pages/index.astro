@@ -138,11 +138,19 @@ const topCities = uniqueCities
     <div class="sponsor-eyebrow">Major Sponsor</div>
     <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor" target="_blank" rel="noopener noreferrer" class="sponsor-brand">
       <img src="/sauna-mind-logo.png" alt="SaunaMind logo" class="sponsor-logo" />
-      <span class="sponsor-name">SaunaMind</span>
     </a>
-    <p class="sponsor-tagline">NOT TIME. <span>TEMPERATURE.</span></p>
-    <p class="sponsor-desc">Science-backed sauna tracking using estimated core body temperature — guided by peer-reviewed research. Know your zones.</p>
-    <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor_cta" target="_blank" rel="noopener noreferrer" class="sponsor-cta">Get Early Access →</a>
+    <p class="sponsor-sub">Physiological Recovery Intelligence</p>
+    <h2 class="sponsor-headline">38.5° is the goal.<br /><span>We get you there.</span></h2>
+    <p class="sponsor-desc">Every other sauna app runs a timer. 38.5° tracks what's actually happening inside your body — guided by peer-reviewed research.</p>
+    <div class="sponsor-zones">
+      <span class="zone zone-warmup">Warm Up</span>
+      <span class="zone zone-adapt">Adaptation</span>
+      <span class="zone zone-hsp">HSP Activation</span>
+      <span class="zone zone-deep">Deep Hormesis</span>
+      <span class="zone zone-caution">Caution</span>
+    </div>
+    <a href="https://www.sauna-mind.com/?utm_source=biohackmaps&utm_medium=referral&utm_campaign=sponsor_cta" target="_blank" rel="noopener noreferrer" class="sponsor-cta">Download on the App Store →</a>
+    <p class="sponsor-founding">Founding Members — $19.99/yr · locked forever</p>
   </section>
 
   <Footer />
@@ -437,7 +445,7 @@ const topCities = uniqueCities
   }
 
   .sponsor-section {
-    background: radial-gradient(ellipse at center, rgba(180,100,56,0.15) 0%, #080808 70%);
+    background: radial-gradient(ellipse at 50% 30%, rgba(180,80,30,0.2) 0%, #080808 70%);
     border-top: 1px solid #2a1a0e;
     border-bottom: 1px solid #2a1a0e;
     padding: 5rem 2rem;
@@ -449,7 +457,7 @@ const topCities = uniqueCities
   }
 
   .sponsor-eyebrow {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 700;
     letter-spacing: 4px;
     text-transform: uppercase;
@@ -462,69 +470,89 @@ const topCities = uniqueCities
   .sponsor-brand {
     display: flex;
     align-items: center;
-    gap: 18px;
     text-decoration: none;
     transition: opacity 0.2s;
   }
   .sponsor-brand:hover { opacity: 0.85; }
 
   .sponsor-logo {
-    height: 72px;
+    height: 64px;
     width: auto;
     filter: drop-shadow(0 0 20px rgba(232,149,106,0.4));
   }
 
-  .sponsor-name {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 900;
-    font-size: 64px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #fff;
-    line-height: 1;
-  }
-
-  .sponsor-tagline {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 900;
-    font-size: 22px;
+  .sponsor-sub {
+    font-size: 11px;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #555;
+    color: #666;
+    margin: 0;
   }
-  .sponsor-tagline span { color: #E8956A; }
+
+  .sponsor-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    line-height: 1.05;
+    color: #fff;
+    margin: 0;
+    letter-spacing: 2px;
+  }
+  .sponsor-headline span { color: #E8956A; }
 
   .sponsor-desc {
-    font-size: 16px;
-    color: #666;
-    max-width: 480px;
+    font-size: 15px;
+    color: #888;
+    max-width: 520px;
     line-height: 1.7;
   }
 
+  .sponsor-zones {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .zone {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 5px 14px;
+    border-radius: 4px;
+  }
+  .zone-warmup { background: rgba(234,179,8,0.15); color: #eab308; }
+  .zone-adapt { background: rgba(249,115,22,0.15); color: #f97316; }
+  .zone-hsp { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .zone-deep { background: rgba(220,38,38,0.2); color: #dc2626; }
+  .zone-caution { background: rgba(153,27,27,0.2); color: #991b1b; }
+
   .sponsor-cta {
     display: inline-block;
-    background: #b46438;
-    color: #fff;
+    background: #fff;
+    color: #000;
     padding: 14px 36px;
-    border-radius: 100px;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
     font-size: 15px;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.02em;
     transition: all 0.2s;
-    box-shadow: 0 0 28px rgba(180,100,56,0.4);
     margin-top: 0.5rem;
   }
   .sponsor-cta:hover {
-    background: #e8956a;
+    background: #e5e5e5;
     transform: translateY(-2px);
-    box-shadow: 0 4px 32px rgba(180,100,56,0.5);
+  }
+
+  .sponsor-founding {
+    font-size: 13px;
+    color: #b46438;
+    font-weight: 600;
   }
 
   @media (max-width: 600px) {
-    .sponsor-name { font-size: 38px; }
+    .sponsor-headline { font-size: 38px; }
     .sponsor-logo { height: 48px; }
-    .sponsor-brand { gap: 12px; }
   }
 
   @media (max-width: 768px) {
