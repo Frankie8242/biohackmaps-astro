@@ -162,6 +162,10 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
 </Layout>
 
 <script is:inline>
+function initVenuesPage() {
+  // Guard: only run on venues page
+  if (!document.getElementById('venue-grid')) return;
+
   // --- State ---
   let userLat = null;
   let userLng = null;
@@ -184,6 +188,8 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
   const activeFiltersEl = document.getElementById('active-filters');
   const resetAll = document.getElementById('reset-all');
   const includeOnlineChk = document.getElementById('include-online');
+
+  if (!searchInput || !grid) return;
 
   // --- Haversine distance (km) ---
   function haversine(lat1, lng1, lat2, lng2) {
@@ -430,6 +436,10 @@ const availableModalities = MODALITIES.filter(m => usedModalities.has(m.slug));
       }
     } catch (_) { /* silent fail */ }
   })();
+}
+// Run now and on View Transition navigation
+initVenuesPage();
+document.addEventListener('astro:page-load', initVenuesPage);
 </script>
 
 <style>
