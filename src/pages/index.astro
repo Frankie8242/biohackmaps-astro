@@ -18,7 +18,7 @@ const orgSchema = generateOrganizationSchema(Astro.url.origin);
 
 // Find any venue pinned via pinnedUntil that is still active as of build time
 const today = new Date().toISOString().slice(0, 10);
-const pinnedVenue = allVenues.find(v => v.pinnedUntil && v.pinnedUntil >= today) ?? null;
+const pinnedVenue = allVenues.find(v => v.pinnedUntil && v.pinnedUntil > today) ?? null;
 // Exclude the pinned venue from the regular grid to avoid duplication
 const gridVenues = pinnedVenue ? allVenues.filter(v => v.slug !== pinnedVenue.slug) : allVenues;
 const uniqueCities = getUniqueCities();
