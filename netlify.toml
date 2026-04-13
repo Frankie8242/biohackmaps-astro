@@ -1,5 +1,5 @@
 [build]
-  command = "npm run build"
+  command = "npm run build && node scripts/ping-search-engines.js"
   publish = "dist"
 
 [build.environment]
