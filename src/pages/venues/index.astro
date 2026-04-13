@@ -301,7 +301,7 @@ function initVenuesPage() {
     const chip = document.createElement('span');
     chip.className = 'active-chip';
     chip.innerHTML = `${label} <button aria-label="Remove filter">✕</button>`;
-    chip.querySelector('button')!.addEventListener('click', onRemove);
+    chip.querySelector('button').addEventListener('click', onRemove);
     return chip;
   }
 
@@ -312,14 +312,14 @@ function initVenuesPage() {
       return;
     }
     nearMeBtn.classList.add('loading');
-    nearMeBtn.querySelector('.near-me-text')!.textContent = 'Locating…';
+    nearMeBtn.querySelector('.near-me-text').textContent = 'Locating…';
     navigator.geolocation.getCurrentPosition(
       pos => {
         userLat = pos.coords.latitude;
         userLng = pos.coords.longitude;
         nearMeBtn.classList.remove('loading');
         nearMeBtn.classList.add('active');
-        nearMeBtn.querySelector('.near-me-text')!.textContent = 'Near Me ✓';
+        nearMeBtn.querySelector('.near-me-text').textContent = 'Near Me ✓';
         sortNearestBtn.disabled = false;
         // Auto-switch to nearest sort
         setSort('nearest');
@@ -328,7 +328,7 @@ function initVenuesPage() {
       },
       () => {
         nearMeBtn.classList.remove('loading');
-        nearMeBtn.querySelector('.near-me-text')!.textContent = 'Near Me';
+        nearMeBtn.querySelector('.near-me-text').textContent = 'Near Me';
         alert('Could not get your location. Please allow location access and try again.');
       },
       { timeout: 10000 }
